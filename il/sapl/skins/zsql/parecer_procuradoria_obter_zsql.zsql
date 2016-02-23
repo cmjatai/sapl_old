@@ -1,0 +1,103 @@
+<dtml-comment>
+connection_id : dbcon_interlegis
+arguments : cod_documento="" ncod_documento="" num_documento="" num_protocolo="" ano_documento="" tip_documento="" ind_tramitacao="" txt_assunto="" txt_busca="" txt_busca_interessado="" ind_excluido=0
+max_rows : 1
+max_cache : 100
+</dtml-comment>
+<dtml-if expr="pysc.verifica_conector_bd_pysc() == 1">
+SELECT DISTINCT
+       REPLACE(parecer_procuradoria.cod_documento, 'L', '') as cod_documento,
+       parecer_procuradoria.tip_documento as tip_documento_sel,
+       tipo_parecer.sgl_tipo_documento,
+       tipo_parecer.des_tipo_documento,
+
+       parecer_procuradoria.tip_documento,
+       parecer_procuradoria.num_protocolo,
+       parecer_procuradoria.ano_documento,
+       parecer_procuradoria.num_documento,
+       parecer_procuradoria.txt_assunto,
+       parecer_procuradoria.num_dias_prazo,
+       parecer_procuradoria.ind_tramitacao,
+       parecer_procuradoria.txt_interessado,
+       parecer_procuradoria.txt_observacao,       
+       DATE_FORMAT(parecer_procuradoria.dat_documento, '%d/%m/%Y') as dat_documento,
+       DATE_FORMAT(parecer_procuradoria.dat_fim_prazo, '%d/%m/%Y') as dat_fim_prazo
+
+FROM   
+       parecer_procuradoria LEFT JOIN tipo_parecer ON
+       parecer_procuradoria.tip_documento=tipo_parecer.tip_documento, 
+       tipo_parecer as tipo_documento
+       
+  <dtml-sqlgroup where>
+    <dtml-sqltest cod_documento         column="parecer_procuradoria.cod_documento" op="="  type="int" optional> <dtml-and>
+    <dtml-sqltest ncod_documento        column="parecer_procuradoria.cod_documento" op="!=" type="int" optional> <dtml-and>
+    <dtml-sqltest num_protocolo         column="parecer_procuradoria.num_protocolo" op="="  type="nb" optional> <dtml-and>
+    <dtml-sqltest ano_documento         column="parecer_procuradoria.ano_documento" op="="  type="int" optional> <dtml-and>
+    <dtml-sqltest tip_documento         column="parecer_procuradoria.tip_documento" op="="  type="int" optional> <dtml-and>
+    <dtml-sqltest num_documento         column="parecer_procuradoria.num_documento" op="="  type="nb" optional> <dtml-and>
+    <dtml-sqltest ind_tramitacao        column="parecer_procuradoria.ind_tramitacao" op="="  type="int" optional> <dtml-and>
+    <dtml-sqltest txt_interessado       column="parecer_procuradoria.txt_interessado"  op="="  type="nb" optional> <dtml-and>
+    <dtml-sqltest txt_assunto           column="parecer_procuradoria.txt_assunto"   op="="  type="nb" optional> <dtml-and>
+    <dtml-sqltest ind_excluido          column="parecer_procuradoria.ind_excluido"  op="="  type="int" optional> <dtml-and>
+
+    <dtml-if txt_busca>
+      (match(txt_assunto)   against (<dtml-sqlvar txt_busca type="string">)) and
+    </dtml-if>
+
+    <dtml-if txt_busca_interessado>
+      (match(txt_interessado)    against (<dtml-sqlvar txt_busca_interessado type="string">)) and
+    </dtml-if>
+
+  </dtml-sqlgroup>
+
+ORDER BY tipo_parecer.sgl_tipo_documento, parecer_procuradoria.ano_documento DESC, LPAD(parecer_procuradoria.num_documento, 5, '0') DESC
+
+<dtml-else>
+
+SELECT 
+       parecer_procuradoria.cod_documento as cod_documento,
+       tipo_parecer.sgl_tipo_documento,
+       tipo_parecer.des_tipo_documento,
+       parecer_procuradoria.tip_protocolo as tip_protocolo,
+       parecer_procuradoria.num_protocolo,
+       parecer_procuradoria.ano_protocolo,
+       parecer_procuradoria.tip_documento,
+       parecer_procuradoria.num_documento,
+       parecer_procuradoria.num_dias_prazo,
+       parecer_procuradoria.ind_tramitacao,
+       parecer_procuradoria.txt_assunto,
+       parecer_procuradoria.txt_observacao,       
+       TO_CHAR(parecer_procuradoria.dat_protocolo, 'DD/MM/YYYY') as dat_protocolo,
+       TO_CHAR(parecer_procuradoria.dat_documento, 'DD/MM/YYYY') as dat_documento,
+       TO_CHAR(parecer_procuradoria.dat_fim_prazo, 'DD/MM/YYYY') as dat_fim_prazo
+
+FROM   
+       parecer_procuradoria,
+       tipo_parecer
+       
+  <dtml-sqlgroup where>
+    <dtml-sqltest cod_documento         column="parecer_procuradoria.cod_materia" op="="  type="int" optional> <dtml-and>
+    <dtml-sqltest ncod_documento        column="parecer_procuradoria.cod_materia" op="!=" type="int" optional> <dtml-and>
+    <dtml-sqltest tip_protocolo         column="parecer_procuradoria.tip_id_basica" op="="  type="int" optional> <dtml-and>
+    <dtml-sqltest num_protocolo         column="parecer_procuradoria.num_ident_basica" op="="  type="nb" optional> <dtml-and>
+    <dtml-sqltest ano_protocolo         column="parecer_procuradoria.ano_ident_basica" op="="  type="int" optional> <dtml-and>
+    <dtml-sqltest tip_documento         column="parecer_procuradoria.tip_documento" op="="  type="int" optional> <dtml-and>
+    <dtml-sqltest num_documento         column="parecer_procuradoria.num_documento" op="="  type="nb" optional> <dtml-and>
+    <dtml-sqltest ind_tramitacao        column="parecer_procuradoria.ind_tramitacao" op="="  type="int" optional> <dtml-and>
+    <dtml-sqltest txt_assunto           column="parecer_procuradoria.txt_assunto" op="="  type="nb" optional> <dtml-and>
+    <dtml-sqltest ind_excluido          column="parecer_procuradoria.ind_excluido"    op="="  type="int" optional> <dtml-and>
+
+    <dtml-if txt_busca>
+      (match(txt_assunto)   against (<dtml-sqlvar txt_busca type="string">)) and
+    </dtml-if>
+
+    <dtml-if txt_busca_autoria>
+      (match(txt_autoria)   against (<dtml-sqlvar txt_busca_autoria type="string">)) and
+    </dtml-if>
+
+    parecer_procuradoria.tip_documento = tipo_parecer.tip_documento
+  </dtml-sqlgroup>
+
+ORDER BY tipo_parecer.sgl_tipo_documento, parecer_procuradoria.ano_protocolo DESC, LPAD(parecer_procuradoria.num_protocolo, 5, '0') DESC
+
+</dtml-if>

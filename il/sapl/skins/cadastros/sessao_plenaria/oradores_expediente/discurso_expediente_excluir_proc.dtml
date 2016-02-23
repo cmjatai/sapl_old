@@ -1,0 +1,25 @@
+<dtml-call expr="REQUEST.set('erro', 0)">
+<dtml-call expr="REQUEST.set('id_documento', _.str(cod_sessao_plen)+ '_' + _.str(cod_parlamentar) + '_discurso')">
+
+<dtml-if expr="_.hasattr(sapl_documentos.oradores_expediente,id_documento)">
+    <dtml-try>
+        <dtml-call "sapl_documentos.oradores_expediente.manage_delObjects(id_documento)">
+    <dtml-except>
+        <dtml-call expr="REQUEST.set('erro', 1)">
+    </dtml-try>
+  
+    <dtml-if erro>
+        <dtml-let mensagem="'Ocorreu um erro ao tentar excluir o discurso do orador!'">
+            <dtml-var mensagem_emitir>
+        </dtml-let>
+    <dtml-else>
+        <dtml-in expr="zsql.parlamentar_obter_zsql(cod_parlamentar = cod_parlamentar, ind_excluido = 0)">
+        <dtml-call expr="pysc.sessao_plenaria_log_pysc(cod_sessao_plen = cod_sessao_plen,
+                                                   txt_acao = 'remoção de discurso no expediente',
+                                                   txt_mensagem = 'Discurso do orador ' + nom_parlamentar + ' excluído no expediente da sessão plenária.')">
+        </dtml-in>
+        <dtml-let mensagem="'Discurso do orador exclu&iacute;do com sucesso!'" sucesso="1" url="'index_html?&cod_sessao_leg=' + cod_sessao_leg + '&cod_sessao_plen=' + cod_sessao_plen + '&cod_num_legislatura=' + cod_num_legislatura + '&dat_sessao=' + dat_sessao + '&tip_sessao=' + tip_sessao">
+            <dtml-var mensagem_emitir>
+        </dtml-let>
+    </dtml-if>
+</dtml-if>

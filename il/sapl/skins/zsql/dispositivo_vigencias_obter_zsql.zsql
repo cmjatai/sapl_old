@@ -1,0 +1,24 @@
+<dtml-comment>
+connection_id : dbcon_interlegis
+arguments : cod_norma="" ini_fim="i"
+max_rows : 0
+max_cache : 100
+</dtml-comment>
+  
+<dtml-if expr="ini_fim == 'i'">
+   SELECT DISTINCT (dat_inicio_vigencia) as data,
+<dtml-else>  
+   SELECT DISTINCT (dat_fim_vigencia) as data,
+</dtml-if>
+   cod_norma_publicada
+ 
+FROM  dispositivo 
+
+
+<dtml-sqlgroup where>  
+    <dtml-sqltest cod_norma column="cod_norma" op="=" type="int" optional> 
+</dtml-sqlgroup>  
+  
+  
+ORDER BY  dat_inicio_vigencia
+  

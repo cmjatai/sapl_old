@@ -1,0 +1,58 @@
+<dtml-comment>
+connection_id : dbcon_interlegis
+arguments : cod_norma="" cod_norma_publicada="" cod_dispositivo="" cod_dispositivo_atualizador="" txt_texto_busca
+max_rows : 0
+max_cache : 100
+</dtml-comment>
+  SELECT 
+      dp.cod_dispositivo				dp_cod_dispositivo,  
+      dp.num_ordem						dp_num_ordem,  
+      dp.num_ordem_bloco_atualizador	dp_num_ordem_bloco_atualizador,  
+      dp.num_nivel						dp_num_nivel,  
+      dp.num_dispositivo_0				dp_num_dispositivo_0,  
+      dp.num_dispositivo_1				dp_num_dispositivo_1,  
+      dp.num_dispositivo_2				dp_num_dispositivo_2,  
+      dp.num_dispositivo_3				dp_num_dispositivo_3,  
+      dp.num_dispositivo_4				dp_num_dispositivo_4,  
+      dp.num_dispositivo_5				dp_num_dispositivo_5,  
+      dp.txt_rotulo						dp_txt_rotulo,  
+      dp.txt_texto						dp_txt_texto,  
+      dp.txt_texto_atualizador			dp_txt_texto_atualizador,  
+      dp.dat_inicio_vigencia			dp_dat_inicio_vigencia,  
+      dp.dat_fim_vigencia				dp_dat_fim_vigencia,  
+      dp.dat_inicio_eficacia			dp_dat_inicio_eficacia,  
+      dp.dat_fim_eficacia				dp_dat_fim_eficacia,  
+      dp.ind_visibilidade				dp_ind_visibilidade,  
+      dp.ind_validade					dp_ind_validade,  
+      dp.tim_atualizacao_banco			dp_tim_atualizacao_banco,  
+      dp.cod_norma						dp_cod_norma,  
+      dp.cod_norma_publicada			dp_cod_norma_publicada,  
+      dp.cod_dispositivo_pai			dp_cod_dispositivo_pai,  
+      dp.cod_dispositivo_vigencia		dp_cod_dispositivo_vigencia,  
+      dp.cod_dispositivo_atualizador	dp_cod_dispositivo_atualizador,  
+      dp.cod_tipo_dispositivo			dp_cod_tipo_dispositivo,  
+      dp.cod_publicacao					dp_cod_publicacao 
+        
+  FROM
+       dispositivo dp  
+        
+       
+  <dtml-sqlgroup where>       
+       <dtml-sqltest cod_norma column="dp.cod_norma" op="=" type="int" optional> <dtml-and>
+       <dtml-sqltest cod_norma_publicada column="dp.cod_norma_publicada" op="=" type="int" optional> <dtml-and> 
+       <dtml-sqltest cod_dispositivo column="dp.cod_dispositivo" op="=" type="int" optional> <dtml-and>
+       <dtml-sqltest cod_dispositivo_atualizador column="dp.cod_dispositivo_atualizador" op="=" type="int" optional> 
+  </dtml-sqlgroup>   
+  
+     <dtml-if txt_texto_busca>
+		<dtml-in expr="_.string.split(txt_texto_busca, ' ')">
+		        <dtml-let txt_texto_busca="'%'+_['sequence-item'].strip()+'%'">
+	                <dtml-if expr="len(txt_texto_busca) > 2">
+			           and  dp.txt_texto like <dtml-sqlvar txt_texto type="string"> 
+	                </dtml-if>
+		        </dtml-let>
+		</dtml-in>
+    </dtml-if>   
+
+ORDER BY dp.num_ordem
+  

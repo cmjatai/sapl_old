@@ -1,0 +1,68 @@
+<dtml-comment>
+    *********************************************************************
+    *   Função: Salvar os dados do protocolo vindos do formulário,      *
+    *   Retorno: Mensagem de sucesso ou erro.                           *
+    *   Luciano De Fazio - 13/11/2011                                   *
+    *********************************************************************
+</dtml-comment>
+
+<dtml-if use_spdo>
+
+		<dtml-try>
+		    <dtml-call expr="zsql.protocolo_legislativo_incluir_zsql(
+		        cod_protocolo            = pysc.protocolo_codigo_obter_pysc(),
+		        num_protocolo            = pysc.protocolo_proximo_obter_pysc(opcao=rd_opcao_num_protocolo),
+		        ano_protocolo            = pysc.current_year_pysc(),
+		        tip_protocolo            = hdn_tip_protocolo,
+		        tip_processo             = hdn_tip_processo,
+		        tip_materia              = lst_tip_materia,
+		        hor_protocolo            = txt_hor_protocolo,
+		        num_paginas              = txt_num_paginas,
+		        txt_assunto_ementa       = txa_txt_ementa,
+		        cod_autor                = hdn_cod_autor,
+		        txt_observacao           = txa_txt_observacao,
+		        num_protocolo_spdo       = num_protocolo_spdo)">
+		
+		    <dtml-in expr="zsql.protocolo_incluido_codigo_obter_zsql(ano=pysc.current_year_pysc())">
+		
+		        <dtml-call expr="REQUEST.set('num_protocolo', num_protocolo)">
+		           <dtml-call expr="REQUEST.set('ano_protocolo', pysc.current_year_pysc())">
+		           <dtml-let mensagem="'Mat&eacute;ria protocolada com sucesso!'" sucesso="1" url="hdn_url" codigo="num_protocolo" ano="ano_protocolo">
+		               <dtml-var mensagem_prot_emitir>
+		           </dtml-let>
+		    </dtml-in>
+		
+		</dtml-try>
+
+
+
+<dtml-else>
+
+
+		<dtml-try>
+		    <dtml-call expr="zsql.protocolo_legislativo_incluir_zsql(
+		        cod_protocolo            = pysc.protocolo_codigo_obter_pysc(),
+		        num_protocolo            = pysc.protocolo_proximo_obter_pysc(opcao=rd_opcao_num_protocolo),
+		        ano_protocolo            = pysc.current_year_pysc(),
+		        tip_protocolo            = hdn_tip_protocolo,
+		        tip_processo             = hdn_tip_processo,
+		        tip_materia              = lst_tip_materia,
+		        hor_protocolo            = txt_hor_protocolo,
+		        num_paginas              = txt_num_paginas,
+		        txt_assunto_ementa       = txa_txt_ementa,
+		        cod_autor                = hdn_cod_autor,
+		        txt_observacao           = txa_txt_observacao)">
+		
+		    <dtml-in expr="zsql.protocolo_incluido_codigo_obter_zsql(ano=pysc.current_year_pysc())">
+		
+		        <dtml-call expr="REQUEST.set('num_protocolo', num_protocolo)">
+		           <dtml-call expr="REQUEST.set('ano_protocolo', pysc.current_year_pysc())">
+		           <dtml-let mensagem="'Mat&eacute;ria protocolada com sucesso!'" sucesso="1" url="hdn_url" codigo="num_protocolo" ano="ano_protocolo">
+		               <dtml-var mensagem_prot_emitir>
+		           </dtml-let>
+		    </dtml-in>
+		
+		</dtml-try>
+ 
+</dtml-if>
+

@@ -1,0 +1,26 @@
+<dtml-comment>
+**************************************************************
+*   Esse método exclui o texto integral do documento         *
+*   Luciano De Fazio - 02/11/2011                            *
+**************************************************************
+</dtml-comment>
+
+<dtml-call expr="REQUEST.set('erro', 0)">
+<dtml-call expr="REQUEST.set('id_texto', _.str(cod_documento)+'_texto_integral')">
+<dtml-if expr="_.hasattr(sapl_documentos.administrativo,id_texto)">
+  <dtml-try>
+    <dtml-call "sapl_documentos.administrativo.manage_delObjects(id_texto)">
+  <dtml-except>
+    <dtml-call expr="REQUEST.set('erro', 1)">
+  </dtml-try>
+  
+  <dtml-if erro>
+    <dtml-let mensagem="'Ocorreu um erro ao tentar excluir o texto do documento!'">
+      <dtml-var mensagem_emitir>
+    </dtml-let>
+  <dtml-else>
+    <dtml-let mensagem="'Texto do documento excluído com sucesso!'" sucesso="1" url="'documento_administrativo_mostrar_proc?cod_documento='+cod_documento">
+      <dtml-var mensagem_emitir>
+    </dtml-let>
+  </dtml-if>
+</dtml-if>

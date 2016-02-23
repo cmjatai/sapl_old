@@ -1,0 +1,134 @@
+Nova Role: Operador Dispositivos Normas
+ 
+
+
+cadastros/dipositivos
+cadastros/dipositivos/dispositivos_normas_index_html.dtml
+cadastros/dipositivos/dispositivos_normas_index_html.dtml.metadata
+
+cadastros/norma_juridica/norma_juridica_form.dtml
+  
+
+zsql/dispositivo_obter_zsql.zsql
+zsql/dispositivo_vigencias_obter_zsql.zsql
+zsql/dispositivo_tipos_obter_zsql.zsql
+
+
+
+pysc/dispositivo_tipos_in_session_pysc.py  (cancelar variável de sessao ao editar tipos de dispostivos - ação rara)
+pysc/dispositivo_vigencias_obter_pysc.py
+
+
+/standard_css_slot.dtml
+generico/estilos_compilacao.css.dtml
+
+javascript/geral_dispositivos.js.dtml
+
+
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `dispositivo`
+--
+
+CREATE TABLE IF NOT EXISTS `dispositivo` (
+  `cod_dispositivo` int(11) NOT NULL AUTO_INCREMENT,
+  `num_ordem` int(11) NOT NULL DEFAULT '0',
+  `num_ordem_bloco_atualizador` int(11) NOT NULL DEFAULT '0',
+  `num_nivel` int(11) NOT NULL DEFAULT '0',
+  `num_dispositivo_0` int(11) NOT NULL DEFAULT '0',
+  `num_dispositivo_1` int(11) NOT NULL DEFAULT '0',
+  `num_dispositivo_2` int(11) NOT NULL DEFAULT '0',
+  `num_dispositivo_3` int(11) NOT NULL DEFAULT '0',
+  `num_dispositivo_4` int(11) NOT NULL DEFAULT '0',
+  `num_dispositivo_5` int(11) NOT NULL DEFAULT '0',
+  `txt_rotulo` text NOT NULL,
+  `txt_texto` longtext NOT NULL,
+  `txt_texto_atualizador` longtext,
+  `dat_inicio_vigencia` date DEFAULT NULL,
+  `dat_fim_vigencia` date DEFAULT NULL,
+  `dat_inicio_eficacia` date DEFAULT NULL,
+  `dat_fim_eficacia` date DEFAULT NULL,
+  `ind_visibilidade` tinyint(4) NOT NULL DEFAULT '1',
+  `ind_inconstitucionalidade` tinyint(4) NOT NULL DEFAULT '1',
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `cod_norma` int(11) NOT NULL DEFAULT '0',
+  `cod_norma_publicada` int(11) NOT NULL DEFAULT '0',
+  `cod_dispositivo_pai` int(11) NOT NULL DEFAULT '0',
+  `cod_dispositivo_vigencia` int(11) NOT NULL DEFAULT '0',
+  `cod_dispositivo_atualizador` int(11) NOT NULL DEFAULT '0',
+  `cod_tipo_dispositivo` int(11) NOT NULL DEFAULT '0',
+  `cod_publicacao` int(11) DEFAULT NULL,
+  PRIMARY KEY (`cod_dispositivo`),
+  UNIQUE KEY `cod_norma` (`cod_norma`,`num_ordem`),
+  UNIQUE KEY `cod_norma_2` (`cod_norma`,`num_dispositivo_0`,`num_dispositivo_1`,`num_dispositivo_2`,`num_dispositivo_3`,`num_dispositivo_4`,`num_dispositivo_5`,`cod_tipo_dispositivo`,`cod_dispositivo_pai`,`cod_publicacao`),
+  KEY `cod_publicacao` (`cod_publicacao`),
+  KEY `cod_norma_publicada` (`cod_norma_publicada`),
+  KEY `cod_dispositivo_pai` (`cod_dispositivo_pai`),
+  KEY `cod_tipo_dispositivo` (`cod_tipo_dispositivo`),
+  KEY `cod_dispositivo_vigencia` (`cod_dispositivo_vigencia`),
+  KEY `cod_dispositivo_atualizador` (`cod_dispositivo_atualizador`),
+  FULLTEXT KEY `txt_rotulo` (`txt_rotulo`),
+  FULLTEXT KEY `txt_texto` (`txt_texto`),
+  FULLTEXT KEY `txt_texto_atualizador` (`txt_texto_atualizador`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tipo_dispositivo`
+--
+
+CREATE TABLE IF NOT EXISTS `tipo_dispositivo` (
+  `tip_dispositivo` int(11) NOT NULL AUTO_INCREMENT,
+  `nome` varchar(50) NOT NULL,
+  `class_css` varchar(20) NOT NULL,
+  `rotulo_prefixo_html` varchar(100) DEFAULT NULL,
+  `rotulo_prefixo_texto` varchar(30) NOT NULL COMMENT 'Rotulo Padrão prefixo a ser usado apenas na edição do rótulo. Separar por (;) ponto e vírgula para dar opções predefinidas ao usuário',
+  `rotulo_ordinal` int(11) NOT NULL DEFAULT '0' COMMENT 'Regras de inserção de caracter gráfico de numero ordinal: -1 Todos, 0 Nenhum, algum máximo N',
+  `rotulo_separadores_variacao` varchar(4) NOT NULL DEFAULT '----' COMMENT 'Caracteres usados na construção das variações dos rótulos de até cinco níveis',
+  `rotulo_sufixo_texto` varchar(30) NOT NULL COMMENT 'Rotulo Padrão de sufixo a ser usado apenas na edição do rótulo',
+  `rotulo_sufixo_html` varchar(100) NOT NULL COMMENT 'Html sempre colocado depois da renderização do rotulo',
+  `texto_prefixo_html` varchar(100) NOT NULL COMMENT 'html sempre usado antes da renderização do texto',
+  `texto_sufixo_html` varchar(100) NOT NULL,
+  `nota_automatica_prefixo_html` varchar(100) NOT NULL,
+  `nota_automatica_sufixo_html` varchar(100) NOT NULL,
+  `ind_cont_continua` tinyint(1) NOT NULL,
+  `frmt0` char(1) NOT NULL DEFAULT '1' COMMENT 'Possíveis tipos de reenderização de contagem (1, I, i, A, a, * - topico, N - sem renderização de contagem)',
+  `frmt1` char(1) NOT NULL DEFAULT '1',
+  `frmt2` char(1) NOT NULL DEFAULT '1',
+  `frmt3` char(1) NOT NULL DEFAULT '1',
+  `frmt4` char(1) NOT NULL DEFAULT '1',
+  `frmt5` char(1) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`tip_dispositivo`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=28 ;
+
+--
+-- Extraindo dados da tabela `tipo_dispositivo`
+--
+
+INSERT INTO `tipo_dispositivo` (`tip_dispositivo`, `nome`, `class_css`, `rotulo_prefixo_html`, `rotulo_prefixo_texto`, `rotulo_ordinal`, `rotulo_separadores_variacao`, `rotulo_sufixo_texto`, `rotulo_sufixo_html`, `texto_prefixo_html`, `texto_sufixo_html`, `nota_automatica_prefixo_html`, `nota_automatica_sufixo_html`, `ind_cont_continua`, `frmt0`, `frmt1`, `frmt2`, `frmt3`, `frmt4`, `frmt5`) VALUES
+(11, 'Anexo', 'anexo', '', 'Anexo', 0, '----', '', '<br>', '', '<br>', '', '', 0, 'I', '1', '1', '1', '1', '1'),
+(12, 'Parte', 'parte', '', 'Parte', 0, '----', '', '<br>', '', '<br>', '', '', 0, 'I', '1', '1', '1', '1', '1'),
+(13, 'Livro', 'livro', '', 'Livro', 0, '----', '', '<br>', '', '<br>', '', '', 0, 'I', '1', '1', '1', '1', '1'),
+(15, 'Capítulo', 'capitulo', '', 'Capítulo', 0, '----', '', '<br>', '', '<br>', '', '', 0, 'I', '1', '1', '1', '1', '1'),
+(16, 'Seção', 'secao', '', 'Seção', 0, '----', '', '<br>', '', '<br>', '', '', 0, 'I', '1', '1', '1', '1', '1'),
+(17, 'SubSeção', 'subsecao', '', 'SubSeção', 0, '----', '', '<br>', '', '<br>', '', '', 0, '1', '1', '1', '1', '1', '1'),
+(18, 'Item de Seção', 'itemsecao', '', 'Item', 0, '----', '', '<br>', '', '<br>', '', '', 0, '1', '1', '1', '1', '1', '1'),
+(19, 'Artigo', 'artigo', '', 'Art.', 9, '----', '', '&nbsp;&ndash;&nbsp;', '', '', '', '', 1, '1', '1', '1', '1', '1', '1'),
+(20, 'Parágrafo', 'paragrafo', '', '§;Parágrafo Único', 9, '----', '', '&nbsp;&ndash;&nbsp;', '', '', '', '', 0, '1', '1', '1', '1', '1', '1'),
+(21, 'Inciso', 'inciso', '', '', 0, '....', '', '&nbsp;&ndash;&nbsp;', '', '', '', '', 0, 'I', '1', '1', '1', '1', '1'),
+(22, 'Alinea', 'alinea', '', '', 0, '....', '', '&nbsp;&ndash;&nbsp;', '', '', '', '', 0, 'a', '1', '1', '1', '1', '1'),
+(23, 'Item', 'item', '', '', 0, '....', '', '&nbsp;&ndash;&nbsp;', '', '', '', '', 0, '1', '1', '1', '1', '1', '1'),
+(24, 'Disposições Preliminares', 'disp_preliminares', '', 'Disposições Preliminares', 0, '----', '', '<br>', '', '<br>', '', '', 0, 'N', '1', '1', '1', '1', '1'),
+(25, 'Disposições Gerais', 'disp_gerais', '', 'Disposições Gerais', 0, '----', '', '<br>', '', '<br>', '', '', 0, 'N', '1', '1', '1', '1', '1'),
+(26, 'Disposições Transitórias', 'disp_transitorias', '', 'Disposições Transitórias', 0, '----', '', '<br>', '', '<br>', '', '', 0, 'N', '1', '1', '1', '1', '1'),
+(27, 'Disposições Finais', 'disp_finais', '', 'Disposições Finais', 0, '----', '', '<br>', '', '<br>', '', '', 0, 'N', '1', '1', '1', '1', '1'),
+(14, 'Título', 'titulo', '', 'Título', 0, '----', '', '<br>', '', '<br>', '', '', 0, 'I', '1', '1', '1', '1', '1'),
+(1, 'Articulação', 'articulacao', '', '', 0, '....', '', '', '', '', '', '', 1, '1', '1', '1', '1', '1', '1'),
+(4, 'Bloco Alteração', 'bloco_alteracao', '', '', 0, '....', '', '', '', '', '', '', 1, '1', '1', '1', '1', '1', '1'),
+(5, 'Omissis', 'omissis', '', '', 0, '....', '', '', '', '', '', '', 0, '1', '1', '1', '1', '1', '1'),
+(6, 'Texto Não Estruturado', 'texto_n_estruturado', '', '', 0, '....', '', '', '', '', '', '', 0, '1', '1', '1', '1', '1', '1'),
+(2, 'Ementa', 'ementa', '', '', 0, '....', '', '', '', '', '', '', 0, 'N', '1', '1', '1', '1', '1');

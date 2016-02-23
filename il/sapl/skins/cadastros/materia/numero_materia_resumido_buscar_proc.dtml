@@ -1,0 +1,12 @@
+<dtml-unless ano_ident_basica>
+    <dtml-call expr="REQUEST.set('ano_ident_basica', _.DateTime.year(_.DateTime()))">
+</dtml-unless>
+<dtml-in expr="zsql.numero_materia_legislativa_obter_zsql(tip_id_basica_sel=tip_id_basica_sel,
+                                       ano_ident_basica=ano_ident_basica,
+                                       ind_excluido=0)">
+    <dtml-unless num_ident_basica>
+        <dtml-call expr="REQUEST.set('num_ident_basica', novo_numero)">
+    </dtml-unless>
+  <dtml-call expr="REQUEST.set('tip_id_basica_novo', tip_id_basica_sel)">
+</dtml-in>
+<dtml-var materia_form_resumido>

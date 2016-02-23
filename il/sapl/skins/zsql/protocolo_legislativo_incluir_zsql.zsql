@@ -1,0 +1,37 @@
+<dtml-comment>
+connection_id : dbcon_interlegis
+arguments :  num_protocolo ano_protocolo tip_protocolo=0 hor_protocolo=now()  tip_processo=1 tip_materia num_paginas txt_assunto_ementa cod_autor txt_observacao num_protocolo_spdo ind_anulado=0
+max_rows : 1000
+max_cache : 100
+</dtml-comment>
+INSERT INTO protocolo
+(num_protocolo,
+ ano_protocolo,
+ dat_protocolo,
+ hor_protocolo,
+ tip_protocolo,
+ tip_processo,
+ cod_autor,
+ tip_materia,
+ txt_assunto_ementa,
+ num_paginas,
+ txt_observacao,
+ num_protocolo_spdo,
+ ind_anulado)
+ 
+VALUES
+
+  (<dtml-sqlvar      num_protocolo          type="int">,
+   <dtml-sqlvar      ano_protocolo          type="int">,
+    NOW(),
+    <dtml-sqlvar      hor_protocolo         type="string">,
+    <dtml-sqlvar      tip_protocolo         type="int">,
+    <dtml-sqlvar      tip_processo          type="int">,
+    <dtml-sqlvar      cod_autor             type="int">,
+    <dtml-sqlvar      tip_materia           type="int">,
+    <dtml-sqlvar      txt_assunto_ementa    type="string">,
+    <dtml-sqlvar      num_paginas           type="int">,
+    <dtml-sqlvar      txt_observacao        type="string"  optional>,
+    <dtml-sqlvar      num_protocolo_spdo    type="string"  optional>,
+    <dtml-sqlvar      ind_anulado           type="int">)
+

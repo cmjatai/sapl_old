@@ -1,0 +1,19 @@
+<dtml-comment>
+*****************************************************************
+*   Luciano De Fazio - 02/11/2011                               *
+*****************************************************************
+</dtml-comment>
+<!-- dtml-var expr="REQUEST" -->
+
+<dtml-try>
+    <dtml-call expr="zsql.protocolo_anular_zsql(num_protocolo=txt_num_protocolo, ano_protocolo=txt_ano_protocolo,
+    txt_user_anulacao=hdn_txt_user_anulacao, txt_ip_anulacao=hdn_txt_ip_anulacao, txt_just_anulacao=txa_txt_just_anulacao)">
+<dtml-except>
+    <dtml-let mensagem="'Houve um erro! Número de Protocolo não anulado!'">
+        <dtml-var mensagem_emitir>
+    </dtml-let>
+<dtml-else>
+    <dtml-let mensagem="'Número de Protocolo anulado com sucesso!'" sucesso="1" url="hdn_url">
+        <dtml-var mensagem_emitir>
+    </dtml-let>
+</dtml-try>

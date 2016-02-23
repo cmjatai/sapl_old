@@ -1,0 +1,58 @@
+<dtml-var standard_html_header>
+
+<a id="ajuda" href="&dtml-portal_url;/ajuda/matapensada">Ajuda</a>
+
+<h1 class="firstHeading">Matéria Legislativa</h1>
+
+<form name="index_form" action="apenso_form" >
+    <input type="hidden" name="cod_materia" value="<dtml-var cod_materia>" />
+    <input type="hidden" name="incluir_apenso" value="1" />
+    <dtml-var materia_menu>
+    <dtml-var materia_header>
+
+    <fieldset>
+        <legend>Matérias Apensadas</legend>
+
+        <dtml-in expr="zsql.apenso_obter_zsql(cod_materia_principal=cod_materia,ind_excluido=0)" size=8 start=query_start orphan=2>
+            <dtml-if previous-sequence>
+         <span class="form-element">
+             <a href="<dtml-var URL><dtml-var sequence-query>query_start=<dtml-var previous-sequence-start-number>">
+                 Página Anterior (<dtml-var previous-sequence-size> resultados)</a>
+         </span>
+            </dtml-if previous-sequence>
+            <dtml-if sequence-start>
+                <table>
+                    <tr>
+                        <th class="form-label">Matéria Apensada</th>
+                        <th class="form-label">Data Apensação </th>
+                    </tr>
+            </dtml-if sequence-start>
+            <tr>
+                <td  class="texto">
+                    <dtml-in expr="zsql.materia_obter_zsql(cod_materia = cod_materia_apensada, ind_excluido = 0)">
+                    <a href="../materia_mostrar_proc?cod_materia=<dtml-var cod_materia_apensada>">
+                        <b><dtml-var sgl_tipo_materia> <dtml-var num_ident_basica missing>/<dtml-var ano_ident_basica></dtml-in></b></a>
+                </td>
+                <td class="texto"><dtml-var dat_apensacao missing></td>
+            </tr>
+            <dtml-if sequence-end>
+                </table>
+                <dtml-if next-sequence>
+         <span class="form-element">
+             <a href="<dtml-var URL><dtml-var sequence-query>query_start=<dtml-var next-sequence-start-number>">
+                 Próxima Página (<dtml-var next-sequence-size> resultados)</a>
+        </span>
+                </dtml-if next-sequence>
+            </dtml-if sequence-end>
+            <dtml-else>
+            <span class="texto">Não há nenhuma matéria apensada.</span>
+        </dtml-in>
+
+    </fieldset>
+
+    <p align="center">
+        <input type="submit" class="botao" name="btn_incluir" value="Incluir Apenso" />
+    </p>
+</form>
+
+<dtml-var standard_html_footer>

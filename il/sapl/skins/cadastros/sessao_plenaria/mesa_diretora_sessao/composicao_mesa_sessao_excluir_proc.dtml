@@ -1,0 +1,23 @@
+<dtml-try>
+<dtml-call expr="zsql.composicao_mesa_sessao_alterar_zsql(cod_parlamentar=cod_parlamentar,
+                                                          cod_sessao_leg=cod_sessao_leg,
+                                                          cod_cargo=cod_cargo,
+                                                          cod_sessao_plen=cod_sessao_plen,
+                                                          ind_excluido = 1)">
+<dtml-except>
+  <dtml-let mensagem="'N&atilde;o foi poss&iacute;vel excluir o parlamentar da composi&ccedil;&atilde;o da mesa!'">
+     <dtml-var mensagem_emitir>
+  </dtml-let>   
+<dtml-else>
+    <dtml-in expr="zsql.parlamentar_obter_zsql(cod_parlamentar=cod_parlamentar, ind_excluido=0)">
+    <dtml-in expr="zsql.cargo_mesa_obter_zsql(cod_cargo=cod_cargo, ind_excluido=0)">
+    <dtml-call expr="pysc.sessao_plenaria_log_pysc(cod_sessao_plen = cod_sessao_plen,
+                                                   txt_acao = 'composiÃ§Ã£o da mesa diretora',
+                                                   txt_mensagem = 'O parlamentar ' + nom_parlamentar + ' que ocupava o cargo de ' + des_cargo + ' foi excluÃ­do da mesa diretora')">
+    </dtml-in>
+    </dtml-in>
+  <dtml-let mensagem="'Parlamentar exclu&iacute;do com sucesso da composi&ccedil;&atilde;o da mesa!'" sucesso="1" url="'index_html?&cod_sessao_leg=' + cod_sessao_leg + '&cod_sessao_plen=' + cod_sessao_plen + '&cod_num_legislatura=' + cod_num_legislatura + '&tip_sessao=' + tip_sessao">
+     <dtml-var mensagem_emitir>
+  </dtml-let>
+   
+</dtml-try>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<lista-sessoes xmlns:tal="http://xml.zope.org/namespaces/tal" 
+ tal:define="data request/data|nothing;
+             data python:test(data!=nothing,context.pysc.data_converter_pysc(data),context.zsql.ultima_sessao_plenaria_obter_zsql()[0].dat_inicio_sessao)">
+             
+  <proxima-data tal:attributes="value python:context.pysc.iso_to_port_pysc(data)"/>    
+  <sessoes>
+    <sessao tal:repeat="item python:context.zsql.sessao_plenaria_obter_zsql(dat_inicio_sessao = str(data).split(' ')[0], ind_excluido=0)"
+            tal:attributes="cod_sessao_plen item/cod_sessao_plen;
+                            cod_andamento_sessao item/cod_andamento_sessao;
+                            cod_sessao_leg item/cod_sessao_leg;
+                            dat_inicio_sessao item/dat_inicio_sessao;
+                            dat_fim_sessao item/dat_fim_sessao;
+                            dia_sessao item/dia_sessao;
+                            hr_inicio_sessao item/hr_inicio_sessao;
+                            hr_fim_sessao item/hr_fim_sessao;
+                            num_legislatura item/num_legislatura;
+                            num_sessao_plen item/num_sessao_plen;
+                            tip_sessao item/tip_sessao;
+                            nom_tip_sessao python:context.zsql.tipo_sessao_plenaria_obter_zsql(tip_sessao=item.tip_sessao)[-1]['nom_sessao'];
+                            url_audio item/url_audio;
+                            url_video item/url_video;
+                            ind_excluido item/ind_excluido;
+                            num_sessao_leg item/num_sessao_leg;"/>
+  </sessoes>  
+  <outras-sessoes>
+    <data tal:repeat="item python:context.zsql.data_sessao_plenaria_obter_zsql(ind_excluido = 0)" 
+             tal:attributes="value item/dat_inicio_sessao"/>
+  </outras-sessoes>
+</lista-sessoes>

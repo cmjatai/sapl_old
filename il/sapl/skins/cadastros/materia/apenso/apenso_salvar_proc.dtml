@@ -1,0 +1,76 @@
+<dtml-call expr="REQUEST.set('erro', 0)">
+<dtml-if expr="isinstance(lst_cod_materia_apensada, str)">
+    <dtml-try>
+            <dtml-call expr="zsql.apenso_incluir_zsql(
+                                cod_materia_apensada    = lst_cod_materia_apensada,
+                                cod_materia_principal  = cod_materia_principal,
+                                dat_apensacao = pysc.data_corrente_pysc(),
+                                ind_excluido = 0)">
+                <dtml-except>
+                    <dtml-if expr="len(lst_cod_materia_apensada) > 1">
+                    <dtml-let mensagem="'Não foi possivel apensar as matérias. Tente novamente!!!.'">
+                        <dtml-var mensagem_emitir>
+                    </dtml-let>
+                    <dtml-else>
+                    <dtml-let mensagem="'Não foi possivel apensar a matéria. Tente novamente!!!.'">
+                        <dtml-var mensagem_emitir>
+                    </dtml-let>
+                    </dtml-if>
+                    <dtml-call expr="REQUEST.set('erro', 1)">
+
+                    <dtml-else>
+                    <dtml-if expr="len(lst_cod_materia_apensada) > 1">
+                    <dtml-let mensagem="'Matérias apensadas!'" sucesso="1" url=hdn_url>
+                        <dtml-var mensagem_emitir>
+                    </dtml-let>
+                    <dtml-else>
+                    <dtml-let mensagem="'Matéria apensada!'" sucesso="1" url=hdn_url>
+                        <dtml-var mensagem_emitir>
+                    </dtml-let>
+                    </dtml-if>
+        </dtml-try>
+<dtml-else>
+<dtml-in lst_cod_materia_apensada>
+        <dtml-try>
+            <dtml-call expr="zsql.apenso_incluir_zsql(
+                                cod_materia_apensada    = cod_materia_apensada,
+                                cod_materia_principal  = cod_materia_principal,
+                                dat_apensacao = pysc.data_corrente_pysc(),
+                                ind_excluido = 0)">
+                <dtml-except>
+                    <dtml-if expr="len(lst_cod_materia_apensada) > 1">
+                    <dtml-let mensagem="'Não foi possivel apensar as matérias. Tente novamente!!!.'">
+                        <dtml-var mensagem_emitir>
+                    </dtml-let>
+                    <dtml-else>
+                    <dtml-let mensagem="'Não foi possivel apensar a matéria. Tente novamente!!!.'">
+                        <dtml-var mensagem_emitir>
+                    </dtml-let>
+                    </dtml-if>
+                    <dtml-call expr="REQUEST.set('erro', 1)">
+
+                    <dtml-else>
+                    <dtml-if expr="len(lst_cod_materia_apensada) > 1">
+                    <dtml-let mensagem="'Matérias apensadas!'" sucesso="1" url=hdn_url>
+                        <dtml-var mensagem_emitir>
+                    </dtml-let>
+                    <dtml-else>
+                    <dtml-let mensagem="'Matéria apensada!'" sucesso="1" url=hdn_url>
+                        <dtml-var mensagem_emitir>
+                    </dtml-let>
+                    </dtml-if>
+        </dtml-try>
+</dtml-in>
+</dtml-if>
+<dtml-unless erro>
+    <dtml-try>
+        <dtml-call expr="pysc.spdo_apenso_add_salvar_pysc(
+                                                materia_principal = cod_materia_principal,
+                                                materias=lst_cod_materia_apensada,
+                                                add=1)">
+    <dtml-except>
+        <dtml-let mensagem="'Não foi possivel apensar as matérias no SPDO. Verifique o status do SPDO!!!.'">
+            <dtml-var mensagem_emitir>
+        </dtml-let>
+    </dtml-try>
+</dtml-unless>

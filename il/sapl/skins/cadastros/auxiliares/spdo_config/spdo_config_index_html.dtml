@@ -1,0 +1,48 @@
+<dtml-var standard_html_header>
+
+<script type="text/javascript">
+
+    function campos_criticar(form){
+
+        if (form.chk_use_spdo.checked && form.txt_end_spdo.value == "") {
+            alert("Para usar o SPDO é necessário informar o endereço!");
+            form.txt_end_spdo.focus();
+            return false;
+        }
+
+        return form.submit();
+    }
+
+</script>
+
+
+<div class="helpsapl"> <a id="ajuda" href="&dtml-portal_url;/ajuda/casa_legislativa">Ajuda</a> </div>
+<h1 class="firstHeading"> Tabelas Auxiliares </h1>
+
+<form name="spdo_config_form" method="post" action="spdo_config_salvar_proc"  enctype="multipart/form-data">
+<fieldset>
+    <legend>Configuração para integração com o SPDO</legend>
+    <table>
+        <tr>
+            <td width="30%">
+                <label>Habilitar integração com o SPDO?</label>
+            </td>
+            <td>
+                <input type="checkbox" name="chk_use_spdo" <dtml-if expr="sapl_documentos.props_sapl.use_spdo == True">checked</dtml-if> />
+            </td>
+        </tr>
+        <tr>
+            <td width="30%">
+                <label>Endereço do SPDO</label>
+            </td>
+            <td>
+                <input type="text" size="100" name="txt_end_spdo" value='<dtml-var expr="sapl_documentos.props_sapl.end_spdo" null=""  missing="">' />
+            </td>
+        </tr>
+    </table>
+    <p align="center">
+        <input type="button" class="botao" name="btn_spdo_salvar" value="Salvar" onClick="campos_criticar(document.spdo_config_form)" />
+    </p>
+</fieldset>
+
+<dtml-var standard_html_footer>

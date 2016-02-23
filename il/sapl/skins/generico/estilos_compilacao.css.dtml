@@ -1,0 +1,321 @@
+/* <dtml-with "sapl_documentos.props_sapl"> */
+
+
+
+
+.tn { /* texto da norma */
+	padding: 0 1em;
+	background-color: #fff; 
+}
+
+.tn, .tn a { /* texto da norma */
+	color: #333;
+}
+
+
+.tn[type=epigrafe] {
+	
+	padding: 0px 2em;	
+	padding-top: 2em;
+	text-align: center;
+	font-size: 1.4em;
+	font-weight: bold;
+}
+
+.tn[type=ementa ] { 	 
+	font-size: 1.2em;
+	padding-left: 30%;
+	padding-top: 2em;
+	text-align: justify;
+	font-weight: bold;
+}
+
+.tn[type=livro ] { 	 
+	font-size: 1.5em;
+	text-align: center;
+	font-weight: bold;
+	padding-top: 2em;
+}
+
+.tn[type=titulo ] { 	
+	padding-top: 1.5em;
+	font-size: 1.3em;
+	text-align: center;
+	font-weight: bold;
+	
+}
+
+.tn[type=capitulo ] { 	
+	padding-top: 1.5em;
+	font-size: 1.3em;
+	text-align: center;
+	font-weight: bold;
+	
+}
+
+.tn[type=secao ] { 	
+	padding-top: 0.8em;
+	font-size: 1.2em;
+	text-align: center;
+	font-weight: bold;
+	
+}
+.tn[type=artigo ] { 	
+	font-size: 1.3em;
+	margin-top: 1em;
+	padding-right: 0em;
+	text-indent: 0em; 
+	float: left;
+	z-index: 2; 
+	background-color: transparent;
+	
+}
+
+.tn[type=caput ] {  
+	font-size: 1.3em;
+	padding-top: 1em;
+	text-indent: 0em;  
+	z-index: 1;
+}
+
+
+.tn[type=inciso ] { 
+	font-size: 1.1em;
+	padding-left: 2.5em;
+	padding-top: 5px;
+	padding-bottom: 3px; 
+}
+
+
+
+.tn[type=alinea ] { 
+	font-size: 1.0em;
+	padding-left: 3.5em; 
+}
+
+.desativado {
+	text-decoration: line-through;
+	color: #777;
+}
+
+.tn > div {
+	
+	display: inline;
+	
+}
+
+.tnedit { /* texto da norma em edição*/
+	margin: 1em 2em 2em 2em; 
+	padding: 2em 2em ; 
+	box-shadow: 0 0 4px rgba(0, 0, 0, .11), 0 2px 6px rgba(0, 0, 0, .22);
+	display: block;
+}
+
+ 
+.tnedit::before { 
+    content: "Edição";
+    position: absolute;
+    right: 0;
+    top: 0;
+    left: 0;
+    font-size: 0.8em;
+    padding: 2px 0.7em; 
+    background-color: &dtml-cor_principal;;
+    color: #fff;
+    font-weight: normal;    
+	transition: display 2s ease-in-out;
+	text-align: left;
+	
+	margin-bottom: 1em;
+}
+
+
+.tnedit[type="artigo"]::before { 
+	content: "Edição do Rótulo do artigo..."
+}
+
+
+.tnedit[type="caput"]::before { 
+	content: "Edição do Caput do artigo..."
+}
+
+.tnedit > div {
+	
+	
+	margin-top: 1em;
+	display: block;
+	
+}
+
+
+
+
+
+
+
+
+.linhatempo {
+	
+	background-color: #fff;
+	padding: 1em;
+}
+
+
+
+
+.linhatempo .container_vigencias {
+   display: flex;
+   flex-flow: row;
+   flex-wrap: no-wrap;
+}
+
+.linhatempo .container_vigencias .item_vigencia { 
+   background-color:  &dtml-cor_borda;;
+   border-left: 1px solid white; 
+   text-align: center; 	
+   height: 2em;
+}
+.linhatempo .container_vigencias .item_vigencia_selected { 
+   background-color:  &dtml-cor_borda;;
+   border-left: 1px solid white; 
+   text-align: center; 	
+   height: 2em;
+}
+.linhatempo .container_vigencias .item_vigencia .text_hover{
+   display: none;    
+   color: white !important; 
+   font-size: 100%;  
+   height: 2em;
+}
+
+.linhatempo .container_vigencias .item_vigencia .ano_norma{
+   display: inline-block;    
+   color: white; 
+   font-size: 100%; 
+   padding: 0.3em 0.2em;
+   height: 2em;
+}
+
+
+.linhatempo .container_vigencias .item_vigencia_selected .text_hover{
+   display: block;    
+   color: white !important; 
+   font-size: 100%;  
+   padding: 0.15em;
+   
+} 
+.linhatempo .container_vigencias .item_vigencia_selected .text_hover:hover{
+ 	font-weight: bold;
+	background-color: rgba(0,0,0,0.2);
+   
+}
+
+.linhatempo .container_vigencias .item_vigencia_selected .ano_norma{
+   display: none;
+}
+
+
+.linhatempo .container_vigencias .item_vigencia:hover { 
+   background-color: &dtml-cor_principal;; 
+   flex: 1 1 40%;
+   font-size: 100%;
+   height: 3.4em;
+}
+
+
+.linhatempo .container_vigencias .item_vigencia_selected { 
+   background-color: &dtml-cor_principal;; 
+   flex: 1 1 30%;
+   font-size: 100%;
+   height: 3.4em;
+}
+
+.linhatempo .container_vigencias .item_vigencia:hover .text_hover {
+   display: block;    
+   font-size: inherit; 
+   padding: 0.15em;
+   height: 1.7em;
+   
+}
+.linhatempo .container_vigencias .item_vigencia:hover .text_hover:hover{
+ 	font-weight: bold;
+	background-color: rgba(0, 0, 0 ,0.2);   
+}
+
+.linhatempo .container_vigencias .item_vigencia:hover  .ano_norma {
+   display: none; 
+} 
+
+.flex0  { flex: 1 0 1%}
+.flex1  { flex: 1 0 1%}
+.flex2 { flex: 1 0 2%}
+.flex3 { flex: 1 1 3%}
+.flex4 { flex: 1 1 4%}
+.flex5 { flex: 1 1 5%}
+.flex6 { flex: 1 1 6%}
+.flex7 { flex: 1 1 7%}
+.flex8 { flex: 1 1 8%}
+.flex9 { flex: 1 1 9%}
+.flex10 { flex: 1 1 10%}
+.flex11 { flex: 1 1 11%}
+.flex12 { flex: 1 1 12%}
+.flex13 { flex: 1 1 13%}
+.flex14 { flex: 1 1 14%}
+.flex15 { flex: 1 1 15%}
+.flex16 { flex: 1 1 16%}
+.flex17 { flex: 1 1 17%}
+.flex18{ flex: 1 1 18%}
+.flex19 { flex: 1 1 19%}
+.flex20 { flex: 1 1 20%}
+.flex21 { flex: 1 1 21%}
+.flex22 { flex: 1 1 22%}
+.flex23 { flex: 1 1 23%}
+.flex24 { flex: 1 1 24%}
+.flex25 { flex: 1 1 25%}
+.flex26 { flex: 1 1 26%}
+.flex27 { flex: 1 1 27%}
+.flex28 { flex: 1 1 28%}
+.flex29 { flex: 1 1 29%}
+.flex30 { flex: 1 1 30%}
+.flex31 { flex: 1 1 31%}
+.flex32 { flex: 1 1 32%}
+.flex33 { flex: 1 1 33%}
+.flex34 { flex: 1 1 34%}
+.flex35 { flex: 1 1 35%}
+.flex36 { flex: 1 1 36%}
+.flex37 { flex: 1 1 37%}
+.flex38 { flex: 1 1 38%}
+.flex39 { flex: 1 1 39%}
+.flex40 { flex: 1 1 40%}
+.flex41 { flex: 1 1 41%}
+.flex42 { flex: 1 1 42%}
+.flex43 { flex: 1 1 43%}
+.flex44 { flex: 1 1 44%}
+.flex45 { flex: 1 1 45%}
+.flex46 { flex: 1 1 46%}
+.flex47 { flex: 1 1 47%}
+.flex48 { flex: 1 1 48%}
+.flex49 { flex: 1 1 49%}
+.flex50 { flex: 1 1 50%}
+.flex51 { flex: 1 1 51%}
+.flex52 { flex: 1 1 52%}
+.flex53 { flex: 1 1 53%}
+.flex54 { flex: 1 1 54%}
+.flex55 { flex: 1 1 55%}
+.flex56 { flex: 1 1 56%}
+.flex57 { flex: 1 1 57%}
+.flex58 { flex: 1 1 58%}
+.flex59 { flex: 1 1 59%}
+.flex60 { flex: 1 1 60%}
+.flexauto { flex: 1 1 auto}
+
+@media
+print
+{
+.linhatempo .container_vigencias {
+	display: none;
+}
+
+}
+
+/* </dtml-with> */

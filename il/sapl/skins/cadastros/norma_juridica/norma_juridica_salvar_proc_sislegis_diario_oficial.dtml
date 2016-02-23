@@ -1,0 +1,128 @@
+<dtml-call expr="REQUEST.set('id_documento', _.str(hdn_cod_norma)+'_'+_.str(hdn_sfx_norma)+'_'+_.str(hdn_num_norma)+'.pdf')">
+
+
+<dtml-if "_.hasattr(sapl_documentos.diario_oficial,id_documento)">
+    <dtml-let documento="_.getattr(sapl_documentos.diario_oficial,id_documento) ">
+        <dtml-try>
+
+            <dtml-try>
+               <dtml-with "restrictedTraverse('sapl_documentos/diario_oficial/' + id_documento)">
+                   <dtml-let path=absolute_url_path>
+                        <dtml-call expr="sapl_documentos.diario_oficial.Catalog.uncatalog_object(path)">
+                   </dtml-let>
+               </dtml-with>
+            </dtml-try>
+
+            <dtml-call "documento.manage_upload(file=file_nom_arquivo)">
+
+            <dtml-try>
+                    <dtml-call "documento.manage_delProperties(['LastModified'])">
+            <dtml-except>
+            </dtml-try>
+
+            <dtml-try>
+                    <dtml-call "documento.manage_delProperties(['ano_norma'])">
+            <dtml-except>
+            </dtml-try>
+            <dtml-try>
+                    <dtml-call "documento.manage_delProperties(['cod_norma'])">
+            <dtml-except>
+            </dtml-try>
+
+            <dtml-try>
+                    <dtml-call "documento.manage_delProperties(['num_norma'])">
+            <dtml-except>
+            </dtml-try>
+
+            <dtml-try>
+                    <dtml-call "documento.manage_delProperties(['tipo_norma'])">
+            <dtml-except>
+            </dtml-try>
+
+            <dtml-try>
+                    <dtml-call "documento.manage_delProperties(['txt_epigrafe'])">
+            <dtml-except>
+            </dtml-try>
+
+
+
+            <dtml-try>
+                <dtml-call "documento.manage_addProperty('LastModified', _.int(hdn_data_doc[:-3]), 'int')">
+                <dtml-call "documento.manage_addProperty('ano_norma', _.int(hdn_ano_norma), 'int')">
+                <dtml-call "documento.manage_addProperty('num_norma', _.int(hdn_num_norma), 'int')">
+                <dtml-call "documento.manage_addProperty('cod_norma', _.int(hdn_cod_norma), 'int')">
+                <dtml-call "documento.manage_addProperty('tipo_norma', _.int(hdn_tip_norma), 'int')">
+                <dtml-call "documento.manage_addProperty('txt_epigrafe', hdn_epigrafe, 'string')">
+            <dtml-except>
+                 <dtml-call "documento.manage_changeProperties({'LastModified':_.int(hdn_data_doc[:-3]), 'cod_norma': _.int(hdn_cod_norma), 'num_norma': _.int(hdn_num_norma), 'tipo_norma': _.int(hdn_tip_norma), 'ano_norma': _.int(hdn_ano_norma), 'txt_epigrafe': _.int(hdn_epigrafe)})">
+            </dtml-try>
+
+            <dtml-with "restrictedTraverse('sapl_documentos/diario_oficial/' + id_documento)">
+                <dtml-let path=absolute_url_path>
+                    <dtml-call expr="documento.manage_changeProperties({'content_type':_.str(hdn_content_type)})">
+                    <dtml-call expr="sapl_documentos.diario_oficial.Catalog.catalog_object(documento)">
+                </dtml-let>
+            </dtml-with>
+
+        <dtml-except>
+           erro1
+        </dtml-try>
+    </dtml-let>
+<dtml-else>
+    <dtml-try>
+        <dtml-call expr="sapl_documentos.diario_oficial.manage_addFile(id_documento, file=file_nom_arquivo)">
+        <dtml-let documento="_.getattr(sapl_documentos.diario_oficial,id_documento) ">
+
+            <dtml-try>
+                    <dtml-call "documento.manage_delProperties(['LastModified'])">
+            <dtml-except>
+            </dtml-try>
+
+            <dtml-try>
+                    <dtml-call "documento.manage_delProperties(['ano_norma'])">
+            <dtml-except>
+            </dtml-try>
+            <dtml-try>
+                    <dtml-call "documento.manage_delProperties(['cod_norma'])">
+            <dtml-except>
+            </dtml-try>
+
+            <dtml-try>
+                    <dtml-call "documento.manage_delProperties(['num_norma'])">
+            <dtml-except>
+            </dtml-try>
+
+            <dtml-try>
+                    <dtml-call "documento.manage_delProperties(['tipo_norma'])">
+            <dtml-except>
+            </dtml-try>
+
+            <dtml-try>
+                    <dtml-call "documento.manage_delProperties(['txt_epigrafe'])">
+            <dtml-except>
+            </dtml-try>
+
+
+            <dtml-try>
+                <dtml-call "documento.manage_addProperty('LastModified', _.int(hdn_data_doc[:-3]), 'int')">
+                <dtml-call "documento.manage_addProperty('ano_norma', _.int(hdn_ano_norma), 'int')">
+                <dtml-call "documento.manage_addProperty('num_norma', _.int(hdn_num_norma), 'int')">
+                <dtml-call "documento.manage_addProperty('cod_norma', _.int(hdn_cod_norma), 'int')">
+                <dtml-call "documento.manage_addProperty('tipo_norma', _.int(hdn_tip_norma), 'int')">
+                <dtml-call "documento.manage_addProperty('txt_epigrafe', hdn_epigrafe, 'string')">
+            <dtml-except>
+                 <dtml-call "documento.manage_changeProperties({'LastModified':_.int(hdn_data_doc[:-3]), 'cod_norma': _.int(hdn_cod_norma), 'num_norma': _.int(hdn_num_norma), 'tipo_norma': _.int(hdn_tip_norma), 'ano_norma': _.int(hdn_ano_norma), 'txt_epigrafe': _.int(hdn_epigrafe)})">
+            </dtml-try>
+
+            <dtml-with "restrictedTraverse('sapl_documentos/diario_oficial/' + id_documento)">
+                <dtml-let path=absolute_url_path>
+                    <dtml-call expr="documento.manage_changeProperties({'content_type':_.str(hdn_content_type)})">
+                    <dtml-call expr="sapl_documentos.diario_oficial.Catalog.catalog_object(documento)">
+                </dtml-let>
+            </dtml-with>
+
+        </dtml-let>
+    <dtml-except>
+       erro2
+    </dtml-try>
+</dtml-if>

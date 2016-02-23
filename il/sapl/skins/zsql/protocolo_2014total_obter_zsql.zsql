@@ -1,0 +1,16 @@
+<dtml-comment>
+connection_id : dbcon_interlegis
+arguments : ano="" 
+max_rows : 1
+max_cache : 10
+</dtml-comment>
+
+<dtml-if expr="pysc.verifica_conector_bd_pysc() == 1">
+   
+   select count(*) as total from  protocolo where ano_protocolo=2014 and num_protocolo=""
+
+<dtml-else>
+
+  select count(*) as total from  protocolo where ano_protocolo=2014 and num_protocolo=""
+
+</dtml-if>

@@ -1,0 +1,24 @@
+<dtml-comment>
+connection_id : dbcon_interlegis
+arguments : cod_parlamentar cod_sessao_plen endereco_ip endereco_mac cod_perfil ind_excluido=0 ind_recontagem=0
+max_rows : 1000
+max_cache : 100
+</dtml-comment>
+INSERT INTO  sessao_plenaria_presenca
+               (cod_sessao_plen,
+                cod_parlamentar,
+                cod_ip,
+                cod_mac,
+                cod_perfil,
+                ind_recontagem,
+                ind_excluido)
+ 
+VALUES
+
+  (<dtml-sqlvar cod_sessao_plen type="int">,
+   <dtml-sqlvar cod_parlamentar type="int">,
+   <dtml-sqlvar endereco_ip type="string">,
+   <dtml-sqlvar endereco_mac type="string">,
+   <dtml-sqlvar cod_perfil type="nb">,
+   <dtml-sqlvar ind_recontagem type="int">,
+   <dtml-sqlvar ind_excluido    type="int">)

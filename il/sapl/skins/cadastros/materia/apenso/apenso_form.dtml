@@ -1,0 +1,55 @@
+<dtml-var standard_html_header>
+
+<script type="text/javascript" src="javascript/data_validar_jvsc"></script>
+
+<script type ="text/javascript">
+    function apenso_excluir(){
+
+        if (confirm("Deseja realmente excluir?")) {
+            location.href="apenso_excluir_proc?cod_materia_apensada=<dtml-var cod_materia_apensada missing>&cod_materia_principal=<dtml-var cod_materia>&dat_apensacao=<dtml-var dat_apensacao missing>";
+        }
+    }
+
+</script>
+
+
+<a id="ajuda" href="&dtml-portal_url;/ajuda/materia_apenasda">Ajuda</a>
+<h1 class="firstHeading">Matéria Legislativa</h1>
+
+<form name="apenso_form" method="post" action="apenso_salvar_proc">
+    <dtml-call expr="REQUEST.set('cod_materia_principal', cod_materia)">
+    <input type="hidden" name="incluir_apenso" value="<dtml-var incluir_apenso missing>" />
+    <input type="hidden" name="hdn_url" value="index_html?cod_materia=<dtml-var cod_materia>" />
+    <dtml-var materia_menu>
+    <dtml-var materia_header>
+    <fieldset>
+        <legend>Matéria Apensada</legend>
+        <dtml-if expr="zsql.tramitacao_obter_zsql(cod_materia = cod_materia, ind_excluido=0)">
+        <label for="lst_cod_materia_apensada">Matérias a serem apensadas</label> <span class="campoObrigatorio">&nbsp;</span><br />
+        <dtml-in expr="zsql.tramitacao_obter_zsql(cod_materia = cod_materia, ind_excluido=0)">
+            <dtml-call expr="REQUEST.set('cod_unid_tram_dest', cod_unid_tram_dest)">
+        </dtml-in>
+        <select name="lst_cod_materia_apensada" id="lst_cod_materia_apensada" multiple onChange="javascript:form.hdn_alterou.value=1">
+            <dtml-in expr="zsql.materia_pesquisar_zsql(cod_unid_tramitacao = cod_unid_tram_dest)">
+            <dtml-if expr="num_protocolo_spdo and cod_materia != cod_materia_principal">
+            <dtml-if expr="not zsql.apenso_obter_zsql(cod_materia_apensada = cod_materia)">
+            <option value="<dtml-var cod_materia>">
+                <dtml-var sgl_tipo_materia> <dtml-var num_ident_basica> <dtml-var ano_ident_basica> - <dtml-var des_tipo_materia></option>
+            </dtml-if>
+            </dtml-if>
+            </dtml-in>
+
+        </select>
+        <p align="center"><input type="submit" class="botao" value="Salvar" />
+            &nbsp;&nbsp;
+                <input type="button" class="botao" name="btn_anexada_excluir" value="Excluir" onClick="anexada_excluir()" />
+        </p>
+        <input type="hidden" name="cod_materia_principal" value="<dtml-var cod_materia_principal>" />
+        <input type="hidden" name="hdn_alterou" value="0" />
+        <dtml-else>
+            <h1 class="firstHeading">Esta matéria não está em tramitação e ela não pode receber nenhum apenso</h1>
+        </dtml-if>
+    </fieldset>
+</form>
+
+<dtml-var standard_html_footer>

@@ -1,0 +1,112 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="pt">
+	
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Sistema de Apoio ao Processo Legislativo</title>
+<script type="text/javascript" src="&dtml-portal_url;/javascript/geral.js"></script>
+<style type="text/css"><!-- @import url(&dtml-portal_url;/generico/manage_page_style); --></style>
+<style type="text/css"><!-- @import url(&dtml-portal_url;/generico/estilos.css); --></style>
+<SCRIPT LANGUAGE = "JavaScript" src="javascript/data_validar_jvsc"></SCRIPT>
+<SCRIPT LANGUAGE = "JavaScript">
+
+<!--
+  function campos_criticar(form){
+      form.submit();
+  }
+//-->
+
+function reloadParentAndClose()
+{
+    // reload the opener or the parent window
+    window.opener.location.reload();
+    // then close this pop-up window
+    window.close();
+} 
+  
+</SCRIPT>
+
+</head>
+
+<table width="98%">
+  <tr><td>
+
+<div class="helpsapl"> <a id="ajuda" href="&dtml-portal_url;/ajuda/pauta_expediente">Ajuda</a> </div>
+<h1 class="firstHeading"> Matérias do Expediente </h1>
+
+<h3 align="center"><dtml-var sessao_plenaria_header></h3>
+
+<fieldset><legend>Gerar Pauta do Expediente</legend>
+
+  <form name="pauta_expediente_gerar" method="post" action="pauta_expediente_salvar_proc">
+
+   <table width="100%" align="center">
+
+  <dtml-in expr="zsql.tramitacao_pesquisar_status_zsql(cod_status=lst_status)" prefix=item>
+
+        <dtml-if sequence-start>
+	  <tr>
+	   <td colspan="3" class="texto">
+	    Resultado da Pesquisa: <b><dtml-var sequence-length> matéria(s) encontrada(s).</b>
+	   </td>
+	  </tr>
+
+	  <tr>
+	   <td colspan="3" class="texto">
+	   </td>
+	  </tr>
+
+          <tr>
+            <th class="form-label">&nbsp;N&ordm; Ordem</th>
+            <th class="form-label">&nbsp;Matéria</th>
+            <th class="form-label">&nbsp;Ementa</th>
+          </tr>
+
+        </dtml-if sequence-start>
+
+            <tr>
+              <td class="texto" valign="top"><b><dtml-var sequence-number></b></td>
+              <input type="hidden" name="txt_cod_materia" value="<dtml-var cod_materia>" />
+  
+        <dtml-in expr="zsql.materia_obter_zsql(cod_materia=cod_materia)">
+              <td class="texto" valign="top"><b><dtml-var sgl_tipo_materia> <dtml-var des_tipo_materia> <dtml-var num_ident_basica>/<dtml-var ano_ident_basica></b></td>
+
+              <td class="texto" valign="top"><dtml-var txt_ementa></td>
+        </dtml-in>
+            </tr> 
+        <dtml-if sequence-end>
+          <tr>
+           <td colspan="3" align="center">
+            <input type="button" name="btn_pauta_expediente_gerar" class="botao" value="Confirmar Geração da Pauta" onClick="campos_criticar(document.pauta_expediente_gerar)" />&nbsp;&nbsp;
+            <input class="botao" type="button" value="Retornar" onClick="history.go(-1)">&nbsp;&nbsp;
+            <input type="button" class="botao" name="btn_fechar" value="Fechar" OnClick="reloadParentAndClose();" />
+           </td>
+          </tr>
+        </dtml-if sequence-end>
+
+      <dtml-else>
+        <tr><td class="form-element">Não foram encontradas Matérias com o Status de Tramitação selecionado.</td></tr>
+	  <tr>
+	   <td colspan="3" class="texto">
+	   </td>
+	  </tr>
+          <tr>
+           <td colspan="3" align="center">
+            <input class="botao" type="button" value="Retornar" onClick="history.go(-1)">&nbsp;&nbsp;
+            <input type="button" class="botao" name="btn_fechar" value="Fechar" OnClick="reloadParentAndClose();" />
+           </td>
+          </tr>
+      </dtml-in> 
+              <input type="hidden" name="cod_sessao_plen" value="<dtml-var cod_sessao_plen missing>" />
+              <input type="hidden" name="txt_dat_ordem" value="<dtml-var "pysc.port_to_iso_pysc(dat_ordem)">" />
+              <input type="hidden" name="rad_tip_votacao" value="1" />
+       <input type="hidden" name="cod_sessao_leg" value="<dtml-var cod_sessao_leg missing>" />
+       <input type="hidden" name="cod_num_legislatura" value="<dtml-var cod_num_legislatura missing>" />
+       <input type="hidden" name="tip_sessao" value="<dtml-var tip_sessao missing>" />
+       <input type="hidden" name="dat_sessao" value="<dtml-var dat_sessao missing" />
+   </table>
+  </form>
+</fieldset>
+
+</td></tr>
+</table>

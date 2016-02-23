@@ -1,0 +1,23 @@
+<dtml-try>
+    <dtml-in expr="zsql.expediente_materia_obter_zsql(cod_ordem=cod_ordem, ind_excluido=0)">
+        <dtml-in expr="zsql.materia_obter_zsql(cod_materia=cod_materia, ind_excluido=0)">
+            <dtml-call expr="REQUEST.set('sgl_tipo_materia', sgl_tipo_materia)">
+            <dtml-call expr="REQUEST.set('des_tipo_materia', des_tipo_materia)">
+            <dtml-call expr="REQUEST.set('num_ident_basica', num_ident_basica)">
+            <dtml-call expr="REQUEST.set('ano_ident_basica', ano_ident_basica)">
+        </dtml-in>
+    </dtml-in>
+    <dtml-call expr="zsql.expediente_materia_excluir_zsql(cod_ordem=cod_ordem, ind_excluido=0)">
+
+<dtml-except>
+    <dtml-let mensagem="'Ocorreu um erro ao tentar excluir a mat&eacute;ria do expediente. Tente novamente.'">
+        <dtml-var mensagem_popup_emitir>
+    </dtml-let>
+<dtml-else>
+    <dtml-call expr="pysc.sessao_plenaria_log_pysc(cod_sessao_plen = cod_sessao_plen,
+                                                   txt_acao = 'remoção de matéria no expediente',
+                                                   txt_mensagem = 'Matéria ' + sgl_tipo_materia + ' - ' + des_tipo_materia + ' ' + str(num_ident_basica) + '/' + str(ano_ident_basica) + '  excluída do expediente da sessão plenária.')">
+    <dtml-let mensagem="'Mat&eacute;ria exclu&iacute;da com sucesso do expediente!'" sucesso="1" url="'javascript:reloadParentAndClose()'">
+        <dtml-var mensagem_popup_emitir>
+    </dtml-let>
+</dtml-try>

@@ -1,0 +1,118 @@
+<dtml-var standard_html_header>
+
+<script type="text/javascript" language="Javascript">
+
+  function campos_criticar(){
+/*-----------------------------
+
+Luciano De Fazio em 15/11/2011
+------------------------------*/
+
+      var form = document.protocolo_anular_form;
+      var regexp_digitos = /\D+/;
+
+      if (form.txt_num_protocolo.value == "") {
+         alert("O número do protocolo deve ser preenchido!");
+         form.txt_num_protocolo.focus();
+         return false;
+      }
+
+      if (form.txt_ano_protocolo.value == "") {
+        alert("O ano do protocolo deve ser preenchido!");
+        form.txt_ano_protocolo.focus();
+        return false;
+      }
+
+      if (form.txa_txt_just_anulacao.value == "") {
+         alert("O motivo da anulação deve ser informado!");
+         form.txa_txt_just_anulacao.focus();
+         return false;
+      }
+
+      if (regexp_digitos.test(form.txt_num_protocolo.value)) {
+         alert("O número do protocolo deve ser um número natural!");
+         form.txt_num_protocolo.focus();
+         return false;
+      }
+
+      if (regexp_digitos.test(form.txt_ano_protocolo.value)) {
+         alert("O ano do protocolo deve ser um número natural!");
+         form.txt_ano_protocolo.focus();
+         return false;
+      }
+
+      form.submit();
+    }
+
+</script>
+
+<a id="ajuda" href="&dtml-portal_url;/ajuda/protocolo_administrativo">Ajuda</a>
+
+<h1> Anula&ccedil;&atilde;o de Protocolo </h1>
+
+    <ul>
+        <li>
+            <a href="&dtml-portal_url;/cadastros/protocolo/protocolo_administrativo_form">Protocolar Documento</a>
+        </li>
+        <li>
+            <a href="&dtml-portal_url;/cadastros/protocolo/protocolo_legislativo_form">Protocolar Mat&eacute;ria</a>
+        </li>
+        <li>
+            <a class="selecionado" href="&dtml-portal_url;/cadastros/protocolo/protocolo_anular_form">Anular Protocolo</a>
+        </li>
+    </ul>
+
+<form action="protocolo_anular_proc" name="protocolo_anular_form" method="post" enctype="multipart/form-data">
+
+<input type="hidden" name="hdn_txt_user_anulacao" value="<dtml-var "AUTHENTICATED_USER.getUserName()">" />
+<input type="hidden" name="hdn_txt_ip_anulacao" value="<dtml-var REMOTE_ADDR>" />
+<input type="hidden" name="hdn_alterou" value="0" />
+<input type="hidden" name="hdn_url" value="&dtml-portal_url;/consultas/protocolo/protocolo_pesquisar_form?incluir=1" />
+
+<fieldset>
+
+    <legend>Identifica&ccedil;&atilde;o do Protocolo</legend>
+
+     <table>
+
+      <tr>
+        <td class="form-element">
+         <b>AVISO:</b> Uma vez anulado, o n&uacute;mero de protocolo n&atilde;o poder&aacute; ser reutilizado.
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+         <label for="txt_num_protocolo">N&uacute;m. Protocolo</label> <span class="campoObrigatorio"></span><br />
+            <input id="txt_num_protocolo" type="text" name="txt_num_protocolo" size="9" maxlength="7" />&nbsp;&nbsp;
+            <input ano="txt_ano_protocolo" type="text" name="txt_ano_protocolo" size="6" maxlength="4" />
+        </td>
+      </tr>
+
+      <tr>
+        <td><label for="txa_txt_just_anulacao">Motivo da Anula&ccedil;&atilde;o</label> <span class="campoObrigatorio"></span>
+         <textarea id="txa_txt_just_anulacao" name="txa_txt_just_anulacao" cols="60" onChange="javascript:form.hdn_alterou.value=1"><dtml-var txt_observacao missing></textarea>
+        </td>
+      </tr>
+
+<tr>
+ <td align="center" colspan="0">
+          <input type="button" class="botao" name="button" value="Anular Protocolo" onClick="campos_criticar()" />
+           &nbsp;
+          <input class="botaoExtra" type="reset" name="btn_protocolo_limpar" value="Limpar" />
+ </td>
+</tr>
+
+      <tr>
+        <td class="label">
+          Seu usuário "<dtml-var "AUTHENTICATED_USER.getUserName()">" e IP "<dtml-var REMOTE_ADDR> <dtml-var HTTP_X_FORWARDED_FOR>" serão registrados no banco de dados.
+        </td>
+      </tr>
+
+</table>
+
+</fieldset>
+
+  </form>
+
+<dtml-var standard_html_footer>

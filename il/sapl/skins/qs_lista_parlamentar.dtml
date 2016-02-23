@@ -1,0 +1,110 @@
+<dtml-if expr="_.str(AUTHENTICATED_USER) == 'dev'">
+<dtml-in expr="qs_filtro_parlamentar()" prefix="filtro" mapping>
+    <dtml-in expr="parlamentares" prefix="parlamentares" mapping>
+        <dtml-if parlamentares_start>
+            <div class="container-parlamentares <dtml-if expr="parlamentares_length == 1">box container-relative</dtml-if>">
+                <dtml-if expr="parlamentares_length == 1">
+                    <a title="Retirar Filtro deste Parlamentar" class="voltarParlamentar" href="&dtml-portal_url;/qs?d=v-&dtml-codigo;">
+                        <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
+                    </a>
+                </dtml-if>
+            <ul class="nav nav-horizontal">
+        </dtml-if>
+
+            <dtml-if img_absolute_url>
+                <li><a href="<dtml-if expr="parlamentares_length == 1">&dtml-portal_url;/consultas/parlamentar/parlamentar_mostrar_proc?cod_parlamentar=&dtml-codigo;<dtml-else>&dtml-portal_url;/qs?v=&dtml-codigo;&q=</dtml-if>"><img class="avatar100pct" id="parlamentar" src="<dtml-var img_absolute_url>"><span><dtml-var nome><br><small><dtml-var cargo></small></span></a></li>
+            <dtml-else>
+                <li><a href="<dtml-if expr="parlamentares_length == 1">&dtml-portal_url;/consultas/parlamentar/parlamentar_mostrar_proc?cod_parlamentar=&dtml-codigo;<dtml-else>&dtml-portal_url;/qs?v=&dtml-codigo;&q=</dtml-if>"><img class="avatar100pct" id="parlamentar" src="&dtml-portal_url;/imagens/iconPessoa.jpg"><span><dtml-var nome><br><dtml-var cargo></span></a></li>
+            </dtml-if>
+
+        <dtml-if parlamentares_end>
+                <dtml-if expr="parlamentares_length > 1">
+                    <li><a class="toggle-parlamentares" href="#" title="Parlamentares"><img class="avatar100pct" id="parlamentar" src="&dtml-portal_url;/imagens/icon_q_parlamentares.png"></a></li>
+                </dtml-if>
+            </ul>
+        </dtml-if>
+    </dtml-in>
+
+    <dtml-in expr="p_antigos" prefix="p_antigos" mapping>
+        <dtml-if p_antigos_start>
+            <ul class="nav nav-vertical">
+        </dtml-if>
+            <dtml-if img_absolute_url>
+                <li><a href="&dtml-portal_url;/qs?v=&dtml-codigo;&q=" title="<dtml-var nome> - <dtml-var cargo>"><img class="avatar100pct" id="parlamentar" src="<dtml-var img_absolute_url>"></a></li>
+            <dtml-else>
+                <li><a href="&dtml-portal_url;/qs?v=&dtml-codigo;&q=" title="<dtml-var nome> - <dtml-var cargo>"><img class="avatar100pct" id="parlamentar" src="&dtml-portal_url;/imagens/iconPessoa.jpg"></a></li>
+            </dtml-if>
+        <dtml-if p_antigos_end>
+            </ul>
+        </dtml-if>
+    </dtml-in>
+    <dtml-in expr="tipo_materias" prefix="tipo_materias" mapping>
+        <dtml-if tipo_materias_start>
+            <ul class="nav nav-pills">
+        </dtml-if>
+            <li><a href="&dtml-portal_url;/qs?tm=&dtml-tipo_materia;&v=&dtml-cod_parlamentar;&q="><span><dtml-var sgl_tipo_materia></span><span><dtml-var des_tipo_materia_plural></span></a><span class="badge bg-primary" title="Número de <dtml-var des_tipo_materia_plural> apresentados"><dtml-var qtde_materia></span></li>
+        <dtml-if tipo_materias_end>
+            </ul>
+        </dtml-if>
+    </dtml-in>
+</dtml-in>
+</div>
+
+
+
+<dtml-else>
+
+
+
+
+<dtml-in expr="qs_filtro_parlamentar()" prefix="filtro" mapping>
+    <dtml-in expr="parlamentares" prefix="parlamentares" mapping>
+        <dtml-if parlamentares_start>
+            <div class="container-parlamentares <dtml-if expr="parlamentares_length == 1">box container-relative</dtml-if>">
+                <dtml-if expr="parlamentares_length == 1">
+                    <a title="Retirar Filtro deste Parlamentar" class="voltarParlamentar" href="&dtml-portal_url;/qs?d=v-&dtml-codigo;">
+                        <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
+                    </a>
+                </dtml-if>
+            <ul class="nav nav-horizontal">
+        </dtml-if>
+
+            <dtml-if img_absolute_url>
+                <li><a href="<dtml-if expr="parlamentares_length == 1">&dtml-portal_url;/consultas/parlamentar/parlamentar_mostrar_proc?cod_parlamentar=&dtml-codigo;<dtml-else>&dtml-portal_url;/qs?v=&dtml-codigo;&q=</dtml-if>"><img class="avatar100pct" id="parlamentar" src="<dtml-var img_absolute_url>"><span><dtml-var nome><br><small><dtml-var cargo></small></span></a></li>
+            <dtml-else>
+                <li><a href="<dtml-if expr="parlamentares_length == 1">&dtml-portal_url;/consultas/parlamentar/parlamentar_mostrar_proc?cod_parlamentar=&dtml-codigo;<dtml-else>&dtml-portal_url;/qs?v=&dtml-codigo;&q=</dtml-if>"><img class="avatar100pct" id="parlamentar" src="&dtml-portal_url;/imagens/iconPessoa.jpg"><span><dtml-var nome><br><dtml-var cargo></span></a></li>
+            </dtml-if>
+
+        <dtml-if parlamentares_end>
+                <dtml-if expr="parlamentares_length > 1">
+                    <li><a class="toggle-parlamentares" href="#" title="Parlamentares"><img class="avatar100pct" id="parlamentar" src="&dtml-portal_url;/imagens/icon_q_parlamentares.png"></a></li>
+                </dtml-if>
+            </ul>
+        </dtml-if>
+    </dtml-in>
+
+    <dtml-in expr="p_antigos" prefix="p_antigos" mapping>
+        <dtml-if p_antigos_start>
+            <ul class="nav nav-vertical">
+        </dtml-if>
+            <dtml-if img_absolute_url>
+                <li><a href="&dtml-portal_url;/qs?v=&dtml-codigo;&q=" title="<dtml-var nome> - <dtml-var cargo>"><img class="avatar100pct" id="parlamentar" src="<dtml-var img_absolute_url>"></a></li>
+            <dtml-else>
+                <li><a href="&dtml-portal_url;/qs?v=&dtml-codigo;&q=" title="<dtml-var nome> - <dtml-var cargo>"><img class="avatar100pct" id="parlamentar" src="&dtml-portal_url;/imagens/iconPessoa.jpg"></a></li>
+            </dtml-if>
+        <dtml-if p_antigos_end>
+            </ul>
+        </dtml-if>
+    </dtml-in>
+    <dtml-in expr="tipo_materias" prefix="tipo_materias" mapping>
+        <dtml-if tipo_materias_start>
+            <ul class="nav nav-pills">
+        </dtml-if>
+            <li><a href="&dtml-portal_url;/qs?tm=&dtml-tipo_materia;&v=&dtml-cod_parlamentar;&q="><span><dtml-var sgl_tipo_materia></span><span><dtml-var des_tipo_materia_plural></span></a><span class="badge bg-primary" title="Número de <dtml-var des_tipo_materia_plural> apresentados"><dtml-var qtde_materia></span></li>
+        <dtml-if tipo_materias_end>
+            </ul>
+        </dtml-if>
+    </dtml-in>
+</dtml-in>
+</div>
+</dtml-if>

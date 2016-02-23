@@ -1,0 +1,180 @@
+<dtml-comment>
+*----------------------------------------------------------------
+  Função: Este form contém os campos de filtro para a realização
+          da pesquisa de documentos administrativos.
+  Autora: Luciano De Fazio 
+  Última Alteração: 07/07/2012
+----------------------------------------------------------------*
+</dtml-comment>
+
+<dtml-var standard_html_header>
+
+<script type="text/javascript" src="&dtml-portal_url;/javascript/prototype.min.js"></script>
+<style  type="text/css"><!-- @import url(&dtml-portal_url;/generico/datepicker.css); --></style>
+
+<div class="helpsapl"><a id="ajuda" href="&dtml-portal_url;/ajuda/consultas#cons_documento_administrativo">Ajuda</a></div>
+<h1>Pareceres da Procuradoria</h1> 
+
+<dtml-if expr="incluir=='1'">
+    <ul>
+        <li>
+            <a href="&dtml-portal_url;/cadastros/parecer_procuradoria/parecer_procuradoria_form">Incluir Parecer</a>
+        </li>
+    </ul>
+</dtml-if>
+
+<style>
+
+table { 
+    border-spacing: 0px !important;
+} 
+table td { 
+   padding: 0.4em; 
+}
+table tr:nth-child(even), table tr:nth-child(odd), table th {
+    background: #fff !important;
+}
+</style>
+
+<form name="pesq_basica_form" action="parecer_procuradoria_pesquisar_proc">
+  <fieldset>
+    <legend>Pesquisa B&aacute;sica</legend>
+    <input type="hidden" name="incluir" value="<dtml-var incluir>" />
+    <input type="hidden" name="existe_ocorrencia" value="0" />
+    <input type="hidden" name="dt_public" value="" />
+    <input type="hidden" name="dt_public2" value="" />
+    <table>
+      <tr>
+        <th><label for="lst_tip_documento">Tipo de Parecer</label></th>
+        <td colspan="2">
+          <select id="lst_tip_documento" name="lst_tip_documento">
+            <option value="">Todos</option>
+            <dtml-in expr="zsql.tipo_parecer_obter_zsql(ind_excluido=0)">
+              <option value="<dtml-var tip_documento missing>">
+                <dtml-var sgl_tipo_documento> - <dtml-var des_tipo_documento>
+              </option>
+            </dtml-in>
+          </select>
+        </td>
+      </tr>
+
+      <tr> 
+        <th><label for="txt_num_documento">N&uacute;mero</label></th>
+        <td>
+          <input id="txt_num_documento" type="text" name="txt_num_documento" null="" missing="" size="6" maxlength="6" />
+
+          <label for="txt_ano_documento">&nbsp;&nbsp;&nbsp;Ano</label>
+          <input id="txt_ano_documento" type="text" name="txt_ano_documento" null="" size="4" maxlength="4" />
+        </td>
+
+       <td>
+        <label for="txt_num_protocolo">&nbsp;&nbsp;N&uacute;m. Protocolo</label>
+          <input id="txt_num_protocolo" type="text" name="txt_num_protocolo" null="" missing="" size="7" maxlength="7" />
+        </td>
+
+      </tr>
+
+      <tr>
+        <th class="label">Período Data:</th>
+        <td>
+          <label for="dt_apres1">Inicial</label>
+          <input type="text" id="dt_apres1" name="dt_apres1" size="10" maxlength=10 onblur="formata_data(form.dt_apres1)" />
+          <script type="text/javascript">
+            /*<[CDATA[*/
+            var dpck = new DatePicker({
+            relative : 'dt_apres1',
+            language : 'pt'
+            });
+            /*]]>*/
+          </script>
+        </td>
+        <td>
+          <label for="dt_apres2">Final</label>
+          <input type="text" id="dt_apres2" name="dt_apres2" size="10" maxlength="10" onblur="formata_data(form.dt_apres2)" />
+          <script type="text/javascript">
+            /*<[CDATA[*/
+            var dpck = new DatePicker({
+            relative : 'dt_apres2',
+            language : 'pt'
+            });
+            /*]]>*/
+          </script>
+        </td>
+      </tr>
+
+      <tr>
+        <th><label for="txa_txt_interessado">Interessado</label></th>
+        <td colspan="3">
+          <input id="txa_txt_interessado" type="text" name="txa_txt_interessado" null="" size="50" maxlength="50" />
+        </td>
+      </tr>
+
+      <tr>
+        <th><label for="txa_txt_assunto">Assunto</label></th>
+        <td colspan="3">
+          <input id="txa_txt_assunto" type="text" name="txa_txt_assunto" null="" size="50" />
+        </td>
+      </tr>
+
+      <tr>
+        <th class="label">Tramitando</th>
+        <td class="campoRadio" colspan="3">
+          <dtml-in expr="[('Sim', '1'), ('Não', '0'), ('Tanto Faz', '')]">
+            <input type="radio" name="rad_tramitando" value="<dtml-var expr="_['sequence-item']">"
+              id="rad_tramitando<dtml-var expr="_['sequence-item']">"
+              <dtml-if expr="_['sequence-item']==''">checked="1"</dtml-if> />
+             <label for="rad_tramitando<dtml-var expr="_['sequence-item']">"><dtml-var expr="_['sequence-key']"></label>
+           </dtml-in>
+        </td>
+      </tr>
+
+      <tr> 
+        <th><label for="lst_localizacao">Localiza&ccedil;&atilde;o Atual &nbsp;&nbsp;</label></th>
+        <td colspan="3">
+          <select id="lst_localizacao" name="lst_localizacao">
+            <option value=""></option>
+            <dtml-in expr="zsql.unidade_tramitacao_obter_zsql()">
+              <option <dtml-if expr="_.has_key('cod_tramitacao') and cod_unid_tram_local==cod_unid_tramitacao">selected</dtml-if>
+                value="<dtml-var cod_unid_tramitacao missing>">
+                <dtml-if cod_orgao><dtml-var nom_orgao>
+                <dtml-else><dtml-var nom_comissao>
+                </dtml-if>
+              </option>
+            </dtml-in>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <th><label for="lst_status">Situa&ccedil;&atilde;o</label></th>
+        <td colspan="3">
+          <select id="lst_status" name="lst_status">
+            <option value=""></option>
+            <dtml-in expr="zsql.status_tramitacao_parecer_obter_zsql(ind_excluido=0)">
+              <option value="<dtml-var cod_status missing>">
+                <dtml-var sgl_status> - <dtml-var des_status>
+              </option>
+            </dtml-in>
+          </select>
+        </td>
+      </tr>
+      <tr>
+       <th class="label">Ordenação do Resultado &nbsp;</th>
+          <td class="campoRadio" colspan="2">
+          <dtml-in expr="[('Descendente', '1'), ('Ascendente', '2')]">
+           <input type="radio" name="rd_ordenacao" value="<dtml-var expr="_['sequence-item']">"
+                  id="rd_ordenacao<dtml-var expr="_['sequence-item']">"
+                <dtml-if expr="_['sequence-item']=='1'">checked="1"</dtml-if> />
+             <label for="rd_ordenacao_t<dtml-var expr="_['sequence-item']">"><dtml-var expr="_['sequence-key']"> &nbsp;</label>
+          </dtml-in>
+      </tr>
+      <tr>
+        <th></th>
+        <td colspan="3">
+          <input class="botao" type="submit" name="btn_documento_pesquisar" value="Pesquisar" />
+          <input class="botaoExtra" type="reset" name="btn_documento_limpar" value="Limpar" />
+        </td>
+      </tr>
+    </table>
+  </fieldset>
+</form>
+<dtml-var standard_html_footer>

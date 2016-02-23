@@ -1,0 +1,30 @@
+<dtml-comment>
+*****************************************************************
+*   Função: Esse método apenas chama o Método SQL de exclusão do*
+*       docum.   isto é, o método que atribui a verdadeiro o    *
+*       campo ind_excluido do documento cujo cod_documento      * 
+*       é recebido.                                             *
+*   Argumentos: cod_documento:    int - o código do documento   *
+*       a ser excluído.                                         *
+*   Retorno: Atribuição do flag ind_excluido do documento   e   *
+*       redirecionamento para a página do documento             *
+*   Luciano De Fazio - 02/11/2011                               *
+*****************************************************************
+</dtml-comment>
+
+<dtml-try>
+   <dtml-in expr="zsql.documento_acessorio_administrativo_obter_zsql(cod_documento = cod_documento, ind_excluido=0)">
+      <dtml-let silent="1">
+         <dtml-call expr="documento_acessorio_administrativo.documento_acessorio_administrativo_excluir_proc">
+      </dtml-let>
+   </dtml-in>
+   <dtml-call expr="zsql.documento_administrativo_excluir_zsql(cod_documento = cod_documento)">
+<dtml-except>
+   <dtml-let mensagem="'Houve um erro! Documento Administrativo não excluído!'">
+      <dtml-var mensagem_emitir>
+   </dtml-let>
+<dtml-else>
+   <dtml-let mensagem="'Documento Administrativo excluído com sucesso!'" sucesso="1" url="url">
+      <dtml-var mensagem_emitir>
+   </dtml-let>
+</dtml-try>

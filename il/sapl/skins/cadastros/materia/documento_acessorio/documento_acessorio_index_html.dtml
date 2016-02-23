@@ -1,0 +1,68 @@
+<dtml-var standard_html_header>
+
+<a id="ajuda" href="&dtml-portal_url;/ajuda/doc_acessorio">Ajuda</a>
+
+<h1 class="firstHeading"> Mat&eacute;ria Legislativa </h1>
+
+<form name="index_form" action="documento_acessorio_form">
+    <input type="hidden" name="cod_materia" value="<dtml-var cod_materia missing>" />
+    <dtml-var materia_menu>
+    <dtml-var materia_header>
+
+    <fieldset><legend>Documento Acess&oacute;rio</legend>
+    <dtml-in expr="zsql.documento_acessorio_obter_zsql(cod_materia=cod_materia,ind_excluido=0)" size=20 start=query_start orphan=2>
+        <dtml-if previous-sequence>
+            <span class="form-element">
+                <a href="<dtml-var URL><dtml-var sequence-query>query_start=<dtml-var previous-sequence-start-number>">
+                    P&aacute;gina Anterior (<dtml-var previous-sequence-size> resultados)</a>
+            </span>
+        </dtml-if previous-sequence>
+        <dtml-if sequence-start>
+            <table>
+                <tr>
+                    <th width="15%" class="form-label">Data</th>
+                    <th class="form-label">Tipo</th>
+                    <th class="form-label">Descrição</th>
+                    <th class="form-label">Autor</th>
+                    <th width="10%" class="form-label">PDF</th>
+                </tr>
+        </dtml-if sequence-start>
+       <tr>
+           <td class="texto"><a href="documento_acessorio_mostrar_proc?cod_documento=<dtml-var cod_documento missing>">
+               <b><dtml-var dat_documento missing null=""></b></a></td>
+           <td class="texto">
+               <dtml-in expr="zsql.tipo_documento_obter_zsql(ind_excluido=0,tip_documento=tip_documento)">
+                   <dtml-var des_tipo_documento missing null="">
+               </dtml-in></td>
+           <td class="texto"><dtml-var nom_documento missing null=""></td>
+           <td class="texto"><dtml-var nom_autor_documento missing null=""></td>
+           <td>
+               <dtml-in expr="pysc.documento_acessorio_materia_pysc(cod_documento, listar=True)" prefix="file">
+                   <dtml-let documento="_.getattr(sapl_documentos.materia,file_item).absolute_url">
+                       <a target="_blank" href="<dtml-var documento>">
+                           <img align="top" src="sapl/imagens/archiv.gif" alt="Arquivo PDF" title="Visualizar PDF" /></a>
+                       <br />
+                   </dtml-let>
+               </dtml-in>
+           </td>
+       </tr>
+        <dtml-if sequence-end>
+            </table>
+        </dtml-if sequence-end>
+        <dtml-if next-sequence>
+       <span class="form-element">
+           <a href="<dtml-var URL><dtml-var sequence-query>query_start=<dtml-var next-sequence-start-number>">
+               Próxima Página (<dtml-var next-sequence-size> resultados)</a>
+       </span>
+        </dtml-if next-sequence>
+        <dtml-else>
+        <span class="texto">Nenhum documento acessório cadastrado.</span>
+    </dtml-in>
+    </fieldset>
+
+    <p align="center">
+        <input type="submit" class="botao" name="btn_incluir" value="Incluir Documento Acessório" />
+    </p>
+</form>
+
+<dtml-var standard_html_footer>

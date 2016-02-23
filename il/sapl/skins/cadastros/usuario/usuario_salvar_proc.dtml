@@ -1,0 +1,52 @@
+<dtml-comment>
+<dtml-call expr="REQUEST.set('name', name)">
+<dtml-call expr="REQUEST.set('password', password)">
+<dtml-call expr="REQUEST.set('confirm', confirm)">
+<dtml-call expr="REQUEST.set('roles', roles)">
+</dtml-comment>
+
+<dtml-if atualizar>
+    <dtml-call expr="REQUEST.set('metodo', acl_users.manage_users('Change', REQUEST))">
+<dtml-else>
+    <dtml-call expr="REQUEST.set('roles', roles+['Alterar Senha'])">
+</dtml-if> 
+
+<dtml-call expr="REQUEST.set('metodo', acl_users.manage_users('Add', REQUEST))">
+
+<dtml-if expr="(name == AUTHENTICATED_USER.getUserName()) and (roles == ['Operador'])">
+    <dtml-call expr="REQUEST.set('url', portal_url() + '/index_html')">
+<dtml-else>
+    <dtml-call expr="REQUEST.set('url', 'index_html')">
+</dtml-if>
+
+<dtml-if expr="metodo">
+    <dtml-if hdn_cod_spdo_users>
+        <dtml-try>
+            <dtml-call expr="zsql.spdo_users_atualizar_zsql(cod_spdo_users = hdn_cod_spdo_users,
+                                                            txt_login_sapl = name,
+                                                            txt_login_spdo = txt_login_spdo,
+                                                            txt_senha_spdo = txt_senha_spdo)">
+        <dtml-except>
+            <dtml-let mensagem="'N&atilde;o foi poss&iacute;vel atualizar os dados do usuário do SPDO. Tente novamente!'">
+                <dtml-var mensagem_emitir>
+            </dtml-let>
+        </dtml-try>
+    <dtml-else>
+        <dtml-try>
+            <dtml-call expr="zsql.spdo_users_incluir_zsql(txt_login_sapl = name,
+                                                          txt_login_spdo = txt_login_spdo,
+                                                          txt_senha_spdo = txt_senha_spdo)">
+        <dtml-except>
+            <dtml-let mensagem="'N&atilde;o foi poss&iacute;vel salvar os dados do usuario do SPDO. Tente novamente!'">
+                <dtml-var mensagem_emitir>
+            </dtml-let>
+        </dtml-try>
+    </dtml-if>
+    <dtml-let mensagem="'O usuário foi salvo com sucesso.'" sucesso="1" url=url>
+        <dtml-var mensagem_emitir>
+    </dtml-let>
+<dtml-else>
+    <dtml-let mensagem="'Não foi possível salvar o usuario. Tente novamente!'">
+        <dtml-var mensagem_emitir>
+    </dtml-let>
+</dtml-if>

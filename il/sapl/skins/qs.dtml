@@ -1,0 +1,35 @@
+<dtml-if expr="AUTHENTICATED_USER.has_role(['Operador', 'Operador Protocolo', 'Operador Lista Materias Privadas'])">
+   <dtml-call "REQUEST.set('itens_privados', '1')">
+<dtml-else>
+   <dtml-call "REQUEST.set('itens_privados', '0')">
+</dtml-if>
+
+<dtml-if expr="(REQUEST['HTTP_REFERER'].split('/')[-1]=='login_form') and (str(REQUEST['AUTHENTICATED_USER']).strip()=='Anonymous User')">
+
+<dtml-var standard_html_header>
+    <p align="center">
+        <br />
+        <b>ATENÇÃO: Tentativa de login falhou !<br /><br />Usu&aacute;rio e/ou senha inv&aacute;lidos.</b>
+    </p>
+
+<dtml-var standard_html_footer>
+
+<dtml-else>
+
+    <dtml-if expr="not _.has_key('c')">
+        <dtml-var standard_html_header>
+    <dtml-elif expr="c == '-2'">
+        <dtml-var qs_lista_parlamentar>
+    <dtml-elif expr="c == '-3'">
+        <dtml-var qs_lista_assuntos>
+    <dtml-elif expr="c == '-4'">
+        <dtml-var qs_lista_filtro>
+    <dtml-else>
+        <dtml-call qs_filtro>
+        <dtml-var qs_lista_pesquisa>
+    </dtml-if>
+
+    <dtml-if expr="not _.has_key('c')">
+        <dtml-var standard_html_footer>
+    </dtml-if>
+</dtml-if>

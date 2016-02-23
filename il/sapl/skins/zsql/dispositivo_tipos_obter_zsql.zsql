@@ -1,0 +1,18 @@
+<dtml-comment>
+connection_id : dbcon_interlegis
+arguments : tip_dispositivo="" 
+max_rows : 1000
+max_cache : 100
+</dtml-comment>
+  SELECT 
+      *        
+  FROM
+       tipo_dispositivo   
+       
+  <dtml-sqlgroup where>       
+       <dtml-sqltest tip_dispositivo column="tip_dispositivo" op="=" type="int" optional> 
+  </dtml-sqlgroup>  
+  
+  
+    ORDER BY tip_dispositivo
+  

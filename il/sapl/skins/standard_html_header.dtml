@@ -1,0 +1,127 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<dtml-if expr="_.has_key('QUERY_STRING') and QUERY_STRING=='retry=1' and portal_membership.isAnonymousUser()">
+    <dtml-call expr="REQUEST['RESPONSE'].expireCookie('__ac', path='/')">
+    <dtml-call expr="REQUEST['RESPONSE'].redirect(portal_url() +'/index_html?retry=0')">
+</dtml-if>
+<dtml-call "RESPONSE.setHeader('Content-Type','text/html; charset=utf-8')">
+<dtml-call "RESPONSE.setHeader('Expires', 'Sat, 1 Jan 2000 00:00:00 GMT')">
+<dtml-call "RESPONSE.setHeader('Cache-Control', 'private, no-cache, no-store, must-revalidate, post-check=0, pre-check=0')">
+<head>
+    <meta charset=utf-8 />
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="author" content="Interlegis">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.6, minimum-scale=1">
+    <link rel="shortcut icon" type="image/x-icon" href="&dtml-portal_url;/imagens/favicon.ico" />
+    <title>Sistema de Apoio ao Processo Legislativo</title>
+    <meta name="generator" content="SAPL - Sistema de Apoio ao Processo Legislativo - http://www.interlegis.leg.br/sapl" />
+
+<dtml-var standard_css_slot>
+
+    <script type="text/javascript"  src="http://midias.camarajatai.go.gov.br/sapl/bower_components/jquery/dist/jquery.js"></script>
+    <script src="http://midias.camarajatai.go.gov.br/sapl/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript" src="&dtml-portal_url;/javascript/jquery.plugin.min.js"></script>
+    <script type="text/javascript" src="&dtml-portal_url;/javascript/jquery.datepick.js"></script>
+    <script type="text/javascript" src="&dtml-portal_url;/javascript/jquery.datepick-pt-BR.js"></script>
+
+    <script type='text/javascript' src='&dtml-portal_url;/javascript/jquery.form.min.js'></script>
+    <script type='text/javascript' src='&dtml-portal_url;/javascript/jquery.cookie.js'></script>
+    <script type="text/javascript" src="&dtml-portal_url;/javascript/jquery.fancybox.pack.js"></script>
+
+    <script src="http://midias.camarajatai.go.gov.br/sapl/js/main0.js?r=<dtml-var expr="_.random.random()">"></script>
+
+    <script type='text/javascript' src='&dtml-portal_url;/javascript/geral.js?r=<dtml-var expr="_.random.random()">'></script>
+
+
+</head>
+<body class="ptrn-fabric">
+<div id="fb-root"></div>
+
+<dtml-if expr="_.has_key('impressao')">
+    <dtml-var printable_html_top_bar>
+
+<dtml-elif expr="_.has_key('iframe') or REQUEST.SESSION.get('iframe')">
+    <dtml-call expr="REQUEST.SESSION.set('iframe', 1)">
+
+<dtml-else>
+<div class="page-container">
+    <dtml-call qs_filtro>
+    <dtml-var standard_html_superior>
+
+    <div id="main-container">
+        <div class="container-fluid">
+            <dtml-if expr="REQUEST.has_key('portal_status_message')">
+                <div id="system-message"><dtml-var portal_status_message></div>
+            </dtml-if>
+            <div class="ajax-Top"><i class="fa fa-cog fa-spin fa-3x fa-fw"></i></div>
+            <div class="row mw-busca">
+                <div class="col-xs-12">
+                    <div id="conteudoBusca3"></div>
+                </div>
+            </div>
+            <dtml-if expr="not filtro['v'] and not filtro['tc']">
+                <div class="row mw-busca">
+                    <div class="col-xs-12">
+                        <div id="qs-4"></div>
+                    </div>
+                    <div class="col-xs-12 col-sm-offset-1 col-sm-10">
+                        <div id="qs-1"></div>
+                    </div>
+                    <div class="col-xs-12">
+                        <div id="qs-2"></div>
+                        <div id="qs-3"></div>
+                    </div>
+                </div>
+            <dtml-elif expr="filtro['v']">
+                <div class="row mw-busca">
+                    <div class="hidden-print col-xs-12 col-sm-12 col-md-2 col-lg-3">
+                        <div id="qs-4"></div>
+                    </div>
+                    <div class="col-xs-10 col-sm-9 col-md-7 col-lg-6">
+                        <div id="qs-1"></div>
+                    </div>
+                    <div class="col-xs-2 col-sm-3 col-md-3 col-lg-3">
+                        <div id="qs-2"></div>
+                        <div id="qs-3"></div>
+                    </div>
+                </div>
+            <dtml-else>
+                <div class="row mw-busca">
+                    <div class="hidden-print col-xs-12 col-sm-3 col-lg-3">
+                        <div id="qs-4"></div>
+                    </div>
+                    <div class="col-xs-12 col-sm-8 col-lg-8">
+                        <div id="qs-1"></div>
+                    </div>
+                    <div class="hidden-print col-xs-1">
+                        <div id="qs-2"></div>
+                        <div id="qs-3"></div>
+                    </div>
+                </div>
+            </dtml-if>
+
+
+
+
+
+
+            <div class="row mw-busca">
+                <div id="qsp" class="col-xs-12 col-lg-6">
+                    <div></div>
+                </div>
+                <div id="qsp" class="col-xs-12 col-lg-6">
+                    <div></div>
+                </div>
+                <div id="qsp" class="col-xs-12 col-lg-6">
+                    <div></div>
+                </div>
+            </div>
+            <div class="ajax-Bottom"><i class="fa fa-cog fa-spin fa-3x fa-fw"></i></div>
+
+            <dtml-if expr="'sapl/qs' not in URL and '/sapl/consultas/parlamentar/parlamentar_index_html' not in URL">
+                <div id="conteudo">
+                </dtml-if>
+</dtml-if>

@@ -1,0 +1,31 @@
+<dtml-if chk_presen_parlamentar>
+    <dtml-if expr="zsql.recomposicao_presencas_ordem_verificar_ultima_aberta_zsql(cod_sessao_plen = hdn_cod_sessao_plen)[0].cod_registro_pre == None">
+        <dtml-let mensagem="'N&atilde;o existe uma recomposi&ccedil;&atilde;o de presen&ccedil;as em aberto'">
+            <dtml-var mensagem_emitir>
+        </dtml-let>
+        <dtml-call expr="REQUEST.set('erro', 1)">
+    </dtml-if>
+<dtml-else>
+    <dtml-let mensagem="'Selecione pelo menos um parlamentar!'" url="hdn_url">
+        <dtml-var mensagem_emitir>
+    </dtml-let>
+    <dtml-call expr="REQUEST.set('erro', 1)">
+</dtml-if>
+
+<dtml-unless erro>
+    <dtml-call expr="REQUEST.set('cod_sessao_plen',hdn_cod_sessao_plen)">
+    <dtml-call expr="REQUEST.set('dat_sessao', dat_inicio_sessao[1])">
+    <dtml-call expr="pysc.presenca_ordem_dia_pysc(cod_sessao_plen=cod_sessao_plen, cod_parlamentar=chk_presen_parlamentar,dat_ordem=pysc.data_converter_pysc(data=dat_sessao))">
+    <dtml-in chk_presen_parlamentar prefix="cod_parlamentar">
+        <dtml-in expr="zsql.parlamentar_obter_zsql(cod_parlamentar=_.int(cod_parlamentar_item), ind_excluido=0)">
+        <dtml-call expr="pysc.sessao_plenaria_log_pysc(cod_sessao_plen = cod_sessao_plen,
+                                               txt_acao = 'registro de presença ordem do dia',
+                                               txt_mensagem = 'A presença do parlamentar ' + nom_parlamentar + ' foi registrada na ordem do dia.')">
+
+        </dtml-in>
+    </dtml-in>
+    <dtml-let mensagem="'Lista de presen&ccedil;a da Ordem do Dia cadastrada com sucesso!'" sucesso="1" url="hdn_url">
+        <dtml-var mensagem_emitir>
+    </dtml-let>
+</dtml-unless>
+

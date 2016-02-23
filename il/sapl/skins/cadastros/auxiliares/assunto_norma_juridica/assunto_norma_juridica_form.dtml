@@ -1,0 +1,81 @@
+<dtml-var standard_html_header>
+
+<script type="text/javascript">
+<!--
+
+function campos_criticar(form){  
+/*-----------------------------
+  Função: Verifica se os campos estão preenchidos corretamente.
+  Argumentos: form : formulário em si.                     
+  Retorno: False - caso detecte na validação algum erro no preenchimento dos campos;
+           caso contrário, invoca o SUBMIT do formulário.
+  Luciano De Fázio em 29/08/2011.
+------------------------------*/   
+
+  if (form.txt_des_assunto.value == "") {
+    alert("O assunto deve ser preenchido!");
+    form.txt_des_asssunto.focus();
+    return false;
+  }
+
+  form.submit();
+}
+
+function assunto_norma_juridica_excluir() {
+/*-----------------------------
+  Função: Solicita a confirmação e chama o Método DTML de exclusão do assunto de norma jurídica.
+  Argumentos: 
+  Retorno: Retorna uma mensagem de exclusão bem sucedida e redireciona à página 'index_html'.
+  Luciano De Fazio em 29/08/2011.
+------------------------------*/
+       
+  if (confirm("Deseja realmente excluir?")) {  
+    location.href = "assunto_norma_juridica_excluir_proc?cod_assunto=<dtml-var cod_assunto missing>";
+  }
+  
+}
+
+//-->
+</script>
+
+<form name="assunto_norma_juridica_form" method="post" action="assunto_norma_juridica_salvar_proc">
+
+<div class="helpsapl"> <a id="ajuda" href="&dtml-portal_url;/ajuda/assunto_norma_juridica">Ajuda</a> </div>
+<h1 class="firstHeading"> Tabelas Auxiliares </h1> 
+
+<table width="95%" align="center">
+  <tr class="fundo"> 
+    <td align="right" class="form-label">| <a href="index_html">Início</a> |</td>
+   </tr>
+</table>  
+
+  <input type="hidden" name="hdn_cod_assunto" value="<dtml-var cod_assunto missing>" />
+<fieldset><legend>Assunto Norma Jurídica</legend>
+  <table width="95%" align="center">
+   <tr>
+     <td>
+       <table width="98%" align="center">
+         <tr style="height: 40">
+           <td width="80%" class="form-element">Assunto (*)<br />
+           <input type="text" name="txt_des_assunto" value="<dtml-var des_assunto missing>" size="50" maxlength="50" /></td>
+         </tr>
+         <tr>
+           <td width="80%" class="form-element">Descrição<br />
+           <textarea name="txt_des_estendida"> <dtml-var des_estendida missing>
+           </textarea> 
+</td>
+         </tr>
+       </table>
+  <center><p>
+  <input type="button" class="botao" name="btn_asssunto_norma_juridica_salvar" value="Salvar" onClick="campos_criticar(document.assunto_norma_juridica_form)" />
+  &nbsp;&nbsp;
+  <dtml-if cod_assunto>
+    <input type="button" class="botao" name="btn_assunto_norma_juridica_excluir" value="Excluir" onClick="assunto_norma_juridica_excluir(document.assunto_norma_juridica_form)" />
+  </dtml-if>
+  </p></center>
+   </td>
+  </tr>
+</table>
+</fieldset>
+</form>
+<dtml-var standard_html_footer>

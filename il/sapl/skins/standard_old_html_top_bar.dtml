@@ -1,0 +1,73 @@
+<div id="topo">
+    <dtml-call expr="REQUEST.set('existe_logo', 0)">
+    <dtml-call expr="REQUEST.set('id_logo', sapl_documentos.props_sapl.id_logo)">
+    <dtml-in expr="sapl_documentos.props_sapl.objectValues('Image')">
+        <dtml-if expr="id() == id_logo">
+            <dtml-call expr="REQUEST.set('existe_logo', 1)">
+        </dtml-if>
+    </dtml-in>
+
+
+
+
+
+    <div id="busca_new">
+
+    <form id="formBusca" name="formBusca" onsubmit="return false;">
+        <dtml-if autostart>
+            <fieldset class="fieldBuscaCenter fieldBuscaLeft">
+        <dtml-else>
+           <fieldset class="fieldBuscaCenter <dtml-if expr="_['REQUEST']['ACTUAL_URL']!=(portal_url() + '/default_index_html') or not portal_membership.isAnonymousUser()">fieldBuscaLeft</dtml-if>">
+        </dtml-if>
+
+        <div id="logo">
+            <a href="&dtml-portal_url;">
+                <dtml-if "not existe_logo">
+                    <img src="&dtml-portal_url;/imagens/brasao.gif" alt="Logotipo da Casa Legislativa" />
+                <dtml-else>
+                    <img src="sapl_documentos/props_sapl/<dtml-var id_logo>" alt="Logotipo da Casa Legislativa" />
+                </dtml-if>
+            </a>
+        </div>
+
+
+        <div id="identidade">
+            <h2>
+                <dtml-var "str(sapl_documentos.props_sapl.nom_casa).decode('utf-8')">
+                <dtml-call expr="REQUEST.set('cod_localidade', sapl_documentos.props_sapl.cod_localidade)">
+                <dtml-in expr="zsql.localidade_obter_zsql(cod_localidade=cod_localidade)">
+                - <dtml-var sgl_uf>
+                </dtml-in>
+            </h2>
+            <h3>Sistema de Apoio ao Processo Legislativo</h3>
+        </div>
+
+
+      <input id="autostart" type="hidden"  name="autostart" value="<dtml-var autostart missing>"/>
+
+      <input id="mtnm" type="hidden"  name="mtnm" value="<dtml-var mtnm missing>"/>
+      <input id="mt_tramitando"  type="hidden"  name="mt_tramitando" value="<dtml-var mt_tramitando missing>" />
+      <input id="mt_status"  type="hidden"  name="mt_status" value="<dtml-var mt_status missing>" />
+
+      <input id="nm_tip_norma"  type="hidden"  name="nm_tip_norma" value="<dtml-var nm_tip_norma missing>" />
+
+      <input id="page" type="hidden"  name="page" value="<dtml-var page missing>"/>
+      <input id="step" type="hidden"  name="step" value="<dtml-var step missing>" />
+      <input id="printer" type="hidden" name="printer" value="<dtml-var printer missing>" />
+      <input id="cod_parlamentar"  type="hidden"  name="cod_parlamentar" value="<dtml-var cod_parlamentar missing>" />
+      <input id="tip_materia"  type="hidden"  name="tip_materia" value="<dtml-var tip_materia missing>" />
+      <input id="cod_materia"  type="hidden"  name="cod_materia" value="<dtml-var cod_materia missing>" />
+
+      <input autocomplete="off" id="campoBuscaInteligente" type="text" spellcheck="false"
+          name="pesquisa" value="<dtml-var pesquisa missing>"
+          placeholder="Pesquisa..."/>
+
+
+    </fieldset>
+    </form>
+  </div>
+
+
+
+
+</div>

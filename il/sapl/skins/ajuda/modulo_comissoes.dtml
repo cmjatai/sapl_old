@@ -1,0 +1,37 @@
+<dtml-var standard_html_header>
+
+<h1 class="firstHeading">Comiss&otilde;es</h1>
+Antes de entrar na parte de alimenta&ccedil;&atilde;o dos dados
+das comiss&otilde;es &eacute; necess&aacute;rio que
+alimente as tabelas auxiliares que d&atilde;o suporte &agrave;
+esta transa&ccedil;&atilde;o, que s&atilde;o:<br />
+
+<br />
+<b>- Tabelas Auxiliares</b><br />
+<br />
+<ul>
+  <li>&nbsp;&nbsp;&nbsp;<a href="tipo_comissao">Tipo de Comiss&atilde;o</a></li>
+  <li>&nbsp;&nbsp;&nbsp;<a href="periodo_composicao_comissao">Per&iacute;odo da
+Composi&ccedil;&atilde;o da Comiss&atilde;o</a></li>
+  <li>&nbsp;&nbsp;&nbsp;<a href="modulo_parlamentares">Parlamentares</a></li>
+  <li>&nbsp;&nbsp;&nbsp;<a href="cargo_comissao">Cargo Comiss&atilde;o</a></li>
+  <li>&nbsp;&nbsp;&nbsp;<a href="partidos">Partidos</a></li>
+  <li>&nbsp;&nbsp;&nbsp;<a href="tipo_autor">Tipo Autor</a></li>
+  <li>&nbsp;&nbsp;&nbsp;<a href="autor">Autor</a></li>
+</ul>
+<br /><br />
+
+Para a comiss&atilde;o ficar com status de Ativa="sim" &eacute; necess&aacute;rio que a data da sua extin&ccedil;&atilde;o n&atilde;o esteja preenchida e,
+tamb&eacute;m, que lhe tenha sido atribuido o login de autor.<br />
+
+A inativa&ccedil;&atilde;o da comiss&atilde;o deve ser feita atualizando-se a 
+data a partir da qual ela ficou inativa; devendo, nesse caso, ser posterior a da apresenta&ccedil;&atilde;o da &uacute;ltima mat&eacute;ria da qual tenha sido autora.<br />
+<br />
+A exclus&atilde;o da comiss&atilde;o somente ser&aacute; poss&iacute;vel se n&atilde;o tiver havido qualquer tramita&ccedil;&atilde;o de mat&eacute;ria para ela. Ent&atilde;o, deve-se exclui-la antes da tabela de unidades de tramita&ccedil;&atilde;o. <br />
+<br />
+
+<dtml-var "navegacao_ajuda(pagina_anterior='cadastro_mesa_diretora', pagina_proxima='cargo_comissao')">
+<br />
+
+<dtml-var standard_html_footer>
+

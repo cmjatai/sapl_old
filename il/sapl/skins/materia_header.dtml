@@ -1,0 +1,37 @@
+<table>
+    <dtml-in expr="zsql.materia_obter_zsql(cod_materia=cod_materia)">
+        <tr>
+            <dtml-if expr="num_protocolo">
+            <th width="25%" class="texto">
+                <b>Tipo: </b> <dtml-var des_tipo_materia>
+            </th>
+            <th width="25%" class="texto">
+                <b>Protocolo: </b>
+                <dtml-if expr="not num_protocolo_spdo">
+                    <dtml-var num_protocolo>
+                </dtml-if>
+                <dtml-if num_protocolo_spdo>
+                    <dtml-var num_protocolo_spdo missing="">
+                </dtml-if>
+            </th>
+            <dtml-else>
+            <th width="50%" class="texto">
+                <b>Tipo: </b> <dtml-var des_tipo_materia>
+            </th>
+            </dtml-if>
+            <th width="25%" class="texto">
+                <b>Número: </b> <dtml-var num_ident_basica>
+            </th>
+            <th width="25%" class="texto">
+                <b>Ano: </b> <dtml-var ano_ident_basica>
+            </th>
+        </tr>
+        <tr>
+            <td colspan="4" class="texto">
+                <dtml-if txt_ementa>
+                    <b>Ementa: </b> <dtml-var txt_ementa>
+                </dtml-if>
+            </td>
+        </tr>
+    </dtml-in>
+</table>

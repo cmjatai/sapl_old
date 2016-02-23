@@ -1,0 +1,12 @@
+*.pyc
+.idea
+il.sapl.egg-info
+.svn
+.svnignore
+.Trash-1000
+interlegis-cmj.sql
+interlegis.sql
+import
+docs
+il.sapl-configure.zcml
+applets

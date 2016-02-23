@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="pt">
+	
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Sistema de Apoio ao Processo Legislativo</title>
+<dtml-var standard_css_slot>
+</head>
+
+<script type="text/javascript" language="Javascript" src="javascript/data_validar_jvsc"></script>
+<script type="text/javascript" language="Javascript">
+
+    function campos_criticar(){
+
+        var form = document.votacao_form;
+        var regexp_digitos = /\D+/;
+        var tipo_votacao = "<dtml-var tip_votacao>";
+
+        if (form.rad_votacao_branco.checked == true) { 
+            form.submit(); 
+        }
+
+        if ((tipo_votacao == 1) || (tipo_votacao == 3)) {
+            if (form.txt_votos_sim.value == "" && form.rad_votacao_branco.checked == false) {
+                alert("O numero de votos deve ser preenchido!");
+                form.txt_votos_sim.focus();
+                return false;
+            }
+
+            if (form.txt_votos_nao.value == "" && form.rad_votacao_branco.checked == false) {
+                alert("O numero de votos deve ser preenchido!");
+                form.txt_votos_nao.focus();
+                return false;
+            }
+
+            if (form.txt_votos_abstencao.value == "" && form.rad_votacao_branco.checked == false) {
+                alert("O numero de votos deve ser preenchido!");
+                form.txt_votos_abstencao.focus();
+                return false;
+            }
+
+            if (form.txt_nao_votou.value == "" && form.rad_votacao_branco.checked == false) {
+                alert("O numero de votos deve ser preenchido!");
+                form.txt_nao_votou.focus();
+                return false;
+            }
+    
+            if (tipo_votacao == 1) {
+
+              if (!(form.rad_ind_votacao_presidente[0].checked || form.rad_ind_votacao_presidente[1].checked)){
+                  alert("Indique se o total de votos inclui o voto do Presidente!");
+                  form.rad_ind_votacao_presidente[0].focus();
+                  return false;
+              }
+              
+	      /*  ---------------------------------------------------------------------------------------- */
+              /* valida quorum: ...[0].checked --> opção: Não - presidente NÃO participa da votação,
+                                ...[1].checked --> opção: Sim - presidente PARTICIPA da votação */
+              /*                                                                                           */
+              /* c/ o voto do presidente --> quorum de presentes = quantidade de votantes                  */
+              /* s/ o voto do presidente --> quorum de presentes = quantidade de votantes - 1              */
+              /* ----------------------------------------------------------------------------------------- */
+            
+              var qtv = 0;
+              var qp  = 0;
+              var qvs = parseInt(form.txt_votos_sim.value,10); 
+              var qvn = parseInt(form.txt_votos_nao.value,10);
+              var qab = parseInt(form.txt_votos_abstencao.value,10);
+              var qnv = parseInt(form.txt_nao_votou.value,10);
+              var quo = parseInt(form.hdn_nro_presentes.value,10);
+              qp = quo;
+              qtv = qvs + qvn + qnv + qab;
+              if (form.rad_ind_votacao_presidente[0].checked) {
+                 qp = quo - 1;
+              }
+	      if (qtv != qp) {
+                 alert("O total de votos não confere com o quorum de presentes na Sessão Plenária. Reinforme corretamente!"); 
+                 form.rad_ind_votacao_presidente[0].focus();
+                 return false;
+              } 
+              if (qp == quo) {
+                 form.rad_ind_votacao_presidente[1].focus();
+              }
+            form.submit(); 
+            }
+//            if (tipo_votacao == 3) {
+//               var qtv = 0
+//               var qvs = parseInt(form.txt_votos_sim.value,10);
+//               var qvn = parseInt(form.txt_votos_nao.value,10);
+//               var qva = parseInt(form.txt_votos_abstencao.value,10);
+//               var quo = parseInt(form.hdn_nro_presentes.value,10);
+//               qtv = qvs + qvn + qva;
+//               if (quo != qtv) {
+//                  alert("Votos indicados não confere com o quorum de presentes na sessão. Reinforme! - quorum= " + quo + " - Sim= " + qvs + " - Não= " + qvn + " - Abstenção= " + qva);
+//                  form.txt_votos_sim.focus();
+//                  return false;
+//               }
+//            }
+        }
+
+        if (form.lst_tip_resultado.selectedIndex == 0 && form.rad_votacao_branco.checked == false){
+            alert("Escolha o tipo do resultado da votação!");
+            form.lst_tip_resultado.focus();
+            return false;
+        }
+
+        form.submit();
+    }
+
+        function submeter(endereco){
+
+            var form = document.votacao_form;
+            endereco += '?cod_sessao_plen=<dtml-var cod_sessao_plen>';
+            endereco += '&cod_sessao_leg=<dtml-var cod_sessao_leg>';
+            endereco += '&cod_num_legislatura=<dtml-var cod_num_legislatura>';
+            endereco += '&dat_sessao=<dtml-var dat_sessao>';
+            endereco += '&tip_sessao=<dtml-var tip_sessao missing>';
+
+            if (form.hdn_cod_sessao_plen.value!=""){
+                location.href = endereco;
+            }
+            return;
+        }
+
+        function votacao_em_branco(tip_votacao){
+             
+            var form = document.votacao_form;
+
+            if (tip_votacao == 1) {
+                if (form.rad_votacao_branco.checked == true) {
+                	alert("Caso exista alguma votação cadastrada ela será perdida!");
+                	form.txt_votos_sim.disabled=1;
+                    form.txt_votos_nao.disabled=1;
+                    form.txt_votos_abstencao.disabled=1;
+                    form.lst_tip_resultado.disabled=1;
+                    }
+                else {
+                	form.txt_votos_sim.disabled=0;
+                    form.txt_votos_nao.disabled=0;
+                    form.txt_votos_abstencao.disabled=0;
+                    form.lst_tip_resultado.disabled=0;
+                    }
+                }
+            if (tip_votacao == 2) {
+            	  if (form.rad_votacao_branco.checked == true) {
+            		  alert("Caso exista alguma votação cadastrada ela será perdida!");
+            		  form.lst_voto_parlamentar.disabled=1;
+            		  form.lst_tip_resultado.disabled=1;
+            		  }
+            	  else {
+                	  form.lst_voto_parlamentar.disabled=0;
+                	  form.lst_tip_resultado.disabled=0;
+                	  }
+            	  }
+            if (tip_votacao == 3) {
+                if (form.rad_votacao_branco.checked == true) {
+                        alert("Caso exista alguma votação cadastrada ela será perdida!");
+                	form.txt_votos_sim.disabled=1;
+                    form.txt_votos_nao.disabled=1;
+                    form.txt_votos_abstencao.disabled=1;
+                    form.lst_tip_resultado.disabled=1;
+                    }
+                else {
+                    form.txt_votos_sim.disabled=0;
+                    form.txt_votos_nao.disabled=0;
+                    form.txt_votos_abstencao.disabled=0;
+                    form.lst_tip_resultado.disabled=0;
+                    }
+                }
+            return;
+        }
+
+    function reloadParentAndClose()
+    {
+        parent.jQuery.fancybox.close();
+    }
+
+</script>
+
+<div style="margin: 10px;">
+<a id="ajuda" href="&dtml-portal_url;/ajuda/sessao_plenaria_votacao">Ajuda</a>
+<h1 class="firstHeading">Vota&ccedil;&atilde;o</h1>
+<h3 align="center"><dtml-var sessao_plenaria_header></h3>
+<form action="votacao_salvar_proc" name="votacao_form" method="get" enctype="multipart/form-data">
+        <input type="hidden" name="hdn_url" value="javascript:reloadParentAndClose()" />
+        <input type="hidden" name="hdn_cod_sessao_plen" value="<dtml-var cod_sessao_plen missing>" />
+        <input type="hidden" name="hdn_cod_sessao_leg" value="<dtml-var cod_sessao_leg missing>"/>
+        <input type="hidden" name="hdn_dat_sessao" value="<dtml-var dat_sessao missing>"/>
+        <input type="hidden" name="hdn_num_legislatura" value="<dtml-var cod_num_legislatura missing>"/>
+        <input type="hidden" name="hdn_cod_ordem" value="<dtml-var cod_ordem missing>"/>
+        <input type="hidden" name="hdn_cod_materia" value="<dtml-var cod_materia missing>"/>
+        <input type="hidden" name="hdn_tip_votacao" value="<dtml-var tip_votacao missing>"/>
+        <input type="hidden" name="hdn_tip_sessao" value="<dtml-var tip_sessao missing>"/>
+        <dtml-in expr="zsql.presenca_ordem_dia_contar_zsql(cod_sessao_plen=cod_sessao_plen)">
+	<input type="hidden" name="hdn_nro_presentes" value="<dtml-var presenca>" />
+        </dtml-in>
+        <dtml-in expr="zsql.votacao_obter_zsql(cod_ordem=cod_ordem, cod_materia=cod_materia, ind_excluido=0)">
+            <dtml-call expr="REQUEST.set('cod_votacao', cod_votacao)">
+            <dtml-call expr="REQUEST.set('num_votos_sim', num_votos_sim)">
+            <dtml-call expr="REQUEST.set('num_votos_nao', num_votos_nao)">
+            <dtml-call expr="REQUEST.set('num_nao_votou', num_nao_votou)">
+            <dtml-call expr="REQUEST.set('num_abstencao', num_abstencao)">
+            <input type="hidden" name="hdn_cod_votacao" value="<dtml-var cod_votacao missing>"/>
+        <dtml-else>
+            <dtml-call expr="REQUEST.set('cod_votacao', None)">
+        </dtml-in>
+        <dtml-if expr="tip_votacao=='1'">
+<fieldset>
+        <legend>Vota&ccedil;&atilde;o Simb&oacute;lica</legend>
+        <table width="100%">
+            <tr>
+               <td class="texto" colspan="4">
+           <dtml-in expr="zsql.materia_obter_zsql(cod_materia=cod_materia, ind_excluido=0)">
+           Mat&eacute;ria: <b><dtml-var sgl_tipo_materia missing> <dtml-var num_ident_basica missing> <dtml-var ano_ident_basica missing> - <dtml-var des_tipo_materia></b><br />
+           Ementa: <b><dtml-var txt_ementa><b>
+           </dtml-in>
+               </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="txt_votos_sim">Sim: </label><span class="campoObrigatorio">&nbsp;</span>
+                    <input type="text" name="txt_votos_sim" id="txt_votos_sim" value="<dtml-var num_votos_sim missing null="">" size="3" maxlength="3" />
+                </td>
+                <td>
+                    <label for="txt_votos_nao">N&atilde;o: </label><span class="campoObrigatorio">&nbsp;</span>
+                    <input type="text" name="txt_votos_nao" id="txt_votos_nao" value="<dtml-var num_votos_nao missing null="">" size="3" maxlength="3" />
+                </td>
+                <td>
+                    <label for="txt_votos_abstencao">Absten&ccedil;&otilde;es: </label><span class="campoObrigatorio">&nbsp;</span>
+                    <input type="text" name="txt_votos_abstencao" id="txt_votos_abstencao" value="<dtml-var num_abstencao missing null="">" size="3" maxlength="3" />
+                </td>
+                <td>
+                    <label for="txt_nao_votou">Não Votou: </label><span class="campoObrigatorio">&nbsp;</span>
+                    <input type="text" name="txt_nao_votou" id="txt_nao_votou" value="<dtml-var num_nao_votou missing null="">" size="3" maxlength="3" />
+                </td>
+            </tr>
+            <tr>
+                <td colspan="1">
+                    <label for="rad_votacao_branco">Anular Vota&ccedil;&atilde;o</label>
+                    <input type="checkbox" name="rad_votacao_branco" onchange="javascript:votacao_em_branco(tip_votacao=1)">
+                </td>
+            
+                <td colspan="3"><label for="rad_ind_votacao_presidente">A totaliza&ccedil;&atilde;o inclui o voto do Presidente: ?</label><span class="campoObrigatorio">&nbsp;</span>
+                <dtml-in expr="[('Não','0'),('Sim','1')]">
+                  <input type="radio" name="rad_ind_votacao_presidente" value="<dtml-var expr="_['sequence-item']">"
+                     id="rad_ind_votacao_presidente<dtml-var expr="_['sequence-item']">"
+                     <dtml-if expr="_['sequence-item']=='0'">checked="1"</dtml-if>
+                      <dtml-if expr="pysc.votacao_assinalar_voto_presidente_pysc(dat_ordem=pysc.data_converter_pysc(data=dat_sessao),cod_sessao_plen=cod_sessao_plen,cod_materia=cod_materia)">
+                            <dtml-if expr="_['sequence-item']=='1'">checked="1"</dtml-if>
+                     </dtml-if> />
+                     <span class="texto"><dtml-var expr="_['sequence-key']"></span>
+                </dtml-in></td>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    <label for="lst_tip_resultado">Resultado da Vota&ccedil;&atilde;o </label><span class="campoObrigatorio">&nbsp;</span>
+                    <select name="lst_tip_resultado" size="1">
+                        <option value="-1">Selecione </option>
+                        <dtml-in expr="zsql.tipo_resultado_votacao_obter_zsql()">
+                            <option
+                            <dtml-if expr="_.has_key('cod_votacao') and nom_resultado==pysc.resultado_votacao_pysc(cod_votacao,cod_materia)">
+                                selected
+                            </dtml-if>
+                                value="<dtml-var tip_resultado_votacao>"><dtml-var nom_resultado>
+                            </option>
+                        </dtml-in>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    <label for="txa_txt_observacao">Observa&ccedil;&otilde;es</label>
+                    <textarea name="txa_txt_observacao" cols="60"><dtml-var txt_observacao missing null=""></textarea>
+                </td>
+            </tr>
+        </table>
+
+        <div style="text-align: center">
+            <input class="botao" type="button" name="button" value="Salvar" onClick="campos_criticar()" />
+            &nbsp;&nbsp;&nbsp;<input type="button" class="botao" name="btn_fechar" value="Fechar" onClick="reloadParentAndClose();" />
+        </div>
+</fieldset>
+        </dtml-if>
+        <dtml-if expr="tip_votacao=='2'">
+<fieldset>
+        <legend>Vota&ccedil;&atilde;o Nominal</legend>
+        <table width="100%">
+            <tr>
+               <td class="texto" colspan="2">
+           <dtml-in expr="zsql.materia_obter_zsql(cod_materia=cod_materia, ind_excluido=0)">
+           Mat&eacute;ria: <b><dtml-var sgl_tipo_materia missing> <dtml-var num_ident_basica missing> <dtml-var ano_ident_basica missing> - <dtml-var des_tipo_materia></b><br />
+           Ementa: <b><dtml-var txt_ementa><b>
+           </dtml-in>
+               </td>
+            </tr>
+
+            <dtml-in expr="zsql.presenca_ordem_dia_obter_zsql(cod_sessao_plen=cod_sessao_plen,  ind_excluido=0)">
+            <dtml-in expr="zsql.parlamentar_obter_zsql(cod_parlamentar = cod_parlamentar, num_legislatura = cod_num_legislatura, ind_ativo=1, ind_excluido=0)">
+            <dtml-if expr="cod_votacao and len(zsql.votacao_parlamentar_obter_zsql(cod_votacao=cod_votacao, cod_parlamentar=cod_parlamentar, ind_excluido=0)) > 0">
+            <dtml-in expr="zsql.votacao_parlamentar_obter_zsql(cod_votacao=cod_votacao, cod_parlamentar=cod_parlamentar, ind_excluido=0)">
+            <tr>
+                <td class="texto">
+                    <dtml-var nom_parlamentar>/<dtml-var sgl_partido missing null="">
+                    <input type="hidden" name="hdn_cod_parlamentar" value="<dtml-var cod_parlamentar missing>"/>
+                </td>
+                <td>
+                   <dtml-comment>votou &nbsp;<b><dtml-var expr="pysc.voto_parlamentar_obter_pysc(cod_votacao, cod_parlamentar)"></b>&nbsp;&nbsp - &nbsp;&nbsp;</dtml-comment>
+                <dtml-comment><select name="lst_voto_parlamentar" size="1">
+                      <dtml-if expr="not _.has_key('vot_parlamentar')">
+                          <option value="-1">Selecione </option>
+                      </dtml-if>
+                   <dtml-in expr="[('Sim','Sim'), ('Não', 'Não'), ('Abstenção', 'Abstenção'), ('Não Votou', 'Não Votou')]">
+                      <option
+                          <dtml-if expr="_.has_key('vot_parlamentar')">
+                              disabled
+                          </dtml-if>
+                           <dtml-if expr="_.has_key('cod_votacao') and (vot_parlamentar==_['sequence-key'] or vot_parlamentar==_['sequence-item'])">
+                                selected
+                           </dtml-if>
+                           value="<dtml-var expr="_['sequence-key']">"><dtml-var expr="_['sequence-item']">
+                      </option>
+                   </dtml-in>
+                  </select>
+                </dtml-comment>
+                    <p class="texto"><dtml-var vot_parlamentar></p>
+
+                  <input type="hidden" name="lst_voto_parlamentar" value="<dtml-var vot_parlamentar missing>"/>
+                </td>
+            </tr>
+            </dtml-in>
+            <dtml-else>
+                <tr>
+                    <td class="texto">
+                        <dtml-var nom_parlamentar>/<dtml-var sgl_partido missing null="">
+                        <input type="hidden" name="hdn_cod_parlamentar" value="<dtml-var cod_parlamentar missing>"/>
+                    </td>
+                    <td>
+                        <select name="lst_voto_parlamentar" size="1">
+                            <option value="-1">Selecione </option>
+
+                            <dtml-in expr="[('Sim','Sim'),('Não','Não'),('Abstenção','Absten&ccedil;&atilde;o'),('Não Votou', 'Não Votou')]">
+                                <dtml-comment> ..tratar como abstenção ('Abstenção Regimental','Absten&ccedil;&atilde;o Regimental')] </dtml-comment>
+                                <dtml-comment> ..tratar como abstenção ('Abstenção Regimental','Absten&ccedil;&atilde;o Regimental')] </dtml-comment>
+                                <option
+                                value="<dtml-var expr="_['sequence-key']">"><dtml-var expr="_['sequence-item']">
+                            </option>
+                            </dtml-in>
+                        </select>
+                    </td>
+                </tr>
+
+            </dtml-if>
+            </dtml-in>
+            </dtml-in>
+            <tr>
+                <td colspan="2">
+                    <label for="rad_votacao_branco">Anular Vota&ccedil;&atilde;o</label>
+                    <input type="checkbox" name="rad_votacao_branco" onchange="javascript:votacao_em_branco(tip_votacao=2)">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <label for="lst_tip_resultado">Resultado da Vota&ccedil;&atilde;o </label><span class="campoObrigatorio">&nbsp;</span>
+                    <dtml-if cod_votacao>
+                        <font size="1">
+                            <b><dtml-var "pysc.resultado_votacao_pysc(cod_votacao, cod_materia)"></b> &nbsp;&nbsp; - &nbsp;&nbsp;
+                        </font>
+                    </dtml-if>
+                    <select name="lst_tip_resultado" size="1">
+                        <option value="-1">Selecione</option>
+                        <dtml-in expr="zsql.tipo_resultado_votacao_obter_zsql()">
+                            <option
+                            <dtml-if expr="_.has_key('cod_votacao') and nom_resultado==pysc.resultado_votacao_pysc(cod_votacao,cod_materia)">
+                                selected
+                            </dtml-if>
+                                value="<dtml-var tip_resultado_votacao>"><dtml-var nom_resultado>
+                            </option>
+                        </dtml-in>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <label for="txa_txt_observacao">Observa&ccedil;&otilde;es</label>
+                    <textarea name="txa_txt_observacao" cols="60"><dtml-var txt_observacao missing></textarea>
+                </td>
+            </tr>
+        </table>
+        <div style="text-align: center">
+            <input class="botao" type="button" name="button" value="Salvar" onClick="campos_criticar()" />
+            &nbsp;&nbsp;&nbsp;<input type="button" class="botao" name="btn_fechar" value="Fechar" onClick="reloadParentAndClose();" />
+        </div>
+</fieldset>
+        </dtml-if>
+        <dtml-if expr="tip_votacao=='3'">
+<fieldset>
+        <legend>Vota&ccedil;&atilde;o Secreta</legend>
+        <dtml-let resultado="pysc.votacao_secreta_obter_pysc(cod_ordem=cod_ordem, resultado=True)">
+            <dtml-call expr="REQUEST.set('num_votos_sim', resultado['sim'])">
+            <dtml-call expr="REQUEST.set('num_votos_nao', resultado['nao'])">
+            <dtml-call expr="REQUEST.set('num_abstencao', resultado['abstencao'])">
+        </dtml-let>
+        <dtml-var expr="REQUEST.set('nao_votou', pysc.votacao_secreta_obter_pysc(cod_sessao_plen=cod_sessao_plen, nao_votou=True))">
+        <table>
+            <tr>
+              <td class="texto" colspan="4">
+           <dtml-in expr="zsql.materia_obter_zsql(cod_materia=cod_materia, ind_excluido=0)">
+           Mat&eacute;ria: <b><dtml-var sgl_tipo_materia missing> <dtml-var num_ident_basica missing> <dtml-var ano_ident_basica missing> - <dtml-var des_tipo_materia></b><br />
+           Ementa: <b><dtml-var txt_ementa><b>
+           </dtml-in>
+               </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="txt_votos_sim">Sim: </label><span class="campoObrigatorio">&nbsp;</span>
+                    <input type="text" name="txt_votos_sim" id="txt_votos_sim" value="<dtml-var num_votos_sim missing>" readonly size="3" maxlength="3" />
+                </td>
+                <td>
+                    <label for="txt_votos_nao">N&atilde;o: </label><span class="campoObrigatorio">&nbsp;</span>
+                    <input type="text" name="txt_votos_nao" id="txt_votos_nao" value="<dtml-var num_votos_nao missing>" readonly size="3" maxlength="3" />
+                </td>
+                <dtml-if nao_votou>
+                <td>
+                    <label for="txt_votos_abstencao">Absten&ccedil;&otilde;es: </label><span class="campoObrigatorio">&nbsp;</span>
+                    <input type="text" name="txt_votos_abstencao" id="txt_votos_abstencao" value="<dtml-var num_abstencao missing>" readonly size="3" maxlength="3" />
+                </td>
+                <td>
+                    <label for="txt_nao_votou">Não votou: </label><span class="campoObrigatorio">&nbsp;</span>
+                    <input type="text" name="txt_nao_votou" id="txt_nao_votou" value="<dtml-var nao_votou missing>" readonly size="3" maxlength="3" />
+                </td>
+                <dtml-else>
+                <td colspan="2">
+                    <label for="txt_votos_abstencao">Absten&ccedil;&otilde;es: </label><span class="campoObrigatorio">&nbsp;</span>
+                    <input type="text" name="txt_votos_abstencao" id="txt_votos_abstencao" value="<dtml-var num_abstencao missing>" readonly size="3" maxlength="3" />
+                </td>
+                </dtml-if>
+            </tr>
+            <tr>
+                <td colspan="1">
+                    <label for="rad_votacao_branco">Anular Vota&ccedil;&atilde;o</label>
+                    <input type="checkbox" name="rad_votacao_branco" onchange="javascript:votacao_em_branco(tip_votacao=3)">
+                </td>
+                <td colspan="3"><label for="rad_ind_votacao_presidente">A totaliza&ccedil;&atilde;o inclui o voto do Presidente: ?</label><span class="campoObrigatorio">&nbsp;</span>
+                <dtml-in expr="[('Não','0'),('Sim','1')]">
+                  <input type="radio" name="rad_ind_votacao_presidente" value="<dtml-var expr="_['sequence-item']">"
+                     id="rad_ind_votacao_presidente<dtml-var expr="_['sequence-item']">"
+                     <dtml-if expr="_['sequence-item']=='0'">checked="1"</dtml-if>
+                      <dtml-if expr="pysc.votacao_assinalar_voto_presidente_pysc(dat_ordem=pysc.data_converter_pysc(data=dat_sessao),cod_sessao_plen=cod_sessao_plen,cod_materia=cod_materia)">
+                            <dtml-if expr="_['sequence-item']=='1'">checked="1"</dtml-if>
+                     </dtml-if> />
+                     <span class="texto"><dtml-var expr="_['sequence-key']"></span>
+                </dtml-in></td>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    <label for="lst_tip_resultado">Resultado da Vota&ccedil;&atilde;o </label><span class="campoObrigatorio">&nbsp;</span>
+                    <select name="lst_tip_resultado" size="1">
+                        <option value="-1">Selecione</option>
+                        <dtml-in expr="zsql.tipo_resultado_votacao_obter_zsql()">
+                            <option
+                            <dtml-if expr="_.has_key('cod_votacao') and nom_resultado==pysc.resultado_votacao_pysc(cod_votacao,cod_materia)">
+                                selected
+                            </dtml-if>
+                            value="<dtml-var tip_resultado_votacao>"><dtml-var nom_resultado>
+                        </option>
+                        </dtml-in>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    <label for="txa_txt_observacao">Observa&ccedil;&otilde;es</label>
+                    <textarea name="txa_txt_observacao" cols="60"><dtml-var txt_observacao missing></textarea>
+                </td>
+            </tr>
+            </table>
+            <div style="text-align: center">
+                <input class="botao" type="button" name="button" value="Salvar" onClick="campos_criticar()" />
+                  &nbsp;&nbsp;&nbsp;<input type="button" class="botao" name="btn_fechar" value="Fechar" onClick="reloadParentAndClose();" />
+            </div>
+    </fieldset>
+    </dtml-if>
+</form>
+</div>
+</html>

@@ -1,0 +1,21 @@
+<dtml-comment>
+connection_id : dbcon_interlegis
+arguments : txt_login_sapl txt_login_spdo ind_excluido=0
+max_rows : 1000
+max_cache : 100
+</dtml-comment>
+
+SELECT
+    cod_spdo_users,
+    txt_login_sapl,
+    txt_login_spdo,
+    txt_senha_spdo
+
+FROM
+    spdo_users
+
+  <dtml-sqlgroup where>
+    <dtml-sqltest txt_login_sapl column="txt_login_sapl" op="=" type="string" optional ><dtml-and>
+    <dtml-sqltest txt_login_spdo column="txt_login_spdo" op="=" type="string" optional ><dtml-and>
+    <dtml-sqltest ind_excluido   column="ind_excluido"   op="=" type="int"    optional>
+  </dtml-sqlgroup>

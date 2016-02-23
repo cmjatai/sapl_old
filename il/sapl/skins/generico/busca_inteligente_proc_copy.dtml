@@ -1,0 +1,682 @@
+<dtml-let isAnon="portal_membership.isAnonymousUser()">
+
+<dtml-call "REQUEST.set('existe_seq_anterior', 0)">
+<dtml-call "REQUEST.set('existe_seq_posterior', 0)">
+<dtml-if page>
+    <dtml-call "REQUEST.set('page', _.int(page))">
+<dtml-else>
+    <dtml-call "REQUEST.set('page', 1)">
+</dtml-if>
+
+<dtml-if step>
+    <dtml-call "REQUEST.set('step', _.int(step))">
+<dtml-else>
+    <dtml-call "REQUEST.set('step', 10)">
+</dtml-if>
+
+<dtml-if printer>
+    <dtml-call "REQUEST.set('stepp', _.int(printer))">
+<dtml-else>
+    <dtml-call "REQUEST.set('stepp', step)">
+</dtml-if>
+
+
+<dtml-if cod_parlamentar>
+<dtml-else>
+    <dtml-call "REQUEST.set('cod_parlamentar', '')">
+</dtml-if>
+
+<dtml-if tip_materia>
+<dtml-else>
+    <dtml-call "REQUEST.set('tip_materia', '')">
+</dtml-if>
+
+<dtml-if expr="AUTHENTICATED_USER.has_role(['Operador', 'Operador Protocolo', 'Operador Lista Materias Privadas'])">
+    <dtml-call "REQUEST.set('itens_privados', '1')">
+<dtml-else>
+    <dtml-call "REQUEST.set('itens_privados', '0')">
+</dtml-if>
+
+
+
+<dtml-if func>
+
+<dtml-if expr="func=='2'">
+
+    <dtml-in expr="pysc.busca_parlamentar_pysc(pesquisa=pesquisa)" mapping>
+		<dtml-if expr="len(parlamentares) > 1 and False">
+				<div class="menuPesquisa" >
+					<ul id="menu-nav">
+					      <li><a  class="<dtml-if expr="mtnm==''">selected</dtml-if>" href="&dtml-portal_url;/1?pesquisa=<dtml-var pesquisa>&mtnm=&autostart=on">Mat&eacute;rias e Normas</a></li>
+					</ul></div>
+
+				<div class="menuPesquisa" >
+				    <ul id="menu-nav">
+					      <li><a class="<dtml-if expr="mtnm=='mt'">selected</dtml-if>">Mat&eacute;rias Legislativas</a>
+
+              	<ul class="<dtml-if expr="mtnm=='mt' or mt_tramitando!='' or mt_status!='' ">selected</dtml-if>">
+									       <li>
+									       <a class="<dtml-if expr="mtnm=='mt' and mt_tramitando=='' and mt_status=='' ">selected</dtml-if>"
+					             href="&dtml-portal_url;/1?pesquisa=<dtml-var pesquisa>&mtnm=mt&autostart=on">Todas as Matérias <h6>(Ver todas)</h6></a>
+									          <ul>
+										        <dtml-in expr="zsql.tipo_materia_legislativa_obter_zsql(ind_excluido=0)">
+										          <li><a  class="<dtml-if expr="tip_materia== _.int('0'+REQUEST.get('tip_materia'))">selected</dtml-if>"
+												  	  href="&dtml-portal_url;/1?pesquisa=<dtml-var pesquisa>&cod_parlamentar=<dtml-var cod_parlamentar>&tip_materia=<dtml-var tip_materia>&func=1&mtnm=mt&mt_tramitando=&mt_status=&autostart=on"><dtml-var des_tipo_materia></a>
+
+
+												  </li>
+											    </dtml-in>
+											  </ul>
+									       </li>
+
+									       <li>
+
+										       <a class="<dtml-if expr="mt_tramitando=='1'">selected</dtml-if>"
+										            href="&dtml-portal_url;/1?pesquisa=<dtml-var pesquisa>&cod_parlamentar=<dtml-var cod_parlamentar>&func=1&mt_tramitando=1&mtnm=mt&autostart=on">
+										       Em tramita&ccedil;&atilde;o <h6>(Ver todas)</h6></a>
+
+									         <dtml-if expr="mt_status == '' and mt_tramitando=='1'">
+
+									          <ul id="ulFixo" class="<dtml-if expr="mt_tramitando=='1'">selected</dtml-if>" >
+
+
+
+											      <dtml-in expr="pysc.busca_analise_atalho_para_mat_norm_pysc(pesquisa=pesquisa)" mapping>
+
+                                                           <dtml-if expr="_['sequence-length'] > 1">
+
+                                                           <li>
+																<a  class="<dtml-if expr=" tip_materia== _.int('0'+REQUEST.get('tip_materia')) and mt_tramitando=='1'">selected</dtml-if>"
+																href="&dtml-portal_url;/1?pesquisa=<dtml-var pesquisa>&page=1&step=<dtml-var step>&cod_parlamentar=<dtml-var cod_parlamentar>&tip_materia=<dtml-var codigo>&nm_tip_norma=<dtml-var codigo>&func=1&autostart=on&mtnm=<dtml-var mtnm missing>&mt_tramitando=<dtml-var mt_tramitando missing>&mt_status=<dtml-var mt_status missing>"><dtml-var titulo> <h6 title="<dtml-var expr="str(count)"> documento(s)">(<dtml-var count>)</h6></a>
+														   </li>
+														   </dtml-if>
+
+													  </dtml-in>
+
+
+
+
+											  </ul>
+											  	   </dtml-if>
+
+
+
+
+
+
+									       </li>
+									       <li><a class="<dtml-if expr="mt_status=='17'">selected</dtml-if>"
+									            href="&dtml-portal_url;/1?pesquisa=<dtml-var pesquisa>&cod_parlamentar=<dtml-var cod_parlamentar>&func=1&mt_status=17&mtnm=mt&autostart=on">
+									       Aguardando San&ccedil;&atilde;o</a>
+
+									       </li>
+
+									       <li><a class="<dtml-if expr="mt_status=='16'">selected</dtml-if>"
+									            href="&dtml-portal_url;/1?pesquisa=<dtml-var pesquisa>&cod_parlamentar=<dtml-var cod_parlamentar>&func=1&mt_status=16&mtnm=mt&autostart=on">
+									       Aguardando Aut&oacute;grafo</a>
+
+									       </li>
+
+									       <li><a class="<dtml-if expr="mt_status=='56'">selected</dtml-if>"
+									            href="&dtml-portal_url;/1?pesquisa=<dtml-var pesquisa>&cod_parlamentar=<dtml-var cod_parlamentar>&func=1&mt_status=56&mtnm=mt&autostart=on">
+									       Sancionadas / Promulgadas <h6>(Ver todas)</h6></a>
+									          <ul>
+										        <dtml-in expr="zsql.tipo_materia_legislativa_obter_zsql(ind_excluido=0)">
+										          <li><a  class="<dtml-if expr="tip_materia== _.int('0'+REQUEST.get('tip_materia')) and mt_status=='56'">selected</dtml-if>"
+												  	  href="&dtml-portal_url;/1?pesquisa=<dtml-var pesquisa>&cod_parlamentar=<dtml-var cod_parlamentar>&tip_materia=<dtml-var tip_materia>&func=1&mtnm=mt&mt_tramitando=&mt_status=56&autostart=on"><dtml-var des_tipo_materia></a>
+
+
+												  </li>
+											    </dtml-in>
+											  </ul>
+									       </li>
+
+									       <li><a class="<dtml-if expr="mt_status=='55'">selected</dtml-if>"
+									            href="&dtml-portal_url;/1?pesquisa=<dtml-var pesquisa>&cod_parlamentar=<dtml-var cod_parlamentar>&func=1&mt_status=55&mtnm=mt&autostart=on">
+									       Requerimentos Encaminhados <h6>(Ver todos)</h6></a>
+
+									       </li>
+									     </ul>
+							</li>
+					</ul>
+					<br>
+					<ul id="menu-nav">
+						<li><a  class="<dtml-if expr="mtnm=='nm'">selected</dtml-if>">Normas Jur&iacute;dicas</a>
+
+						   <ul class="<dtml-if expr="mtnm=='nm' and nm_tip_norma!=''">selected</dtml-if>">
+						   <li><a  class="<dtml-if expr="mtnm=='nm'">selected</dtml-if>"
+					            href="&dtml-portal_url;/1?pesquisa=<dtml-var pesquisa>&mtnm=nm&autostart=on">Todas as Normas Jur&iacute;dicas</a>
+					      </li>
+
+
+
+							    <dtml-in expr="zsql.tipo_norma_juridica_obter_zsql(ind_excluido=0)">
+						          <li><a class="<dtml-if expr="mtnm=='nm' and nm_tip_norma==_.str(tip_norma)">selected</dtml-if>"
+						                 href="&dtml-portal_url;/1?pesquisa=<dtml-var pesquisa>&mtnm=nm&nm_tip_norma=<dtml-var tip_norma missing>&autostart=on"><dtml-var des_tipo_norma></a></li>
+							    </dtml-in>
+						   </ul>
+					   </li>
+					</ul>
+				</div>
+		</dtml-if>
+
+        <dtml-in expr="parlamentares" mapping>
+        
+		         <dtml-if sequence-start>
+
+                <div class=<dtml-if expr="_['sequence-length']==1">"linkUmParlamentar"<dtml-elif expr="ativo > 0">"linkParlamentares"</dtml-if> style="">
+
+                </dtml-if>
+
+            <dtml-if expr="_['sequence-length'] == 1">
+
+		            <a  href="&dtml-portal_url;/1?pesquisa=<dtml-var pesquisa_new>&page=1&step=<dtml-var step>&cod_parlamentar=&func=1&autostart=on">
+                        <div class="avatar9">
+                               <img class="imgAvatar" src="<dtml-var img_absolute_url>?a=1" title="<dtml-var nome>">
+                            </div>
+		            <div><h2><dtml-var nome></h2><h5><dtml-var cargo></h5></div>
+                    </a>
+
+		    <dtml-elif expr="ativo > 0">
+
+		            <a  href="&dtml-portal_url;/1?pesquisa=<dtml-var pesquisa_new>&page=1&step=<dtml-var step>&cod_parlamentar=<dtml-var codigo>&func=1&autostart=on">
+                        <div class="avatar3" style="float: left;">
+                               <img class="imgAvatar" src="<dtml-var img_absolute_url>?a=1" title="<dtml-var nome>">
+                        </div>
+		            <div><span class="nome"><dtml-var nome></span>
+		                 <span class="cargo"><dtml-var cargo></span>
+		            </div>
+                    </a>
+
+		    </dtml-if>
+
+	         <dtml-if sequence-end>
+
+            </div>
+
+            </dtml-if sequence-end>
+
+		</dtml-in>
+
+		<dtml-if expr="len(parlamentares) == 1">
+
+            <div class="menuPesquisa" >
+                <ul id="menu-nav">
+                  <li><a title="Mostrar todas as Matérias do parlamentar" href="&dtml-portal_url;/1?pesquisa=<dtml-var pesquisa_new>&page=1&step=<dtml-var step>&cod_parlamentar=<dtml-var cod_parlamentar>&func=1&autostart=on"><h3>Matérias do Parlamentar</h3></a>
+                      <ul class="selected">
+                        <dtml-in expr="tipo_materias" mapping>
+                            <li><a  title="<dtml-var qtde_materia> documentos encontrados"
+                                    <dtml-if expr="tip_materia==_.str(tipo_materia)">
+                                        class="selected"
+                                    </dtml-if>
+                                    href="&dtml-portal_url;/1?pesquisa=<dtml-var pesquisa_new>&page=1&step=<dtml-var step>&cod_parlamentar=<dtml-var cod_parlamentar>&tip_materia=<dtml-var tipo_materia>&func=1&autostart=on">
+
+                                   <div><dtml-var des_tipo_materia_plural> <h6>(<dtml-var qtde_materia>)</h6></div>
+                                </a>
+                            </li>
+                        </dtml-in>
+                      </ul>
+                  </li>
+                </ul>
+            </div>
+
+			<div class="menuPesquisa" >
+				<ul id="menu-nav">
+				      <li><a class="<dtml-if expr="mtnm=='mt'">selected</dtml-if>"
+				             href="&dtml-portal_url;/1?pesquisa=<dtml-var pesquisa>&mtnm=<dtml-if expr="mtnm=='mt'"><dtml-else>mt</dtml-if>&autostart=on">Outras Mat&eacute;rias Legislativas</a>
+						</li>
+				</ul>
+				<br>
+				<ul id="menu-nav">
+					<li><a  class="<dtml-if expr="mtnm=='nm'">selected</dtml-if>"
+				            href="&dtml-portal_url;/1?pesquisa=<dtml-var pesquisa>&mtnm=<dtml-if expr="mtnm=='nm'"><dtml-else>nm</dtml-if>&autostart=on">Normas Jur&iacute;dicas</a>
+				   </li>
+				</ul>
+			</div>
+
+
+        </dtml-if>
+    </dtml-in>
+
+
+<dtml-elif expr="func=='99'">
+
+  <dtml-var expr="pysc.busca_parlamentar_pysc(pesquisa=pesquisa)">
+
+<dtml-elif expr="func=='3'">
+    <dtml-call "REQUEST.set('start',(page-1) * step + 1)">
+
+        <dtml-if lst_tip_autor>
+           <dtml-if expr="cod_parlamentar == ''">
+              <dtml-call "REQUEST.set('lst_tip_autor', '')">
+           </dtml-if>
+        <dtml-else>
+           <dtml-if expr="cod_parlamentar == ''">
+              <dtml-call "REQUEST.set('lst_tip_autor', '')">
+           <dtml-else>
+              <dtml-call "REQUEST.set('lst_tip_autor', 'Parlamentar')">
+           </dtml-if>
+        </dtml-if>
+        <dtml-if tip_materia>
+        <dtml-else>
+           <dtml-call "REQUEST.set('tip_materia', '')">
+        </dtml-if>
+ 
+            <div class="barraMenu">
+                <ul class="nv">
+                    <li  class="<dtml-if expr="mtnm==''">selected</dtml-if>" ><a href="&dtml-portal_url;/1?pesquisa=<dtml-var pesquisa>&mtnm=&autostart=on">Mat&eacute;rias e Normas</a></li>
+                    <li class="<dtml-if expr="mtnm=='mt'">selected</dtml-if>"><a>Mat&eacute;rias Legislativas</a>
+                        <ul class="<dtml-if expr="mtnm=='mt' or mt_tramitando!='' or mt_status!='' ">selected</dtml-if>">
+                            <li>
+                                <a class="<dtml-if expr="mtnm=='mt' and mt_tramitando=='' and mt_status=='' ">selected</dtml-if>"
+                                    href="&dtml-portal_url;/1?pesquisa=<dtml-var pesquisa>&mtnm=mt&autostart=on">Todas as Matérias <h6>(Ver todas)</h6></a>
+                                <ul>
+                                    <dtml-in expr="zsql.tipo_materia_legislativa_obter_zsql(ind_excluido=0)">
+                                        <li><a  class="<dtml-if expr="tip_materia== _.int('0'+REQUEST.get('tip_materia'))">selected</dtml-if>"
+                                              href="&dtml-portal_url;/1?pesquisa=<dtml-var pesquisa>&cod_parlamentar=<dtml-var cod_parlamentar>&tip_materia=<dtml-var tip_materia>&func=1&mtnm=mt&mt_tramitando=&mt_status=&autostart=on"><dtml-var des_tipo_materia></a>
+                                        </li>
+                                    </dtml-in>
+                                </ul>
+                            </li>
+                            <li><a class="<dtml-if expr="mt_tramitando=='1'">selected</dtml-if>"
+                                    href="&dtml-portal_url;/1?pesquisa=<dtml-var pesquisa>&cod_parlamentar=<dtml-var cod_parlamentar>&func=1&mt_tramitando=1&mtnm=mt&autostart=on">
+                                   Em tramita&ccedil;&atilde;o <h6>(Ver todas)</h6></a>
+                                <dtml-if expr="mt_status == '' and mt_tramitando=='1'">
+                                    <ul class="<dtml-if expr="mt_tramitando=='1'">selected</dtml-if>" >
+                                        <dtml-in expr="pysc.busca_analise_atalho_para_mat_norm_pysc(pesquisa=pesquisa)" mapping>
+                                            <dtml-if expr="_['sequence-length'] > 1">
+                                                <li><a  class="<dtml-if expr=" tip_materia== _.int('0'+REQUEST.get('tip_materia')) and mt_tramitando=='1'">selected</dtml-if>"
+                                                        href="&dtml-portal_url;/1?pesquisa=<dtml-var pesquisa>&page=1&step=<dtml-var step>&cod_parlamentar=<dtml-var cod_parlamentar>&tip_materia=<dtml-var codigo>&nm_tip_norma=<dtml-var codigo>&func=1&autostart=on&mtnm=<dtml-var mtnm missing>&mt_tramitando=<dtml-var mt_tramitando missing>&mt_status=<dtml-var mt_status missing>"><dtml-var titulo> <h6 title="<dtml-var expr="str(count)"> documento(s)">(<dtml-var count>)</h6></a>
+                                                </li>
+                                            </dtml-if>
+                                        </dtml-in>
+                                    </ul>
+                                </dtml-if>
+                            </li>
+                            <li><a class="<dtml-if expr="mt_status=='17'">selected</dtml-if>"
+                                    href="&dtml-portal_url;/1?pesquisa=<dtml-var pesquisa>&cod_parlamentar=<dtml-var cod_parlamentar>&func=1&mt_status=17&mtnm=mt&autostart=on">
+                                   Aguardando San&ccedil;&atilde;o</a>
+                            </li>
+                            <li><a class="<dtml-if expr="mt_status=='16'">selected</dtml-if>"
+                                    href="&dtml-portal_url;/1?pesquisa=<dtml-var pesquisa>&cod_parlamentar=<dtml-var cod_parlamentar>&func=1&mt_status=16&mtnm=mt&autostart=on">
+                                    Aguardando Aut&oacute;grafo</a>
+                            </li>
+                            <li><a class="<dtml-if expr="mt_status=='56'">selected</dtml-if>"
+                                    href="&dtml-portal_url;/1?pesquisa=<dtml-var pesquisa>&cod_parlamentar=<dtml-var cod_parlamentar>&func=1&mt_status=56&mtnm=mt&autostart=on">
+                                    Sancionadas / Promulgadas <h6>(Ver todas)</h6></a>
+                                <ul>
+                                    <dtml-in expr="zsql.tipo_materia_legislativa_obter_zsql(ind_excluido=0)">
+                                        <li><a  class="<dtml-if expr="tip_materia== _.int('0'+REQUEST.get('tip_materia')) and mt_status=='56'">selected</dtml-if>"
+                                                href="&dtml-portal_url;/1?pesquisa=<dtml-var pesquisa>&cod_parlamentar=<dtml-var cod_parlamentar>&tip_materia=<dtml-var tip_materia>&func=1&mtnm=mt&mt_tramitando=&mt_status=56&autostart=on"><dtml-var des_tipo_materia></a>
+                                        </li>
+                                    </dtml-in>
+                                </ul>
+                            </li>
+                            <li><a class="<dtml-if expr="mt_status=='55'">selected</dtml-if>"
+                                    href="&dtml-portal_url;/1?pesquisa=<dtml-var pesquisa>&cod_parlamentar=<dtml-var cod_parlamentar>&func=1&mt_status=55&mtnm=mt&autostart=on">
+                                    Requerimentos Encaminhados <h6>(Ver todos)</h6></a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li  class="<dtml-if expr="mtnm=='nm'">selected</dtml-if>"><a>Normas Jur&iacute;dicas</a>
+                        <ul class="<dtml-if expr="mtnm=='nm' and nm_tip_norma!=''">selected</dtml-if>">
+                            <li><a  class="<dtml-if expr="mtnm=='nm'">selected</dtml-if>"
+                                href="&dtml-portal_url;/1?pesquisa=<dtml-var pesquisa>&mtnm=nm&autostart=on">Todas as Normas Jur&iacute;dicas</a>
+                            </li>
+                            <dtml-in expr="zsql.tipo_norma_juridica_obter_zsql(ind_excluido=0)">
+                              <li><a class="<dtml-if expr="mtnm=='nm' and nm_tip_norma==_.str(tip_norma)">selected</dtml-if>"
+                                     href="&dtml-portal_url;/1?pesquisa=<dtml-var pesquisa>&mtnm=nm&nm_tip_norma=<dtml-var tip_norma missing>&autostart=on"><dtml-var des_tipo_norma></a></li>
+                            </dtml-in>
+                       </ul>
+                   </li>
+                </ul>
+            </div>
+
+        <div class="container-atalhos" style="font-size: 100%; opacity: 1; height: auto;">
+	        <dtml-in expr="pysc.busca_analise_atalho_para_mat_norm_pysc(pesquisa=pesquisa)" mapping>
+	               <div class="link-atalhos">
+						<a  title="<dtml-var titulo> - <dtml-var expr="str(count)"> documento(s)" href="&dtml-portal_url;/1?pesquisa=<dtml-var pesquisa>&page=1&step=<dtml-var step>&cod_parlamentar=<dtml-var cod_parlamentar>&tip_materia=<dtml-var codigo>&nm_tip_norma=<dtml-var codigo>&func=1&autostart=on&mtnm=<dtml-var mtnm missing>&mt_tramitando=<dtml-var mt_tramitando missing>&mt_status=<dtml-var mt_status missing>">
+						     <dtml-var sigla>
+						</a>
+				   </div>
+	        </dtml-in>
+        </div>
+
+<dtml-elif expr="func=='1'">
+
+    <dtml-call "REQUEST.set('start',(page-1) * step + 1)">
+
+        <dtml-if lst_tip_autor>
+           <dtml-if expr="cod_parlamentar == ''">
+              <dtml-call "REQUEST.set('lst_tip_autor', '')">
+           </dtml-if>
+        <dtml-else>
+           <dtml-if expr="cod_parlamentar == ''">
+              <dtml-call "REQUEST.set('lst_tip_autor', '')">
+           <dtml-else>
+              <dtml-call "REQUEST.set('lst_tip_autor', 'Parlamentar')">
+           </dtml-if>
+        </dtml-if>
+        <dtml-if tip_materia>
+        <dtml-else>
+          <dtml-call "REQUEST.set('tip_materia', '')">
+        </dtml-if>
+
+         <dtml-in expr="pysc.busca_materias_normas_pysc(pesquisa=pesquisa) " size="stepp" start="start" orphan=0 mapping>
+
+           <dtml-if scroll>
+           <dtml-else>
+	            <dtml-if sequence-start>
+	                <dtml-if expr="_['sequence-length'] > step">
+	                    <dtml-var "pysc.PageListOutput_pysc('1', page, step, _['sequence-length'], pesquisa=pesquisa, cod_parlamentar=cod_parlamentar, tip_materia=tip_materia, mtnm=mtnm, mt_tramitando = mt_tramitando, mt_status = mt_status, nm_tip_norma = nm_tip_norma, autostart='on')">
+	                </dtml-if>
+	            </dtml-if sequence-start>
+            </dtml-if>
+
+            <dtml-if expr="tipo == 1">
+
+
+            <div class="itemMateria <dtml-if expr="itens_privados == '1' and item['ind_publico'] == 0">flagBordaP</dtml-if>">
+              <div class="topoItemMateria">
+                  <div style="display: table" >
+                      <a  class="linkItemMateria" href="&dtml-portal_url;/consultas/materia/materia_mostrar_proc?cod_materia=<dtml-var expr="item['cod_materia']">&autostart=off&pesquisa=<dtml-var pesquisa missing>">
+                          <dtml-var expr="item['des_tipo_materia']">  <dtml-var expr="item['num_ident_basica']">/<dtml-var expr="item['ano_ident_basica']">
+                      </a>
+
+
+	              <div class="imgsAutores">
+	               <dtml-let listaFotos="sapl_documentos.parlamentar.fotos.objectValues('Image')">
+
+	                <dtml-in expr="zsql.autoria_obter_zsql(cod_materia=item['cod_materia'])">
+	                  <dtml-in expr="zsql.autor_obter_zsql(cod_autor=cod_autor)">
+	                    <dtml-if expr="des_tipo_autor=='Parlamentar'">
+	                      <dtml-in expr="zsql.parlamentar_obter_zsql(cod_parlamentar=_['cod_parlamentar'])">
+	                           <dtml-if sequence-start>
+	                               <dtml-in expr="listaFotos">
+	                                 <dtml-if expr="(cod_parlamentar+'_'+sapl_documentos.parlamentar.fotos.nom_documento) == id()">
+	                                        <a class="linkImgs pointer" href="&dtml-portal_url;/1?pesquisa=<dtml-var pesquisa>&page=1&step=<dtml-var step>&cod_parlamentar=<dtml-var cod_parlamentar>&func=1&autostart=on">
+	                                            <div class="avatar2">
+				                                   <img class="imgAvatar" src="<dtml-var absolute_url>" title="<dtml-var nom_completo>">
+				                                </div>
+	                                        </a>
+	                                 </dtml-if>
+	                               </dtml-in>
+	                            </dtml-if>
+	                      </dtml-in>
+	                    <dtml-elif expr="des_tipo_autor=='Comissao'">
+	                      <dtml-in expr="zsql.comissao_obter_zsql(cod_comissao=cod_comissao)">
+	                        <b>Autor: </b><dtml-var nom_comissao><br>
+	                      </dtml-in>
+	                    <dtml-else>
+	                       <div class="autorMateria">
+	                           <dtml-var nom_autor><br>
+	                       </div>
+	                    </dtml-if>
+	                  </dtml-in>
+	                    <a class="linkImgs linebreak"></a>
+	                </dtml-in>
+	                 </dtml-let>
+	               </div>
+               </div>
+               </div>
+
+
+              <div class="corpoItemMateria">
+
+
+           <div class="flagNorma">Mat&eacute;ria Legislativa</div>
+
+              <div class="textoEmenta">
+                   <a class="textoEmenta" style="color: inherit; display:block;" href="&dtml-portal_url;/consultas/materia/materia_mostrar_proc?cod_materia=<dtml-var expr="item['cod_materia']">&autostart=off&pesquisa=<dtml-var pesquisa missing>">
+                   <dtml-var expr="item['txt_ementa']"> </a>
+              </div>
+
+              <div class="detalhesMateria">
+                <b><dtml-var expr="pysc.data_converter_por_extenso_pysc(str(item['dat_apresentacao']))"></b>
+
+
+                <dtml-call expr="REQUEST.set('des_status', '')">
+                <dtml-call expr="REQUEST.set('txt_tramitacao', '')">
+                <dtml-comment>obtem a ultima tramitação da materia.</dtml-comment>
+                <dtml-in expr="zsql.tramitacao_obter_zsql(cod_materia=item['cod_materia'], ind_ult_tramitacao=1)">
+
+                    <dtml-if expr="cod_status!='55'">
+                        <br>
+                      <dtml-if cod_unid_tram_dest>
+                        <dtml-call expr="REQUEST.set('cod_unid_tram', cod_unid_tram_dest)">
+                      <dtml-else>
+                        <dtml-call expr="REQUEST.set('cod_unid_tram', cod_unid_tram_local)">
+                      </dtml-if>
+                      <dtml-comment>obt�m a unidade de tramita��o da mat�ria.</dtml-comment>
+                      <dtml-in expr="zsql.unidade_tramitacao_obter_zsql(cod_unid_tramitacao=cod_unid_tram)">
+
+                        <dtml-if cod_orgao>
+                          <b>Localização Atual: </b><dtml-var nom_orgao><br>
+                        <dtml-else>
+                          <b>Localização Atual: </b><dtml-var nom_comissao><br>
+                        </dtml-if>
+                      </dtml-in>
+                      <dtml-call expr="REQUEST.set('des_status', des_status)">
+                      <dtml-call expr="REQUEST.set('txt_tramitacao', txt_tramitacao)">
+	                <dtml-if des_status>
+	                  <b>Situação: </b><dtml-var des_status null=""><br>
+	                </dtml-if>
+	                <dtml-if txt_tramitacao>
+	                  <b>Última Ação: </b><dtml-var txt_tramitacao>
+	                </dtml-if>
+	                <dtml-if dat_fim_prazo><br>
+	                  <b>Data Fim do Prazo: </b> <dtml-var dat_fim_prazo><br>
+	                </dtml-if>
+                  </dtml-if>
+                </dtml-in>
+
+
+              <dtml-comment> obt�m data da sess�o na qual a mat�ria tenha sido votada </dtml-comment>
+                <dtml-in expr="zsql.pesquisa_sessao_votacao_materia_zsql(cod_materia=item['cod_materia'])">
+                  <dtml-if dat_inicio_sessao>
+                   <dtml-let data_sessao="pysc.iso_to_port_pysc(dat_inicio_sessao)">
+                    <br><b><dtml-var nom_resultado> em:&nbsp;
+                    <a href="&dtml-portal_url;/consultas/sessao_plenaria/sessao_plenaria_index_html?dat_sessao_sel=<dtml-var data_sessao>"><dtml-var data_sessao></a></b>
+                   </dtml-let>
+                  </dtml-if>
+                </dtml-in>
+
+               <dtml-in expr="zsql.anexada_obter_zsql(cod_materia_anexada=item['cod_materia'], ind_excluido=0)">
+                 <br>
+                 <dtml-in expr="zsql.materia_obter_zsql(cod_materia=cod_materia_principal, ind_excluido = 0)">
+                  <b>Matéria Anexadora:</b>
+                     <a href="&dtml-portal_url;/consultas/materia/materia_mostrar_proc?cod_materia=<dtml-var cod_materia_principal>&autostart=off&pesquisa=<dtml-var pesquisa missing>">
+                     <b><dtml-var sgl_tipo_materia> <dtml-var num_ident_basica missing>/<dtml-var ano_ident_basica></b></a> -
+                     <b>Data Anexação:</b> <dtml-var dat_anexacao missing>
+                 </dtml-in>
+               </dtml-in>
+
+              <dtml-in expr="zsql.anexada_obter_zsql(cod_materia_principal=item['cod_materia'], ind_excluido=0)">
+                 <br>
+                 <dtml-in expr="zsql.materia_obter_zsql(cod_materia=cod_materia_anexada, ind_excluido = 0)">
+                    <b>Matéria Anexada:</b>
+                     <a href="&dtml-portal_url;/consultas/materia/materia_mostrar_proc?cod_materia=<dtml-var cod_materia>&autostart=off&pesquisa=<dtml-var pesquisa missing>">
+                     <b><dtml-var sgl_tipo_materia> <dtml-var num_ident_basica missing>/<dtml-var ano_ident_basica></b></a> -
+                     <b>Data Anexação:</b> <dtml-var dat_anexacao missing>
+                 </dtml-in>
+               </dtml-in>
+
+
+                <dtml-comment>obtêm normas jurídicas vinculadas </dtml-comment>
+                <dtml-in expr="zsql.materia_buscar_norma_juridica_zsql(cod_materia=item['cod_materia'])">
+
+                   <br>
+                   <dtml-if cod_norma>
+
+
+                   <dtml-if expr="sgl_norma=='ATG'">
+                    <b>Autógrafo:</b>
+                   <dtml-else>
+
+                   <b>Norma Jurídica Vinculada:</b>
+                   </dtml-if>
+                   <a href="&dtml-portal_url;/consultas/norma_juridica/norma_juridica_mostrar_proc?cod_norma=<dtml-var cod_norma>&autostart=off&pesquisa=<dtml-var pesquisa missing>"><b><dtml-var des_norma> nº <dtml-var num_norma>/<dtml-var ano_norma></b></a>
+                   </dtml-if>
+                </dtml-in>
+                </div>
+                </div>
+
+                </div>
+
+
+
+
+            <dtml-elif expr="tipo == 2">
+
+
+
+
+      <dtml-in expr="zsql.norma_juridica_obter_zsql(cod_norma=item['codNorma'])">
+
+
+              <div class="itemNorma">
+
+
+              <div class="topoItemNorma"><a  class="linkItemNorma" href="&dtml-portal_url;/consultas/norma_juridica/norma_juridica_mostrar_proc?cod_norma=<dtml-var cod_norma>&autostart=off&pesquisa=<dtml-var pesquisa missing>">
+
+        <dtml-var des_tipo_norma capitalize> nº <dtml-var num_norma> de <dtml-var expr="pysc.data_converter_por_extenso_pysc(dat_norma)"></a>
+
+              </div>
+
+
+
+              <div class="corpoItemNorma">
+
+
+
+           <div class="flagNorma">Norma Jurídica</div>
+
+
+
+              <div class="textoEmenta">
+
+               <a href="&dtml-portal_url;/consultas/norma_juridica/norma_juridica_mostrar_proc?cod_norma=<dtml-var cod_norma>&autostart=off&pesquisa=<dtml-var pesquisa missing>">
+                    <dtml-var txt_ementa missing>
+               </a>
+
+
+
+
+
+
+
+              </div>
+
+<div class="linksOutrasNormas">
+
+
+
+  <dtml-in expr="zsql.vinculo_norma_juridica_referentes_obter_zsql(cod_norma=cod_norma)">
+
+            <dtml-if "tip_vinculo=='A'"><img align="absmiddle" border="0" src="&dtml-portal_url;/imagens/icon_status_altera.gif">&nbsp;<span style="color:#32682F;font-weight:normal;">Norma alterada pelo(a) <a href="&dtml-portal_url;/consultas/norma_juridica/norma_juridica_mostrar_proc?cod_norma=<dtml-var cod_norma_referente>&autostart=off&pesquisa=<dtml-var pesquisa missing>"><dtml-var sgl_tipo_norma> <dtml-var num_norma>/<dtml-var ano_norma></a>.&nbsp;</span>
+
+            <dtml-elif "tip_vinculo=='R'"><img align="absmiddle" border="0" src="&dtml-portal_url;/imagens/icon_status_revoga_integral.gif">&nbsp;<span style="color:#C72100;font-weight:normal;">Norma revogada integralmente pelo(a) <a href="&dtml-portal_url;/consultas/norma_juridica/norma_juridica_mostrar_proc?cod_norma=<dtml-var cod_norma_referente>&autostart=off&pesquisa=<dtml-var pesquisa missing>"><dtml-var sgl_tipo_norma> <dtml-var num_norma>/<dtml-var ano_norma></a>.&nbsp;</span>
+
+            <dtml-elif "tip_vinculo=='P'"><img align="absmiddle" border="0" src="&dtml-portal_url;/imagens/icon_status_revoga_parcial.gif">&nbsp;<span style="color:#32682F;font-weight:normal;">Norma revogada parcialmente pelo(a) <a href="&dtml-portal_url;/consultas/norma_juridica/norma_juridica_mostrar_proc?cod_norma=<dtml-var cod_norma_referente>&autostart=off&pesquisa=<dtml-var pesquisa missing>"><dtml-var sgl_tipo_norma> <dtml-var num_norma>/<dtml-var ano_norma></a>.&nbsp;</span>
+
+            <dtml-elif "tip_vinculo=='T'"><span style="color:#C72100;font-weight:normal;">Norma revogada por consolidação.&nbsp;</span>
+
+            <dtml-elif "tip_vinculo=='C'"><img align="absmiddle" border="0" src="&dtml-portal_url;/imagens/icon_status_correlata.gif">&nbsp;<span style="color:#62682F;font-weight:normal;">Norma correlata / regulamentadora:&nbsp;<a href="&dtml-portal_url;/consultas/norma_juridica/norma_juridica_mostrar_proc?cod_norma=<dtml-var cod_norma_referente>&autostart=off&pesquisa=<dtml-var pesquisa missing>"><dtml-var sgl_tipo_norma> <dtml-var num_norma>/<dtml-var ano_norma></a>.&nbsp;</span>
+            <dtml-elif "tip_vinculo=='Z'"><img align="absmiddle" border="0" src="&dtml-portal_url;/imagens/icon_status_correlata.gif">&nbsp;<span style="color:#62682F;font-weight:normal;">Autógrafo Transformado em Lei:&nbsp;<a href="&dtml-portal_url;/consultas/norma_juridica/norma_juridica_mostrar_proc?cod_norma=<dtml-var cod_norma_referente>&autostart=off&pesquisa=<dtml-var pesquisa missing>"><dtml-var sgl_tipo_norma>&nbsp;<dtml-var num_norma>/<dtml-var ano_norma></a>.&nbsp;</span>
+
+            <dtml-elif "tip_vinculo=='S'"><img align="absmiddle" border="0" src="&dtml-portal_url;/imagens/icon_status_revoga_parcial.gif">&nbsp;<span style="color:#32682F;font-weight:normal;">Norma ressalvada pelo(a) <a href="&dtml-portal_url;/consultas/norma_juridica/norma_juridica_mostrar_proc?cod_norma=<dtml-var cod_norma_referente>&autostart=off&pesquisa=<dtml-var pesquisa missing>"><dtml-var sgl_tipo_norma>&nbsp;<dtml-var num_norma>/<dtml-var ano_norma></a>.&nbsp;</span>
+
+            <dtml-elif "tip_vinculo=='E'"><img align="absmiddle" border="0" src="&dtml-portal_url;/imagens/icon_status_revoga_parcial.gif">&nbsp;<span style="color:#32682F;font-weight:normal;">Norma reeditada pelo(a) <a href="&dtml-portal_url;/consultas/norma_juridica/norma_juridica_mostrar_proc?cod_norma=<dtml-var cod_norma_referente>&autostart=off&pesquisa=<dtml-var pesquisa missing>"><dtml-var sgl_tipo_norma>&nbsp;<dtml-var num_norma>/<dtml-var ano_norma></a>.&nbsp;</span>
+
+            <dtml-elif "tip_vinculo=='I'"><img align="absmiddle" border="0" src="&dtml-portal_url;/imagens/icon_status_revoga_parcial.gif">&nbsp;<span style="color:#32682F;font-weight:normal;">Norma reeditada com altera&ccedil;&atilde;o pelo(a) <a href="&dtml-portal_url;/consultas/norma_juridica/norma_juridica_mostrar_proc?cod_norma=<dtml-var cod_norma_referente>&autostart=off&pesquisa=<dtml-var pesquisa missing>"><dtml-var sgl_tipo_norma>&nbsp;<dtml-var num_norma>/<dtml-var ano_norma></a>.&nbsp;</span>
+
+            <dtml-elif "tip_vinculo=='G'"><img align="absmiddle" border="0" src="&dtml-portal_url;/imagens/icon_status_revoga_parcial.gif">&nbsp;<span style="color:#32682F;font-weight:normal;">Norma regulamentada pelo(a) <a href="&dtml-portal_url;/consultas/norma_juridica/norma_juridica_mostrar_proc?cod_norma=<dtml-var cod_norma_referente>&autostart=off&pesquisa=<dtml-var pesquisa missing>"><dtml-var sgl_tipo_norma>&nbsp;<dtml-var num_norma>/<dtml-var ano_norma></a>.&nbsp;</span>
+            <dtml-elif "tip_vinculo=='L'"><img align="absmiddle" border="0" src="&dtml-portal_url;/imagens/icon_status_revoga_integral.gif">&nbsp;<span style="color:#32682F;font-weight:normal;">Norma suspensa integralmente pelo(a) <a href="&dtml-portal_url;/consultas/norma_juridica/norma_juridica_mostrar_proc?cod_norma=<dtml-var cod_norma_referente>&autostart=off&pesquisa=<dtml-var pesquisa missing>"><dtml-var sgl_tipo_norma>&nbsp;<dtml-var num_norma>/<dtml-var ano_norma></a>.&nbsp;</span>
+
+            </dtml-if>
+				<BR>
+            <dtml-else>
+				<img align="absmiddle" border="0" src="&dtml-portal_url;/imagens/icon_status_vigente.gif" alt="Norma Vigente">&nbsp;<span style="color:#32682F;font-weight:normal;">Norma sem altera&ccedil;&otilde;es posteriores.&nbsp;</span>
+				<BR>
+            </dtml-in>
+
+</div>
+
+<div class="linksOutrasNormas">
+
+  <dtml-in expr="zsql.vinculo_norma_juridica_referidas_obter_zsql(cod_norma=cod_norma)">
+
+            <dtml-if "tip_vinculo=='A'"><img align="absmiddle" border="0" src="&dtml-portal_url;/imagens/icon_status_altera.gif">&nbsp;<span style="color:#32682F;font-weight:normal;">Altera o(a) <a href="&dtml-portal_url;/consultas/norma_juridica/norma_juridica_mostrar_proc?cod_norma=<dtml-var cod_norma_referida>&autostart=off&pesquisa=<dtml-var pesquisa missing>"><dtml-var sgl_tipo_norma> <dtml-var num_norma>/<dtml-var ano_norma></a>.&nbsp;</span>
+
+            <dtml-elif "tip_vinculo=='R'"><img align="absmiddle" border="0" src="&dtml-portal_url;/imagens/icon_status_revoga_integral.gif">&nbsp;<span style="color:#C72100;font-weight:normal;">Revoga totalmente o(a) <a href="&dtml-portal_url;/consultas/norma_juridica/norma_juridica_mostrar_proc?cod_norma=<dtml-var cod_norma_referida>&autostart=off&pesquisa=<dtml-var pesquisa missing>"><dtml-var sgl_tipo_norma> <dtml-var num_norma>/<dtml-var ano_norma></a>.&nbsp;</span>
+
+            <dtml-elif "tip_vinculo=='P'"><img align="absmiddle" border="0" src="&dtml-portal_url;/imagens/icon_status_revoga_parcial.gif">&nbsp;<span style="color:#32682F;font-weight:normal;">Revoga parcialmente o(a) <a href="&dtml-portal_url;/consultas/norma_juridica/norma_juridica_mostrar_proc?cod_norma=<dtml-var cod_norma_referida>&autostart=off&pesquisa=<dtml-var pesquisa missing>"><dtml-var sgl_tipo_norma> <dtml-var num_norma>/<dtml-var ano_norma></a>.&nbsp;</span>
+
+            <dtml-elif "tip_vinculo=='T'"><span style="color:#C72100;font-weight:normal;">Revoga integralmente por consolidação <a href="&dtml-portal_url;/consultas/norma_juridica/norma_juridica_mostrar_proc?cod_norma=<dtml-var cod_norma_referida>&autostart=off&pesquisa=<dtml-var pesquisa missing>"><dtml-var sgl_tipo_norma> <dtml-var num_norma>/<dtml-var ano_norma></a>.&nbsp;</span></span>
+
+            <dtml-elif "tip_vinculo=='C'"><img align="absmiddle" border="0" src="&dtml-portal_url;/imagens/icon_status_correlata.gif">&nbsp;<span style="color:#62682F;font-weight:normal;">Norma correlata:&nbsp;<a href="&dtml-portal_url;/consultas/norma_juridica/norma_juridica_mostrar_proc?cod_norma=<dtml-var cod_norma_referida>&autostart=off&pesquisa=<dtml-var pesquisa missing>"><dtml-var sgl_tipo_norma> <dtml-var num_norma>/<dtml-var ano_norma></a>.&nbsp;</span>
+            <dtml-elif "tip_vinculo=='Z'"><img align="absmiddle" border="0" src="&dtml-portal_url;/imagens/icon_status_correlata.gif">&nbsp;<span style="color:#62682F;font-weight:normal;">Autógrafo da Norma:&nbsp;<a href="&dtml-portal_url;/consultas/norma_juridica/norma_juridica_mostrar_proc?cod_norma=<dtml-var cod_norma_referida>&autostart=off&pesquisa=<dtml-var pesquisa missing>"><dtml-var sgl_tipo_norma>&nbsp;<dtml-var num_norma>/<dtml-var ano_norma></a>.&nbsp;</span>
+
+            <dtml-elif "tip_vinculo=='S'"><img align="absmiddle" border="0" src="&dtml-portal_url;/imagens/icon_status_revoga_parcial.gif">&nbsp;<span style="color:#32682F;font-weight:normal;">Ressalva o(a) <a href="&dtml-portal_url;/consultas/norma_juridica/norma_juridica_mostrar_proc?cod_norma=<dtml-var cod_norma_referida>&autostart=off&pesquisa=<dtml-var pesquisa missing>"><dtml-var sgl_tipo_norma>&nbsp;<dtml-var num_norma>/<dtml-var ano_norma></a>.&nbsp;</span>
+
+            <dtml-elif "tip_vinculo=='E'"><img align="absmiddle" border="0" src="&dtml-portal_url;/imagens/icon_status_revoga_parcial.gif">&nbsp;<span style="color:#32682F;font-weight:normal;">Reedita o(a) <a href="&dtml-portal_url;/consultas/norma_juridica/norma_juridica_mostrar_proc?cod_norma=<dtml-var cod_norma_referida>&autostart=off&pesquisa=<dtml-var pesquisa missing>"><dtml-var sgl_tipo_norma>&nbsp;<dtml-var num_norma>/<dtml-var ano_norma></a>.&nbsp;</span>
+
+            <dtml-elif "tip_vinculo=='I'"><img align="absmiddle" border="0" src="&dtml-portal_url;/imagens/icon_status_revoga_parcial.gif">&nbsp;<span style="color:#32682F;font-weight:normal;">Reedita com alteração o(a) <a href="&dtml-portal_url;/consultas/norma_juridica/norma_juridica_mostrar_proc?cod_norma=<dtml-var cod_norma_referida>&autostart=off&pesquisa=<dtml-var pesquisa missing>"><dtml-var sgl_tipo_norma>&nbsp;<dtml-var num_norma>/<dtml-var ano_norma></a>.&nbsp;</span>
+
+            <dtml-elif "tip_vinculo=='G'"><img align="absmiddle" border="0" src="&dtml-portal_url;/imagens/icon_status_revoga_parcial.gif">&nbsp;<span style="color:#32682F;font-weight:normal;">Regulamenta o(a) <a href="&dtml-portal_url;/consultas/norma_juridica/norma_juridica_mostrar_proc?cod_norma=<dtml-var cod_norma_referida>&autostart=off&pesquisa=<dtml-var pesquisa missing>"><dtml-var sgl_tipo_norma>&nbsp;<dtml-var num_norma>/<dtml-var ano_norma></a>.&nbsp;</span>
+            <dtml-elif "tip_vinculo=='L'"><img align="absmiddle" border="0" src="&dtml-portal_url;/imagens/icon_status_revoga_integral.gif">&nbsp;<span style="color:#32682F;font-weight:normal;">Suspende totalmente o(a) <a href="&dtml-portal_url;/consultas/norma_juridica/norma_juridica_mostrar_proc?cod_norma=<dtml-var cod_norma_referida>&autostart=off&pesquisa=<dtml-var pesquisa missing>"><dtml-var sgl_tipo_norma>&nbsp;<dtml-var num_norma>/<dtml-var ano_norma></a>.&nbsp;</span>
+
+            </dtml-if>
+<BR>
+
+  </dtml-in>
+
+  </div>
+
+
+
+  <div style="font-size: 75%">
+    <dtml-in prefix="loop" expr="_.string.split(cod_assunto_sel,',')">
+
+
+                            <dtml-call "REQUEST.set('assunt', 0)">
+
+                        <dtml-in expr="zsql.assunto_norma_juridica_obter_zsql(cod_assunto=loop_item, ind_excluido=0)">
+                            <dtml-call expr="REQUEST.set('_.str(loop_item)','des_assunto')">
+                            <dtml-var des_assunto>
+
+
+                            <dtml-call "REQUEST.set('assunt', 1)">
+
+                        </dtml-in>
+
+<dtml-if expr="not _['sequence-end'] and assunt == 1"> - </dtml-if>
+
+                    </dtml-in>
+   </div>
+</div>
+
+
+</div>
+      </dtml-in>
+
+
+            </dtml-if>
+            <dtml-comment>
+            <dtml-if sequence-end>
+                <dtml-if expr="_['sequence-length'] > step">
+                <dtml-var "pysc.PageListOutput_pysc('1', page, step, _['sequence-length'], pesquisa=pesquisa, cod_parlamentar=cod_parlamentar, tip_materia=tip_materia, mtnm=mtnm, mt_tramitando = mt_tramitando, mt_status = mt_status, nm_tip_norma = nm_tip_norma, autostart='on')">
+                </dtml-if>
+            </dtml-if sequence-end>
+           </dtml-comment>
+
+
+        </dtml-in>
+
+
+
+
+</dtml-if>
+</dtml-if func>
+
+</dtml-let>

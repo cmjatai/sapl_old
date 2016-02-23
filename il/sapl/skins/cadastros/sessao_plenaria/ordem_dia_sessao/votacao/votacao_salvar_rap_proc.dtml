@@ -1,0 +1,23 @@
+  <dtml-try>
+    <dtml-call expr="zsql.votacao_incluir_zsql(cod_votacao           = hdn_cod_votacao,
+                            num_votos_sim         = txt_votos_sim,
+                            num_votos_nao         = txt_votos_nao,
+                            num_nao_votou         = txt_nao_votou,
+                            num_abstencao         = txt_votos_abstencao,
+                            txt_observacao        = txa_txt_observacao,
+                            cod_ordem             = hdn_cod_ordem,
+                            cod_materia           = hdn_cod_materia,
+                            tip_resultado_votacao = lst_tip_resultado
+                            )">
+
+
+  <dtml-except>
+    <dtml-let mensagem="'N&atilde;o foi poss&iacute;vel salvar a Vota&ccedil;&atilde;o. Tente novamente!'">
+      <dtml-var mensagem_popup_emitir>
+    </dtml-let>
+
+  <dtml-else>
+    <dtml-let mensagem="'Vota&ccedil;&atilde;o salva com sucesso!'" sucesso="1" url="'javascript:reloadParentAndClose()'">
+      <dtml-var mensagem_popup_emitir>
+    </dtml-let> 
+  </dtml-try>

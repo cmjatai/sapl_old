@@ -1,0 +1,488 @@
+<dtml-var standard_html_header>
+
+<script type="text/javascript" language="Javascript" src="javascript/data_validar_jvsc"></script>
+
+<script type="text/javascript" language="Javascript">
+
+    function campos_criticar(){
+        var form = document.protocolo_legislativo_form;
+        var regexp_digitos = /\D+/;
+
+<dtml-if use_spdo>
+        if (form.lst_tip_protocolo.selectedIndex==0){
+            alert("Selecione o tipo de Protocolo!");
+            form.lst_tip_protocolo.focus();
+            return false;
+        }
+
+        if (form.lst_tip_documento.selectedIndex==0){
+            alert("Selecione o tipo de documento!");
+            form.lst_tip_documento.focus();
+            return false;
+        }
+
+        if (form.txt_assunto.value==""){
+            alert("Informe o assunto do protocolo!");
+            form.txt_assunto.focus();
+            return false;
+        }
+
+        if (form.lst_origem.selectedIndex==0){
+            alert("Selecione a origem do protocolo!");
+            form.lst_origem.focus();
+            return false;
+        }
+
+        if (form.lst_destino.selectedIndex==0){
+            alert("Selecione o destino do protocolo!");
+            form.lst_destino.focus();
+            return false;
+        }
+</dtml-if>
+
+
+
+        if (form.lst_tip_materia.selectedIndex==0){
+            alert("Selecione um tipo de materia legislativa!");
+            form.lst_tip_materia.focus();
+            return false;
+        }
+
+        if (form.txt_num_paginas.value == "") {
+            alert("O numero de paginas deve ser preenchido!");
+            form.txt_num_paginas.focus();
+            return false;
+        }
+
+        if (form.txa_txt_ementa.value == "") {
+            alert("A ementa deve ser preenchida!");
+            form.txa_txt_ementa.focus();
+            return false;
+        }
+
+        if (form.txt_autor.value == "") {
+            alert("O autor deve ser selecionado!");
+            form.txt_autor.focus();
+            return false;
+        }
+
+        if (form.lst_tip_autor.selectedIndex==0) {
+            alert("O tipo de autor deve ser selecionado!");
+            form.lst_tip_autor.focus();
+            return false;
+        }
+
+        if (regexp_digitos.test(form.txt_num_paginas.value)) {
+            alert("O numero de paginas deve ser um numero natural!");
+            form.txt_num_paginas.focus();
+            return false;
+        }
+
+        form.submit();
+    }
+
+    function tipo_autor_trocar(form) {
+        form.txt_autor.value = "";
+        form.hdn_txt_autor.value = "";
+        form.hdn_cod_autor.value = "";
+        return;
+    }
+</script>
+
+<script type="text/javascript">
+    $(function() {
+        $('#txt_dat_documento').datepick();
+    });
+</script>
+
+<a id="ajuda" href="&dtml-portal_url;/ajuda/protocolo_legislativo">Ajuda</a>
+<dtml-call expr="REQUEST.set('use_spdo', sapl_documentos.props_sapl.use_spdo)">
+<dtml-if use_spdo>
+    <dtml-call expr="REQUEST.set('end_spdo', sapl_documentos.props_sapl.end_spdo)">
+    <dtml-call expr="REQUEST.set('login', pysc.dados_spdo_pysc(tipo='login'))">
+    <dtml-call expr="REQUEST.set('pass', pysc.dados_spdo_pysc(tipo='senha'))">
+</dtml-if>
+<h1> Protocolo Mat&eacute;ria Legislativa </h1>
+<dtml-unless use_spdo>
+<ul>
+
+
+    <ul>
+        <li>
+            <a class="selecionado" href="&dtml-portal_url;/cadastros/protocolo/protocolo_administrativo_form">Protocolar Documento</a>
+        </li>
+        <li>
+            <a href="&dtml-portal_url;/cadastros/protocolo/protocolo_legislativo_form">Protocolar Mat&eacute;ria</a>
+        </li>
+        <li>
+            <a href="&dtml-portal_url;/cadastros/protocolo/protocolo_anular_form">Anular Protocolo</a>
+        </li>
+    </ul>
+
+
+</ul>
+</dtml-unless>
+
+<dtml-if use_spdo>
+<form action="&dtml-portal_url;/pysc/spdo_protocolo_add_salvar_pysc" name="protocolo_legislativo_form" method="post" enctype="multipart/form-data">
+<input type="hidden" name="hdn_num_protocolo" value="<dtml-var num_protocolo missing>" />
+<input type="hidden" name="hdn_tip_protocolo" value="0" />
+<input type="hidden" name="hdn_tip_processo" value="1" />
+<input type="hidden" name="hdn_url" value="&dtml-portal_url;/consultas/protocolo/protocolo_pesquisar_form?incluir=1" />
+
+<input type="hidden" name="rd_opcao_num_protocolo" value="1" id="rd_opcao_num_protocolo">
+
+<dtml-comment>
+<fieldset>
+    <legend>Op&ccedil;&atilde;o de Numera&ccedil;&atilde;o (para controle do SAPL)</legend>
+    <table>
+
+        <tr>
+            <td align="left" class="campoRadio">
+            <dtml-in expr="[('Sequencial por Ano', '1'), ('Sequencial &Uacute;nico', '2')]">
+                <input type="radio" name="rd_opcao_num_protocolo" value="<dtml-var expr="_['sequence-item']">"
+                 id="rd_opcao_num_protocolo<dtml-var expr="_['sequence-item']">"
+                <dtml-if expr="_['sequence-item']=='1'">checked="1"</dtml-if> />
+                <label for="rd_opcao_num_protocolo_t<dtml-var expr="_['sequence-item']">"><dtml-var expr="_['sequence-key']"></label>
+            </dtml-in>
+            </td>
+        </tr>
+    </table>
+</fieldset>
+</dtml-comment>
+
+<fieldset>
+    <legend>Identifica&ccedil;&atilde;o da Mat&eacute;ria a ser protocolada no SPDO</legend>
+    <table>
+        <tr>
+            <td align="left" width="50%">
+                <label for="lst_tip_protocolo">Tipo de Protocolo</label><span class="campoObrigatorio">&nbsp;</span><br />
+                <select id="lst_tip_protocolo" name="lst_tip_protocolo">
+                    <option>Selecione</option>
+                    <dtml-in expr="[('R', 'Recebido'), ('E', 'Expedido'), ('I', 'Interno')]">
+                    <option value="<dtml-var expr="_['sequence-key']">">
+                        <dtml-var expr="_['sequence-item']">
+                    </option>
+                    </dtml-in>
+                  </select>
+            </td>
+            <td>
+                <label for="lst_tip_documento">Tipo de documento</label><span class="campoObrigatorio">&nbsp;</span><br/>
+                <select id="lst_tip_documento" name="lst_tip_documento" width="300">
+                    <option>Selecione</option>
+                    <dtml-in expr="pysc.spdo_listas_pysc(end='@@ws-list-tipodocumento')" prefix="spdo">
+                    <option value="<dtml-var expr="spdo_item['nome']">">
+                        <dtml-var expr="spdo_item['nome']">
+                    </option>
+                    </dtml-in>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="txt_num_documento">Número do documento</label><br/ >
+                <input type="text" id="txt_num_documento" name="txt_num_documento"  />
+            </td>
+            <td>
+                <label for="lst_situacao">Situação</label><span class="campoObrigatorio">&nbsp;</span><br/>
+                <select id="lst_situacao" name="lst_situacao">
+                    <option>Selecione</option>
+                    <dtml-in expr="pysc.spdo_listas_pysc(end='@@ws-list-situacao')" prefix="spdo">
+                    <dtml-if expr="spdo_item['inicial']">
+                    <option value="<dtml-var expr="spdo_item['nome']">">
+                        <dtml-var expr="spdo_item['nome']">
+                    </option>
+                    </dtml-if>
+                    </dtml-in>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="txt_dat_documento">Data Emissão do Documento</label><br />
+                <dtml-call expr="REQUEST.set('dat_documento', _.DateTime().strftime('%d/%m/%Y'))">
+                <input type="text" id="txt_dat_documento"
+                       name="txt_dat_documento"
+                       value="<dtml-var dat_documento>"
+                       size="10" maxlength="10" onBlur="formata_data(form.txt_dat_documento)" />
+            </td>
+            <td>
+                <label for="txt_assunto">Assunto</label><span class="campoObrigatorio">&nbsp;</span><br />
+                <input type="text" id="txt_assunto" name="txt_assunto" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="lst_origem">Origem</label><span class="campoObrigatorio">&nbsp;</span><br/>
+                <select id="lst_origem" name="lst_origem">
+                    <option>Selecione</option>
+                    <dtml-in expr="pysc.spdo_listas_pysc(end='@@ws-list-pessoas')" prefix="spdo">
+                    <option value="<dtml-var expr="spdo_item['email']">;<dtml-var expr="spdo_item['nome']">">
+                        <dtml-var expr="spdo_item['nome']">
+                    </option>
+                    </dtml-in>
+                </select>
+            </td>
+            <td>
+                <label for="lst_destino">Destino</label><span class="campoObrigatorio">&nbsp;</span><br/>
+                <select id="lst_destino" name="lst_destino">
+                    <option>Selecione</option>
+                    <dtml-in expr="pysc.spdo_listas_pysc(end='@@ws-list-pessoas')" prefix="spdo">
+                    <option value="<dtml-var expr="spdo_item['email']">;<dtml-var expr="spdo_item['nome']">">
+                        <dtml-var expr="spdo_item['nome']">
+                    </option>
+                    </dtml-in>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="lst_tip_materia">Tipo Mat&eacute;ria </label> <span class="campoObrigatorio">&nbsp;</span> <br />
+                <select id="lst_tip_materia" name="lst_tip_materia" width="300">
+                    <option>Selecione</option>
+                    <dtml-in expr="zsql.tipo_materia_legislativa_obter_zsql(ind_excluido=0)">
+                    <option value="<dtml-var tip_materia>">
+                        <dtml-var sgl_tipo_materia> - <dtml-var des_tipo_materia>
+                    </option>
+                    </dtml-in>
+                </select>
+            </td>
+            <td align="center">
+                <label for="txt_num_paginas">N&uacute;m. P&aacute;ginas </label> <span class="campoObrigatorio">&nbsp;</span> <br />
+                <input type="text" id="txt_num_paginas" name="txt_num_paginas" size="6 maxlength="3" value="<dtml-var num_dias_prazo missing null="">"/>
+            </td>
+            <td align="center"><label for="txt_hor_protocolo">Horário Chegada</label> <span class="campoObrigatorio">&nbsp;</span> <br />
+				<input type="text" id="txt_hor_protocolo" name="txt_hor_protocolo" size="8" maxlength="8" value="<dtml-var expr="_.DateTime().Time()">"/>
+			</td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <label for="txa_txt_ementa">Ementa </label> <span class="campoObrigatorio">&nbsp;</span>
+                <textarea id="txa_txt_ementa" name="txa_txt_ementa"
+                          cols="67" rows="4"
+                          onBlur="form.txa_txt_ementa.value = form.txa_txt_ementa.value.toUpperCase()"><dtml-var txt_assunto_ementa missing></textarea>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="txt_autor">Autor </label> <span class="campoObrigatorio">&nbsp;</span><br />
+                <input id="txt_autor" type="text" name="txt_autor" null="" size="40" maxlength="50" disabled onFocus="javascript:this.blur()" />
+                <input type="hidden" name="hdn_txt_autor" value="" />
+                <input class="botaoSelecionar" type="button" value="Selecionar" onClick="javascript:window.open('autor_pesquisar_form?hdn_tipo_pesquisa=protocolo_legislativo' , 'AutorWin', 'width=420,height=250,resizable=0');" />
+                <input type="hidden" name="hdn_cod_autor" value="" />
+            <td>
+                <label for="lst_tip_autor">Tipo Autor </label> <br />
+                <select id="lst_tip_autor" name="lst_tip_autor" onChange="tipo_autor_trocar(document.protocolo_legislativo_form)" disabled >
+                    <option>Todos</option>
+                    <dtml-in expr="zsql.tipo_autor_obter_zsql(ind_excluido=0)">
+                    <option value="<dtml-var tip_autor>">
+                        <dtml-var des_tipo_autor>
+                    </option>
+                    </dtml-in>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <label for="txa_txt_observacao">Observação</label>
+                <textarea id="txa_txt_observacao" name="txa_txt_observacao" cols="67" rows="4"
+                          onBlur="form.txa_txt_observacao.value = form.txa_txt_observacao.value.toUpperCase()"></textarea>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <label for="files">Anexos</label><br />
+                <input type="file" name="files" id="files" multiple>
+            </td>
+        </tr>
+        <tr>
+            <td align="center" colspan="2" style="text-align: center;">
+                <input type="button" class="botao" name="button" value="Protocolar Mat&eacute;ria" onClick="campos_criticar()" />
+                    &nbsp;
+                <input class="botaoExtra" type="reset" name="btn_protocolo_limpar" value="Limpar" />
+            </td>
+        </tr>
+
+    </table>
+</fieldset>
+
+
+<dtml-else>
+
+
+
+<form action="protocolo_legislativo_salvar_proc" name="protocolo_legislativo_form" method="post" enctype="multipart/form-data">
+
+<input type="hidden" name="rd_opcao_num_protocolo" value="1" id="rd_opcao_num_protocolo">
+
+<dtml-comment>
+<fieldset>
+    <legend>Protocolo - Op&ccedil;&atilde;o de Numera&ccedil;&atilde;o</legend>
+    <table>
+        <tr>
+            <td align="left" class="campoRadio">
+            <dtml-in expr="[('Sequencial por Ano', '1'), ('Sequencial &Uacute;nico', '2')]">
+                <input type="radio" name="rd_opcao_num_protocolo" value="<dtml-var expr="_['sequence-item']">"
+                 id="rd_opcao_num_protocolo<dtml-var expr="_['sequence-item']">"
+                <dtml-if expr="_['sequence-item']=='1'">checked="1"</dtml-if> />
+                <label for="rd_opcao_num_protocolo_t<dtml-var expr="_['sequence-item']">"><dtml-var expr="_['sequence-key']"> &nbsp;</label>
+            </dtml-in>
+            </td>
+        </tr>
+    </table>
+</fieldset>
+</dtml-comment>
+<fieldset>
+<legend>Identifica&ccedil;&atilde;o da Mat&eacute;ria</legend>
+
+<input type="hidden" name="hdn_num_protocolo" value="<dtml-var num_protocolo missing>" />
+<input type="hidden" name="hdn_tip_protocolo" value="0" />
+<input type="hidden" name="hdn_tip_processo" value="1" />
+<input type="hidden" name="hdn_url" value="&dtml-portal_url;/consultas/protocolo/protocolo_pesquisar_form?incluir=1" />
+
+<table>
+
+<tr>
+<td><label for="lst_tip_materia">Tipo Mat&eacute;ria </label> <span class="campoObrigatorio">&nbsp;</span> <br />
+<select id="lst_tip_materia" name="lst_tip_materia" style="width:80%; max-width: 100% !important;">
+<option>Selecione</option>
+<dtml-in expr="zsql.tipo_materia_legislativa_obter_zsql(ind_excluido=0)">
+<option value="<dtml-var tip_materia>">
+<dtml-var sgl_tipo_materia> - <dtml-var des_tipo_materia>
+</option>
+</dtml-in>
+</select>
+</td>
+
+<td align="center"><label for="txt_num_paginas">N&uacute;m. P&aacute;ginas </label> <span class="campoObrigatorio">&nbsp;</span> <br />
+<input type="text" id="txt_num_paginas" name="txt_num_paginas" size="6 maxlength="3" value="<dtml-var num_dias_prazo missing null="">"/>
+</td>
+
+
+<td align="center"><label for="txt_hor_protocolo">Horário Chegada</label> <span class="campoObrigatorio">&nbsp;</span> <br />
+	<input type="text" id="txt_hor_protocolo" name="txt_hor_protocolo" size="8" maxlength="8" value="<dtml-var expr="_.DateTime().Time()">"/>
+</td>
+
+
+</tr>
+
+<tr>
+<td colspan="3"><label for="txa_txt_ementa">Ementa </label> <span class="campoObrigatorio">&nbsp;</span>
+<textarea id="txa_txt_ementa" name="txa_txt_ementa" cols="67" rows="4" onBlur="form.txa_txt_ementa.value = form.txa_txt_ementa.value.toUpperCase()"><dtml-var txt_assunto_ementa missing></textarea>
+</td>
+</tr>
+
+      <tr>
+        <td colspan="3">
+         <label for="txt_autor">Autor </label> <span class="campoObrigatorio">&nbsp;</span><br />
+          <input id="txt_autor" type="text" name="txt_autor" null="" size="40" maxlength="50" disabled onFocus="javascript:this.blur()" />
+          <input type="hidden" name="hdn_txt_autor" value="" />
+          <input class="botaoSelecionar" type="button" value="Selecionar" onClick="javascript:window.open('autor_pesquisar_form?hdn_tipo_pesquisa=protocolo_legislativo' , 'AutorWin', 'width=420,height=250,resizable=0');" />
+          <input type="hidden" name="hdn_cod_autor" value="" />
+        </td>
+      </tr>
+
+      <tr>
+        <td colspan="3">
+          <label for="lst_tip_autor">Tipo Autor </label> <br />
+          <select id="lst_tip_autor" name="lst_tip_autor" onChange="tipo_autor_trocar(document.protocolo_legislativo_form)" disabled >
+            <option>Todos</option>
+            <dtml-in expr="zsql.tipo_autor_obter_zsql(ind_excluido=0)">
+              <option value="<dtml-var tip_autor>">
+                <dtml-var des_tipo_autor>
+              </option>
+            </dtml-in>
+          </select>
+        </td>
+      </tr>
+
+<tr>
+<td colspan="3"><label for="txa_txt_observacao">Observa&ccedil;&atilde;o</label>
+<textarea id="txa_txt_observacao" name="txa_txt_observacao" cols="67" onChange="javascript:form.hdn_alterou.value=1"><dtml-var txt_observacao missing null="N&atilde;o h&aacute;"></textarea>
+</td>
+</tr>
+
+<tr>
+<td align="center" colspan="3">
+<input type="button" class="botao" name="button" value="Protocolar Mat&eacute;ria" onClick="campos_criticar()" />
+&nbsp;
+<input class="botaoExtra" type="reset" name="btn_protocolo_limpar" value="Limpar" />
+</td>
+</tr>
+
+</table>
+
+</fieldset>
+</form>
+
+
+<dtml-if ano_base>
+<dtml-else>
+    <dtml-call "REQUEST.set('ano_base', (_.DateTime()).year())">
+</dtml-if>
+<dtml-if mes_base>
+<dtml-else>
+    <dtml-call "REQUEST.set('mes_base', (_.DateTime()).month())">
+</dtml-if>
+
+
+<form name="protocolo_trocar_periodo" action="protocolo_legislativo_form">
+    <fieldset>
+    <legend>Registro de Protocolo de Requerimentos por Vereador - Mês <dtml-var mes_base>/<dtml-var ano_base>.</legend>
+    <table class="table">
+        <tr>
+            <th>
+                <select id="ano_base" name="ano_base">
+                    <dtml-in expr="_.range((_.DateTime()).year(),(_.DateTime()).year()-10,-1)">
+                        <option value="<dtml-var sequence-item>" <dtml-if expr="_['sequence-item'] == int(ano_base)">selected</dtml-if>><dtml-var sequence-item></option>
+                    </dtml-in>
+                </select>
+                <select id="mes_base" name="mes_base">
+                    <dtml-in expr="_.range(1,13)">
+                        <option value="<dtml-var sequence-item>" <dtml-if expr="_['sequence-item'] == int(mes_base)">selected</dtml-if>><dtml-var sequence-item></option>
+                    </dtml-in>
+                </select>
+                <input  type="hidden" name="incluir" value="1" />
+                <input class="botao" type="submit" name="btn_protocolo_trocar_periodo" value="Trocar" />
+            </th>
+            <dtml-if expr="mes_base in [2, 12, '2', '12']">
+                <th colspan="2" style="text-align: center;">
+                    Nº de Requerimentos Protocolados - <dtml-var mes_base>/<dtml-var ano_base>
+                </th>
+            <dtml-else>
+                <th>
+                    Nº de Requerimentos Protocolados<br>1ª Quizena
+                </th>
+                <th>
+                    Nº de Requerimentos Protocolados<br>2ª Quizena
+                </th>
+            </dtml-if>
+        </tr>
+        <dtml-in expr="pysc.protocolo_conta_requerimentos_pysc(ano_base=ano_base,mes_base=mes_base)" >
+            <tr>
+                <th><dtml-var sequence-key></th>
+                <dtml-if expr="mes_base in [2, 12, '2', '12']">
+                    <td class="texto" colspan=2 style="text-align: center; padding: 0.5em;">
+                        <dtml-var expr="int((_['sequence-item'])['primQ']) + int((_['sequence-item'])['segQ'])">
+                    </td>
+                <dtml-else>
+                    <td class="texto" style="text-align: center; padding: 0.5em;">
+                        <dtml-var expr="(_['sequence-item'])['primQ']">
+                    </td>
+                    <td class="texto" style="text-align: center;padding: 0.5em;">
+                        <dtml-var expr="(_['sequence-item'])['segQ']">
+                    </td>
+                </dtml-if>
+            </tr>
+        </dtml-in>
+        <tr>
+        <th colspan="3" class="texto">
+            Informações geradas em acordo com §3 do Art. 94 do Regimento Interno nº 002/2010
+        </th>
+        </tr>
+    </table>
+    </fieldset>
+</form>
+
+</dtml-if>
+<dtml-var standard_html_footer>

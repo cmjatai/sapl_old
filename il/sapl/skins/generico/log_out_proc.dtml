@@ -1,0 +1,5 @@
+<dtml-call "REQUEST['RESPONSE'].expireCookie('__ac', path='/')">
+<dtml-call "REQUEST['RESPONSE'].expireCookie('endereco_ip', path='/')">
+<dtml-call "REQUEST['RESPONSE'].expireCookie('endereco_mac', path='/')">
+<dtml-call "REQUEST['RESPONSE'].expireCookie('__token', path='/')">
+<dtml-call "REQUEST['RESPONSE'].redirect(portal_url())">

@@ -1,0 +1,80 @@
+<dtml-var standard_html_header>
+<table border=0 align="center">
+  <tr><td colspan="2" class="titulo">&nbsp;</td></tr>
+  <tr>
+    <td width="20%" class="exclama" align="center" valign="top"> ! </td>
+    <td width="80%" class="texto"><b><dtml-var mensagem></b><br />
+  
+<dtml-if expr="_.has_key('sucesso')">
+  <dtml-if expr="_.has_key('url')">
+      <!-- dtml-call expr="REQUEST.set('cod_protocolo',_.str(_.int(cod_protocolo)))" -->
+    <dtml-call expr="REQUEST.set('num_protocolo',_.str(_.int(num_protocolo)))">
+    <dtml-call expr="REQUEST.set('ano_protocolo',_.str(_.int(ano_protocolo)))">
+
+   <a href="javascript: void(0)" 
+   onclick="window.open('&dtml-portal_url;/relatorios/pdf_etiqueta_protocolo_preparar_pysc?rad_tip_protocolo=&amp;txt_num_protocolo=<dtml-var num_protocolo>&amp;txt_ano_protocolo=<dtml-var ano_protocolo>&amp;dt_apres=&amp;dt_apres2=&amp;rad_tip_processo=&amp;lst_tip_documento=&amp;lst_tip_materia=&amp;txt_assunto=&amp;txa_txt_interessado=&amp;hdn_cod_autor=',
+  'ProtocoloWin', 
+  'width=384, height=219'); 
+   return false;">Imprimir Etiqueta</a>
+   &nbsp;&nbsp;&nbsp;
+
+   <a href="javascript: void(0)" 
+   onclick="window.open('&dtml-portal_url;/consultas/protocolo/comprovante_protocolo_mostrar_proc?num_protocolo=<dtml-var num_protocolo>&ano_protocolo=<dtml-var ano_protocolo>',
+  'ProtocoloWin1', 
+  'width=670, height=470'); 
+   return false;">Imprimir Comprovante</a>
+   &nbsp;&nbsp;&nbsp;
+     <br />
+        <dtml-in expr="zsql.protocolo_obter_zsql(num_protocolo=num_protocolo, ano_protocolo=ano_protocolo)">
+
+         <dtml-if expr="tip_processo==0">
+            <form method="post" action="&dtml-portal_url;/cadastros/documento_administrativo/numero_buscar_proc">
+                <input type="hidden" name="tip_documento"   value="<dtml-var tip_documento>" />
+                <input type="hidden" name="ano_documento"   value="<dtml-var ano_protocolo>" />
+                <input type="hidden" name="dat_documento"   value="<dtml-var "pysc.iso_to_port_pysc(dat_protocolo)">" />
+                <input type="hidden" name="num_protocolo"   value="<dtml-var num_protocolo>" />
+                <input type="hidden" name="num_protocolo_spdo"   value="<dtml-var num_protocolo_spdo>" />
+                <input type="hidden" name="txt_assunto"     value="<dtml-var txt_assunto_ementa>" />
+                <input type="hidden" name="txt_interessado" value="<dtml-var txt_interessado>" />
+                <input type="hidden" name="txt_observacao"  value="<dtml-var txt_observacao missing null="">" />
+                <p>
+                    <input class="botao"type="submit" name="cmdCriarDoc" value="Criar Documento Administrativo" />
+                </p>
+            </form>
+          </dtml-if>
+
+         <dtml-if expr="tip_processo==1">
+            <form method="post" action="&dtml-portal_url;/cadastros/materia/numero_materia_resumido_buscar_proc">
+                <input type="hidden" name="tip_id_basica_sel" value="<dtml-var tip_materia>" />
+                <input type="hidden" name="ano_ident_basica"  value="<dtml-var ano_protocolo>" />
+                <input type="hidden" name="dat_apresentacao"  value="<dtml-var "pysc.iso_to_port_pysc(dat_protocolo)">" />
+                <input type="hidden" name="num_protocolo"     value="<dtml-var num_protocolo>" />
+                <input type="hidden" name="num_protocolo_spdo"   value="<dtml-var num_protocolo_spdo>" />
+                <input type="hidden" name="txt_ementa"        value="<dtml-var txt_assunto_ementa>" />
+                <input type="hidden" name="txt_observacao"    value="<dtml-var txt_observacao missing null="">" />
+                <input type="hidden" name="protAutor"         value="<dtml-var cod_autor>" />
+                <p>
+                    <input class="botao"type="submit" name="cmdCriarMat" value="Criar Mat&eacute;ria Legislativa" />
+                </p>
+            </form>
+          </dtml-if>
+
+         </dtml-in>
+
+    <a href="<dtml-var url>">Continuar</a>
+
+  <dtml-else>
+    <a href="index_html">Continuar</a>
+  </dtml-if>
+
+<dtml-else>
+  <dtml-if expr="_.has_key('url')">
+    <a href="<dtml-var url>">Voltar</a>
+  <dtml-else>  
+    <a href="javascript:history.go(-1)">Voltar</a>
+  </dtml-if>
+</dtml-if>
+
+</td></tr>
+</table>
+<dtml-var standard_html_footer>

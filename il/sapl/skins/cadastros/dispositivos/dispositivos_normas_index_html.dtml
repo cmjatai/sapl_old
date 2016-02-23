@@ -1,0 +1,200 @@
+<dtml-var standard_html_header>
+
+
+<style>
+
+#corpo {
+   background-color: #eeeeee;
+}
+
+</style>
+
+<dtml-let tiposDisp="pysc.dispositivo_tipos_in_session_pysc()">
+
+<div class="linhatempo"> 
+
+
+<dtml-call "REQUEST.set('cod_norma_em_uso', cod_norma)">
+
+<div class="container_vigencias">
+
+	<dtml-in expr="pysc.dispositivo_vigencias_obter_pysc(cod_norma=cod_norma_em_uso)" mapping> 
+
+       <dtml-if expr="_['sequence-length'] > 1">
+       
+		       <dtml-if sequence-end>
+		           <dtml-if data_ini_vigencia>
+		           <dtml-else>
+		               <dtml-call "REQUEST.set('data_ini_vigencia', pysc.iso_to_port_pysc(data_ini))">
+		           </dtml-if>
+		       </dtml-if>
+		   
+					   <dtml-if sequence-start>
+					   
+						       <dtml-in expr="zsql.norma_juridica_obter_zsql(cod_norma=cod_norma_publicada)">
+								   <a  class="item_vigencia<dtml-if expr="_.has_key('data_ini_vigencia') and data_ini_vigencia == pysc.iso_to_port_pysc(data_ini)">_selected</dtml-if> <dtml-var css>" href="?cod_norma=<dtml-var cod_norma_em_uso>&data_ini_vigencia=<dtml-var expr="pysc.iso_to_port_pysc(data_ini)">&data_fim_vigencia=<dtml-var expr="pysc.iso_to_port_pysc(data_fim)">" title="">
+								 	   <span class="text_hover <dtml-if expr="_.has_key('data_ini_vigencia') and data_ini_vigencia == pysc.iso_to_port_pysc(data_ini)">selected</dtml-if>">Texto Original.</span>
+								    <span class="ano_norma <dtml-if expr="_.has_key('data_ini_vigencia') and data_ini_vigencia == pysc.iso_to_port_pysc(data_ini)">selected</dtml-if>"><dtml-var ano_norma></span></a>
+						       </dtml-in>
+		
+					    <dtml-elif sequence-end> 
+		
+						       <dtml-in expr="zsql.norma_juridica_obter_zsql(cod_norma=cod_norma_publicada)">
+								    <div  class="item_vigencia<dtml-if expr="_.has_key('data_ini_vigencia') and data_ini_vigencia == pysc.iso_to_port_pysc(data_ini)">_selected</dtml-if> <dtml-var css>" >
+										   <span class="ano_norma <dtml-if expr="_.has_key('data_ini_vigencia') and data_ini_vigencia == pysc.iso_to_port_pysc(data_ini)">selected</dtml-if>"><dtml-var ano_norma></span>
+										   <a class="text_hover <dtml-if expr="_.has_key('data_ini_vigencia') and data_ini_vigencia == pysc.iso_to_port_pysc(data_ini)">selected</dtml-if>" href="?cod_norma=<dtml-var cod_norma_em_uso>&data_ini_vigencia=<dtml-var expr="pysc.iso_to_port_pysc(data_ini)">&data_fim_vigencia=<dtml-var expr="pysc.iso_to_port_pysc(data_fim)">" title="">
+										       <span>Texto em Vigência. Desde <dtml-var expr="pysc.iso_to_port_pysc(data_ini)">  </span> 
+										   </a>
+										   <a  class="text_hover <dtml-if expr="_.has_key('data_ini_vigencia') and data_ini_vigencia == pysc.iso_to_port_pysc(data_ini)">selected</dtml-if>" href="?cod_norma=<dtml-var cod_norma_publicada>" title="Acessar <dtml-var des_tipo_norma capitalize> nº <dtml-var num_norma>">
+										       <dtml-var des_tipo_norma capitalize> nº <dtml-var num_norma> 
+		 								   </a>
+		  							 </div>
+						       </dtml-in> 
+			       
+					   <dtml-else>
+		    			
+						       <dtml-in expr="zsql.norma_juridica_obter_zsql(cod_norma=cod_norma_publicada)">
+								    <div  class="item_vigencia<dtml-if expr="_.has_key('data_ini_vigencia') and data_ini_vigencia == pysc.iso_to_port_pysc(data_ini)">_selected</dtml-if> <dtml-var css>" >
+										   <span class="ano_norma <dtml-if expr="_.has_key('data_ini_vigencia') and data_ini_vigencia == pysc.iso_to_port_pysc(data_ini)">selected</dtml-if>"><dtml-var ano_norma></span>
+										   <a class="text_hover <dtml-if expr="_.has_key('data_ini_vigencia') and data_ini_vigencia == pysc.iso_to_port_pysc(data_ini)">selected</dtml-if>" href="?cod_norma=<dtml-var cod_norma_em_uso>&data_ini_vigencia=<dtml-var expr="pysc.iso_to_port_pysc(data_ini)">&data_fim_vigencia=<dtml-var expr="pysc.iso_to_port_pysc(data_fim)">" title="">
+										       <span>Vigência a partir de: <dtml-var expr="pysc.iso_to_port_pysc(data_ini)">  </span> 
+										   </a>
+										   <a  class="text_hover <dtml-if expr="_.has_key('data_ini_vigencia') and data_ini_vigencia == pysc.iso_to_port_pysc(data_ini)">selected</dtml-if>" href="?cod_norma=<dtml-var cod_norma_publicada>" title="Acessar norma alteradora&#10;<dtml-var des_tipo_norma capitalize> nº <dtml-var num_norma>">
+										       <dtml-var des_tipo_norma capitalize> nº <dtml-var num_norma> 
+		 								   </a>
+		  							 </div>
+						       </dtml-in>
+					   
+					   </dtml-if> 
+					   
+					   
+					
+			       
+			       
+		       <dtml-if sequence-end> 
+		       
+		           <dtml-if data_ini_vigencia>
+		           <dtml-else>
+		               <dtml-call "REQUEST.set('data_ini_vigencia', DateTime(pysc.iso_to_port_pysc(data_ini)+' GMT+0'))">
+		           </dtml-if>
+		       </dtml-if>
+	    </dtml-if>
+       
+       
+	</dtml-in>
+</div>
+
+
+
+
+
+
+<dtml-if expr="len(zsql.norma_juridica_obter_zsql(cod_norma=cod_norma_em_uso)) > 0">
+    <dtml-call "REQUEST.set('norma_alteradora', 1)">
+</dtml-if>
+
+<dtml-if data_ini_vigencia>
+    <dtml-call "REQUEST.set('data_ini', DateTime(pysc.iso_to_port_pysc(data_ini_vigencia)+' GMT+0'))">
+<dtml-else> 
+    <dtml-call "REQUEST.set('data_ini', DateTime())">
+</dtml-if>
+
+<dtml-if data_fim_vigencia>
+    <dtml-call "REQUEST.set('data_fim', DateTime(pysc.iso_to_port_pysc(data_fim_vigencia)+' GMT+0'))">
+<dtml-else> 
+    <dtml-call "REQUEST.set('data_fim', DateTime())">
+</dtml-if>
+
+<dtml-if expr="DateTime() - data_fim > 1">
+ 
+	<br>
+	Vigência a partir de: <dtml-var expr="pysc.iso_to_port_pysc(data_ini)">. Até: <dtml-var expr="pysc.iso_to_port_pysc(data_fim-1)">
+
+<dtml-else>  
+	<br>
+	Vigência a partir de: <dtml-var expr="pysc.iso_to_port_pysc(data_ini)">.
+</dtml-if> 
+ 
+							
+	<div >
+		<input style="color: red;" type="button" value="Compilar Parcialmente" onclick="consolidarParcialmente();" title="Acionar essa opção elimina todos os itens revogados.">
+    	<input style="color: red;"  type="button" value="Compilar Totalmente" onclick="consolidarTotalmente();" title="Acionar essa opção limpa todo o texto e mostra apenas os dispositivos em vigor.">
+	</div>   
+	     		  
+</div>
+ 
+				
+			    <dtml-in expr="zsql.norma_juridica_obter_zsql(cod_norma=cod_norma)">
+			 
+					    <div class="tn" type="epigrafe">
+					    	<dtml-var des_tipo_norma> nº <dtml-var num_norma> de <dtml-var expr="pysc.data_converter_por_extenso_pysc(dat_norma)">
+						</div>    
+			    </dtml-in>  
+
+<dtml-in expr="zsql.dispositivo_obter_zsql(cod_norma=cod_norma)">  
+
+		
+    <dtml-if expr="dp_dat_inicio_vigencia < data_fim">
+				   <dtml-comment>
+				    <dtml-var expr="dp_dat_inicio_vigencia"> = <dtml-var data_ini>  ===  <dtml-var dp_dat_fim_vigencia> = <dtml-var data_fim>
+				   </dtml-comment>		
+					
+					
+					<dtml-let tipoItem="tiposDisp['id_'+str(dp_cod_tipo_dispositivo)]">
+							
+							<div class="tn <dtml-if expr="dp_dat_fim_eficacia != None and dp_dat_fim_eficacia < data_ini">desativado</dtml-if>" type="<dtml-var expr="tipoItem['class_css']">"> 
+							 
+								<a  style="display: inline;" name="<dtml-var dp_cod_dispositivo>"><dtml-var expr="tipoItem['rotulo_prefixo_html']"><dtml-var dp_txt_rotulo><dtml-var expr="tipoItem['rotulo_sufixo_html']"></a>
+								
+										<div ><dtml-var expr="tipoItem['texto_prefixo_html']"><dtml-var dp_txt_texto><dtml-var expr="tipoItem['texto_sufixo_html']">
+										 
+											 <dtml-if dp_link_disp_atualizador>
+											    <a class="link_alterador" href="&dtml-portal_url;/cadastros/norma_juridica/dispositivos/dispositivos_normas_index_html?cod_norma=<dtml-var dp_cod_norma_publicada>#<dtml-var dp_cod_disp_atualizador>">
+											       <dtml-var dp_link_disp_atualizador></a> 
+											 </dtml-if>
+										  
+										</div>  
+						    </div>
+				     
+				    </dtml-let> 
+				    
+				    
+				    <dtml-if norma_alteradora>
+							<dtml-in expr="zsql.dispositivo_obter_zsql(cod_dispositivo_atualizador=dp_cod_dispositivo)"> 
+							
+							    <dtml-if expr="dp_dat_inicio_vigencia < data_fim">
+								   <dtml-comment>
+								    <dtml-var expr="dp_disp_dat_ini_vigencia"> = <dtml-var data_ini>  ===  <dtml-var dp_dat_fim_vigencia> = <dtml-var data_fim>
+								   </dtml-comment>		
+									
+									
+									<dtml-let tipoItem="tiposDisp['id_'+str(dp_cod_tipo_dispositivo)]">
+									
+											<div class="novalei <dtml-var expr="tipoItem['class_css']"> <dtml-if expr="dp_dat_fim_vigencia != None and dp_dat_fim_vigencia < data_ini">desativado</dtml-if>"> 
+											
+												<a  href="&dtml-portal_url;/cadastros/dispositivos/dispositivos_normas_index_html?cod_norma=<dtml-var dp_cod_norma>#<dtml-var dp_cod_dispositivo>" style="display: inline;" name="<dtml-var dp_cod_dispositivo>"><dtml-var expr="tipoItem['rotulo_prefixo_html']"><dtml-var dp_txt_rotulo><dtml-var expr="tipoItem['rotulo_sufixo_html']"></a>
+												
+														<div  style="display: inline;" ><dtml-var expr="tipoItem['texto_prefixo_html']"><dtml-var dp_txt_texto><dtml-var expr="tipoItem['texto_sufixo_html']">
+														   
+														</div>  
+										    </div> 
+								    </dtml-let>
+								    
+							    </dtml-if>
+							</dtml-in> 
+				     </dtml-if>
+				     
+	</dtml-if>
+			    
+	<dtml-if sequence-end> 
+	
+	
+	</dtml-if>
+    
+</dtml-in>
+
+
+
+</dtml-let>
+
+<dtml-var standard_html_footer>

@@ -1,0 +1,13 @@
+<dtml-try>
+
+     <dtml-call expr="zsql.ordem_dia_restaurar_zsql(cod_ordem = cod_ordem, num_ordem = zsql.ordem_dia_numero_obter_zsql(cod_sessao_plen=cod_sessao_plen)[0]['novo_item'])">
+  
+  <dtml-except>
+  <dtml-let mensagem="'Ocorreu um erro ao tentar restaurar a mat&eacute;ria da ordem do dia. Tente novamente.'">
+     <dtml-var mensagem_popup_emitir>
+  </dtml-let>
+<dtml-else>
+  <dtml-let mensagem="'Mat&eacute;ria restaurada com sucesso na ordem do dia!'" sucesso="1" url="'javascript:reloadParentAndClose()'">
+     <dtml-var mensagem_popup_emitir>
+  </dtml-let>
+</dtml-try>

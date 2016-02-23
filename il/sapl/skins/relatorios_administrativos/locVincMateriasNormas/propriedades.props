@@ -1,0 +1,3 @@
+nome_relatorio:string=Localização de Vínculos entre Matérias e Normas
+desc_relatorio:string=Relatório Análitico das possíveis relações a serem criadas entre Matérias, Normas e Autógrafos
+acesso_publico:boolean=True

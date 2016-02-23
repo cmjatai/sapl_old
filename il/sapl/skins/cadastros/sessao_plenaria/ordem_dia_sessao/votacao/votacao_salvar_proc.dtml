@@ -1,0 +1,121 @@
+<dtml-unless hdn_cod_votacao>
+<dtml-if rad_votacao_branco>
+    <dtml-call expr="zsql.votacao_iniciar_zsql(cod_ordem            = hdn_cod_ordem,
+                                               ind_votacao_iniciada = 0,
+                                               )">
+    <dtml-call expr="REQUEST.set('erro', 1)">
+    <dtml-let mensagem="'Resultado da vota&ccedil;&atilde;o n&atilde;o cadastrado'" url="hdn_url">
+        <dtml-var mensagem_popup_emitir>
+    </dtml-let>
+</dtml-if>
+</dtml-unless>
+
+<dtml-if expr="hdn_tip_votacao != '2' ">
+<dtml-if rad_votacao_branco>
+    <dtml-call expr="REQUEST.set('txt_votos_sim', '0')">
+    <dtml-call expr="REQUEST.set('txt_votos_nao', '0')">
+    <dtml-call expr="REQUEST.set('txt_votos_abstencao', '0')">
+    <dtml-call expr="REQUEST.set('txt_nao_votou', '0')">
+    <dtml-call expr="REQUEST.set('lst_tip_resultado', '-1')">
+</dtml-if>
+</dtml-if>
+
+<dtml-if expr="hdn_tip_votacao == '2' ">
+<dtml-if rad_votacao_branco>
+    <dtml-call expr="REQUEST.set('lst_voto_parlamentar', '[]')">
+    <dtml-call expr="REQUEST.set('lst_tip_resultado', '-1')">
+</dtml-if>
+</dtml-if>
+
+<dtml-unless erro>
+<dtml-if expr="hdn_tip_votacao == '2' ">
+    <dtml-try>
+         <dtml-call expr="pysc.votacao_salvar_pysc(cod_parlamentar=hdn_cod_parlamentar,
+                                                   txt_observacao=txa_txt_observacao,
+                                                   vot_parlamentar=lst_voto_parlamentar,
+                                                   cod_ordem=hdn_cod_ordem,
+                                                   cod_materia=hdn_cod_materia,
+                                                   tip_resultado_votacao=lst_tip_resultado,
+                                                   ind_votacao_iniciada=0)">
+    <dtml-except>
+        <dtml-let mensagem="'Houve um erro ao inserir os votos dos parlamentares!'" url="hdn_url">
+            <dtml-var mensagem_popup_emitir>
+        </dtml-let>
+    <dtml-else>
+        <dtml-let mensagem="'Vota&ccedil;&atilde;o cadastrada com sucesso!'" sucesso="1" url="hdn_url">
+            <dtml-var mensagem_popup_emitir>
+        </dtml-let>
+    </dtml-try>
+</dtml-if>
+</dtml-unless>
+
+<dtml-if hdn_cod_votacao >
+  <dtml-call expr="REQUEST.set('metodo', zsql.votacao_atualizar_zsql)">
+<dtml-else>
+  <dtml-call expr="REQUEST.set('metodo', zsql.votacao_incluir_zsql)">
+  <dtml-call expr="REQUEST.set('hdn_cod_votacao', '')">
+</dtml-if>
+
+<dtml-unless txt_nao_votou>
+    <dtml-call expr="REQUEST.set('txt_nao_votou', 0)">
+</dtml-unless>
+
+<dtml-unless erro>
+  <dtml-if expr="hdn_tip_votacao != '2' ">
+  <dtml-try>
+    <dtml-call expr="metodo(cod_votacao           = hdn_cod_votacao,
+                            num_votos_sim         = txt_votos_sim,
+                            num_votos_nao         = txt_votos_nao,
+                            num_abstencao         = txt_votos_abstencao,
+                            num_nao_votou         = txt_nao_votou,
+                            txt_observacao        = txa_txt_observacao,
+                            cod_ordem             = hdn_cod_ordem,
+                            cod_materia           = hdn_cod_materia,
+                            tip_resultado_votacao = lst_tip_resultado
+                            )">
+
+    <dtml-call expr="zsql.votacao_iniciar_zsql(cod_ordem=hdn_cod_ordem, ind_votacao_iniciada = 0)">
+
+  <dtml-except>
+    <dtml-let mensagem="'N&atilde;o foi poss&iacute;vel salvar a Vota&ccedil;&atilde;o. Tente novamente!'">
+      <dtml-var mensagem_popup_emitir>
+
+    </dtml-let>
+
+  <dtml-if expr="hdn_tip_votacao == '3' ">
+      <dtml-call expr="pysc.tokens_gerar_pysc(remover=True)">
+  </dtml-if>
+  <dtml-else>
+    <dtml-let mensagem="'Vota&ccedil;&atilde;o salva com sucesso!'" sucesso="1" url="hdn_url">
+      <dtml-var mensagem_popup_emitir>
+    </dtml-let>
+
+      <dtml-in expr="zsql.tipo_resultado_votacao_obter_zsql(tip_resultado_votacao=lst_tip_resultado)">
+          <dtml-call expr="REQUEST.set('tip_resultado', nom_resultado)">
+      </dtml-in>
+      <dtml-in expr="zsql.materia_obter_zsql(cod_materia=hdn_cod_materia    , ind_excluido=0)">
+          <dtml-if rad_votacao_branco>
+              <dtml-call expr="pysc.sessao_plenaria_log_pysc(cod_sessao_plen = hdn_cod_sessao_plen,
+                                          txt_acao = 'votação anulada',
+                                          txt_mensagem = 'A votação da matéria ' + sgl_tipo_materia + ' - ' + des_tipo_materia + ' foi anulada')">
+          <dtml-else>
+              <dtml-if hdn_cod_votacao>
+              <dtml-call expr="pysc.sessao_plenaria_log_pysc(cod_sessao_plen = hdn_cod_sessao_plen,
+                            txt_acao = 'atualização de votação',
+                            txt_mensagem = 'Votação da matéria ' + sgl_tipo_materia + ' - ' + des_tipo_materia + ' ' +
+                                           _.str(num_ident_basica) + '/' + _.str(ano_ident_basica) + ' atualizada na sessão plenária. Resultado: ' + txt_votos_sim + ' votos sim, ' +
+                                           txt_votos_nao + ' votos não e ' + txt_votos_abstencao + ' votos de abstenção. Tipo do resultado: ' + tip_resultado)">
+
+              <dtml-else>
+              <dtml-call expr="pysc.sessao_plenaria_log_pysc(cod_sessao_plen = hdn_cod_sessao_plen,
+                            txt_acao = 'inclusão de votação',
+                            txt_mensagem = 'Votação da matéria ' + sgl_tipo_materia + ' - ' + des_tipo_materia + ' ' +
+                                           _.str(num_ident_basica) + '/' + _.str(ano_ident_basica) + ' incluída na sessão plenária. Resultado: ' + txt_votos_sim + ' votos sim, ' +
+                                           txt_votos_nao + ' votos não e ' + txt_votos_abstencao + ' votos de abstenção. Tipo do resultado: ' + tip_resultado)">
+
+          </dtml-if>
+          </dtml-if>
+      </dtml-in>
+  </dtml-try>
+  </dtml-if>
+</dtml-unless>

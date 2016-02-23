@@ -1,0 +1,13 @@
+<dtml-call "REQUEST.set('filtro', SESSION.get('filtro') )">
+<form class="navbar-form" role="search" onsubmit="return false;">
+    <input class="form-control search qs" autocomplete="off" id="qs" type="search" spellcheck="false"
+        name="q" value="<dtml-var expr="filtro['qs-user']">"
+        placeholder="Pesquisa..."/>
+    <input id="qs-p" type="hidden" name="p" value="<dtml-var expr="filtro['p']">"/>
+
+    <input id="qs-tc" type="hidden" name="qs-tc" value="<dtml-var expr="filtro['tc']">"/>
+
+
+
+
+</form>

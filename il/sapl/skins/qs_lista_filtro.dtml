@@ -1,0 +1,88 @@
+<dtml-call "REQUEST.set('filtro', SESSION.get('filtro') )">
+
+<dtml-if expr="filtro['v'] or filtro['tc'] or filtro['tm'] or filtro['tn']">
+    <div class="box">
+        <div class="qs-filtro">
+
+                <div class="qs-topo">
+                    <span>SELEÇÃO ATUAL</span>
+                    <a href="&dtml-portal_url;/qs?d=-">
+                        <span>Limpar todos os filtros</span>
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </a>
+                </div>
+            <ul>
+            <dtml-if expr="filtro['v']">
+                <li class="qs-grupo">
+                    <span class="qs-grupo">Por Parlamentar</span>
+                    <a href="&dtml-portal_url;/qs?d=v-"><span class="qs-button glyphicon glyphicon-remove"></span></a>
+                </li>
+            </dtml-if>
+
+            <dtml-if expr="'tn' in filtro['tc'] and (27 not in filtro['tn'] or (27 in filtro['tn'] and len(filtro['tn']) > 1))">
+                <li class="qs-grupo">
+                    <span class="qs-grupo">Legislação Municipal</span>
+                    <a href="&dtml-portal_url;/qs?d=tc-tn"><span class="qs-button glyphicon glyphicon-remove"></span></a>
+                </li>
+                <dtml-in expr="filtro['tn'] " prefix="tn">
+                    <dtml-in expr="zsql.tipo_norma_juridica_obter_zsql(ind_excluido=0, tip_norma=tn_item)">
+                        <dtml-if expr="tip_norma != 27">
+                            <li>
+                                <span><dtml-var des_tipo_norma></span>
+                                <a href="&dtml-portal_url;/qs?d=tn-<dtml-var tn_item>"><span class="qs-button glyphicon glyphicon-remove"></span></a>
+                            </li>
+                        </dtml-if>
+                    </dtml-in>
+                </dtml-in>
+            </dtml-if>
+            <dtml-if expr="'tm' in filtro['tc']">
+                <li class="qs-grupo">
+                    <span class="qs-grupo">Matérias Legislativas</span>
+                    <dtml-if expr="not filtro['v']">
+                        <a href="&dtml-portal_url;/qs?d=tc-tm"><span class="qs-button glyphicon glyphicon-remove"></span></a>
+                    </dtml-if>
+                </li>
+                <dtml-if expr="len(filtro['tr']) > 0 and filtro['tr'][0] == 1">
+                    <li>
+                        <span>Tramitando</span>
+                        <a href="&dtml-portal_url;/qs?d=tr-1"><span class="qs-button glyphicon glyphicon-remove"></span></a>
+                    </li>
+                </dtml-if>
+
+                <dtml-in expr="filtro['ts']" prefix="ts">
+                    <dtml-in expr="zsql.status_tramitacao_obter_zsql(cod_status=ts_item)">
+                        <li>
+                            <span><dtml-var des_status></span>
+                            <a href="&dtml-portal_url;/qs?d=ts-<dtml-var ts_item>"><span class="qs-button glyphicon glyphicon-remove"></span></a>
+                        </li>
+                    </dtml-in>
+                </dtml-in>
+
+                <dtml-in expr="filtro['tm']" prefix="tm">
+                    <dtml-in expr="zsql.tipo_materia_legislativa_obter_zsql(ind_excluido=0, tip_materia=tm_item)">
+                        <li>
+                            <span><dtml-var des_tipo_materia></span>
+                            <a href="&dtml-portal_url;/qs?d=tm-<dtml-var tm_item>"><span class="qs-button glyphicon glyphicon-remove"></span></a>
+                        </li>
+                    </dtml-in>
+                </dtml-in>
+            </dtml-if>
+            <dtml-if expr="'ta' in filtro['tc']">
+                <li class="qs-grupo">
+                    <span class="qs-grupo">Autógrafos</span>
+                    <a href="&dtml-portal_url;/qs?d=tc-ta"><span class="qs-button glyphicon glyphicon-remove"></span></a>
+                </li>
+            </dtml-if>
+            <dtml-if expr="'td' in filtro['tc']">
+                <li class="qs-grupo">
+                    <span class="qs-grupo">Diários Oficiais</span>
+                    <a href="&dtml-portal_url;/qs?d=tc-td"><span class="qs-button glyphicon glyphicon-remove"></span></a>
+                </li>
+            </dtml-if>
+            </ul>
+        </div>
+    </div>
+</dtml-if>
+<dtml-if expr="_.str(AUTHENTICATED_USER) == 'devv'">
+    <dtml-var filtro>
+</dtml-if>

@@ -1,0 +1,172 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="pt">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Comprovante de Protocolo</title>
+<style type="text/css"><!-- @import url(&dtml-portal_url;/generico/estilos.css); --></style>
+</head>
+
+<body>
+<dtml-call expr="REQUEST.set('use_spdo', sapl_documentos.props_sapl.use_spdo)">
+ <table width="645" align="center">
+  <tr>
+    <td colspan="2">
+<div id="topo">
+  <dtml-call expr="REQUEST.set('existe_logo', 0)">
+  <dtml-call expr="REQUEST.set('id_logo', sapl_documentos.props_sapl.id_logo)">
+  <dtml-in expr="sapl_documentos.props_sapl.objectValues('Image')">
+    <dtml-if expr="id() == id_logo">
+      <dtml-call expr="REQUEST.set('existe_logo', 1)">
+    </dtml-if>
+  </dtml-in>
+  <h1 id="logo-prot">
+    <dtml-if "not existe_logo">
+      <img src="&dtml-portal_url;/imagens/brasao.gif" alt="Bras&atilde;o da Casa Legislativa" />
+    <dtml-else>
+      <img src="sapl_documentos/props_sapl/<dtml-var id_logo>" alt="Bras&atilde;
+o da Casa Legislativa" />
+    </dtml-if>
+  </h1>
+  <div id="identidade-prot">
+    <h2><dtml-var "sapl_documentos.props_sapl.nom_casa" missing></h2>
+    <h3>Sistema de Apoio ao Processo Legislativo</h3>
+  </div>
+</div>
+    </td>
+  </tr>
+
+  <tr>
+   <td class="borda-prot" colspan="2" align="center">
+<dtml-if expr="ind_anulado==1"> <span class="anulado">** NULO **&nbsp;&nbsp;</span></dtml-if>
+   <b>COMPROVANTE DE PROTOCOLO</b>
+<dtml-if expr="ind_anulado==1"> <span class="anulado"> &nbsp;&nbsp;** NULO **</span></dtml-if>
+   </td>
+  </tr>
+
+  <tr>
+   <td align="center" width="30%" class="borda-prot"><div>
+       <dtml-if use_spdo>
+        <img src="http://www.barcodesinc.com/generator/image.php?code=<dtml-var num_protocolo_spdo>&amp;style=180&amp;type=C128A&amp;width=170&amp;height=50&amp;xres=1&amp;font=2" width="170" height="50"></div>
+       <dtml-else>
+           <img src="http://www.barcodesinc.com/generator/image.php?code=<dtml-var num_protocolo>&amp;style=180&amp;type=C128A&amp;width=170&amp;height=50&amp;xres=1&amp;font=2" width="170" height="50"></div>
+       </dtml-if>
+   </td>
+   <td align="center" class="borda-prot" width="70%">Autentica&ccedil;&atilde;o: 
+   <dtml-if expr="ind_anulado==1"> <span class="anulado"> ** NULO **</span>
+   <dtml-else>
+     <dtml-var tip_processo><dtml-var dat_protocolo><dtml-var num_protocolo></td>
+   </dtml-if>
+  </tr>  
+
+     <dtml-if use_spdo>
+              <tr>
+   <td class="borda-prot" width="30%"><b>N&uacute;mero</b></td>
+   <td class="borda-prot" width="70%"><dtml-var num_protocolo_spdo></td>
+  </tr>
+     <dtml-else>
+         <tr>
+   <td class="borda-prot" width="30%"><b>N&uacute;mero / Ano</b></td>
+   <td class="borda-prot" width="70%"><dtml-var num_protocolo> / <dtml-var ano_protocolo></td>
+  </tr>
+  <tr>
+   <td class="borda-prot" width="30%"><b>N&uacute;mero / Ano</b></td>
+   <td class="borda-prot" width="70%"><dtml-var num_protocolo> / <dtml-var ano_protocolo></td>
+  </tr>
+     </dtml-if>
+
+  <tr>
+   <td class="borda-prot" width="30%"><b>Data / Hor&aacute;rio</b></td>
+   <td class="borda-prot" width="70%"><dtml-var "pysc.iso_to_port_pysc(dat_protocolo)"> - <dtml-var hor_protocolo></td>
+  </tr>
+
+  <tr>
+   <td class="borda-prot" width="30%"><b>Ementa</b></td>
+   <td class="borda-prot" width="70%"><dtml-var txt_assunto_ementa></td>
+  </tr>
+
+  <tr>
+   <td class="borda-prot" width="30%">
+	<dtml-if cod_autor>
+		<b>Autor</b>
+        </dtml-if>
+
+	<dtml-if txt_interessado>
+		<b>Interessado</b>
+        </dtml-if>
+   </td>
+   <td class="borda-prot" width="70%">
+	<dtml-if cod_autor>
+		<dtml-in expr="zsql.autor_obter_zsql(cod_autor=cod_autor)">
+
+		<dtml-if cod_parlamentar>
+		<dtml-in expr="zsql.parlamentar_obter_zsql(cod_parlamentar=cod_parlamentar)">
+		<dtml-var nom_completo><br /> 
+		</dtml-in>
+
+	<dtml-elif cod_comissao>
+		<dtml-in expr="zsql.comissao_obter_zsql(cod_comissao=cod_comissao)">
+		<dtml-var nom_comissao><br />
+		</dtml-in>
+	<dtml-else>
+		<dtml-var nom_autor missing null=""><br />
+	</dtml-if>
+		</dtml-in>
+	</dtml-if>
+
+	<dtml-if txt_interessado>
+		<dtml-var txt_interessado> <br />
+	</dtml-if>
+   </td>
+  </tr>
+
+  <tr>
+   <td class="borda-prot" width="30%"><b>Natureza</b></td>
+   <td class="borda-prot" width="70%">
+	<dtml-if expr="tip_processo==0">
+		Documento Administrativo
+	</dtml-if>
+
+	<dtml-if expr="tip_processo==1">
+		Mat&eacute;ria Legislativa
+	</dtml-if>
+   </td>
+  </tr>
+
+  <tr>
+   <td class="borda-prot" width="30%">
+	<dtml-if expr="tip_processo==0">
+		<b>Tipo Documento</b>
+	</dtml-if>
+
+	<dtml-if expr="tip_processo==1">
+		<b>Tipo Mat&eacute;ria</b>
+	</dtml-if>
+  </td>
+   <td class="borda-prot" width="70%">
+	<dtml-if expr="tip_processo==0">
+		<dtml-var sgl_tipo_documento> <dtml-var des_tipo_documento> 
+	</dtml-if>
+
+	<dtml-if expr="tip_processo==1">
+		<dtml-var sgl_tipo_materia> <dtml-var des_tipo_materia> 
+	</dtml-if>
+  </td>
+  </tr>
+
+  <tr>
+   <td class="borda-prot" width="30%"><b>N&uacute;mero P&aacute;ginas</b></td>
+   <td class="borda-prot" width="70%"><dtml-var num_paginas></td>
+  </tr>
+     <tr>
+         <td class="borda-prot" width="30%"><b>Comprovante emitido por:</b></td>
+         <td class="borda-prot" width="70%"><dtml-var AUTHENTICATED_USER></td>
+     </tr>
+ </table>
+<p align="center">
+<input class="botao" type="button" id="hideprint" value="Imprimir" onClick="window.print()">
+<input class="botaoExtra" type="button" id="hideclose" value="Fechar" onClick="self.close()">
+</p>
+
+</body>
+</html>

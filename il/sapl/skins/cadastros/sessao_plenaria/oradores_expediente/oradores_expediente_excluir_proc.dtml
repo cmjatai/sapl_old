@@ -1,0 +1,19 @@
+<dtml-in expr="zsql.parlamentar_obter_zsql(cod_parlamentar = cod_parlamentar, ind_excluido = 0)">
+    <dtml-call expr="REQUEST.set('nom_parlamentar', nom_parlamentar)">
+</dtml-in>
+<dtml-try>
+<dtml-call expr="zsql.oradores_expediente_excluir_zsql(cod_sessao_plen=cod_sessao_plen,
+                                            cod_parlamentar=cod_parlamentar)">
+<dtml-except>
+  <dtml-let mensagem="'N&atilde;o foi poss&iacute;vel excluir o parlamentar da lista de oradores do Expediente!'">
+     <dtml-var REQUEST>
+  </dtml-let>   
+<dtml-else>
+    <dtml-call expr="pysc.sessao_plenaria_log_pysc(cod_sessao_plen = cod_sessao_plen,
+                                                   txt_acao = 'remoção de orador no expediente',
+                                                   txt_mensagem = 'O orador ' + nom_parlamentar + ' excluído no expediente da sessão plenária.')">
+    <dtml-let mensagem="'Parlamentar exclu&iacute;do com sucesso da lista de oradores do Expediente!'" sucesso="1" url="'index_html?&cod_sessao_leg=' + cod_sessao_leg + '&cod_sessao_plen=' + cod_sessao_plen + '&cod_num_legislatura=' + cod_num_legislatura + '&dat_sessao=' + dat_sessao + '&tip_sessao=' + tip_sessao">
+        <dtml-var mensagem_emitir>
+    </dtml-let>
+   
+</dtml-try>

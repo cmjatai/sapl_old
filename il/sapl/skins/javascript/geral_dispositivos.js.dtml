@@ -1,0 +1,25 @@
+ 
+
+function consolidarTotalmente() {
+	$(".desativado").remove();
+	$(".link_alterador").remove();
+}
+function consolidarParcialmente() {
+	$(".desativado").remove();
+}
+ 
+
+
+
+$(function() {
+	
+	$(".tn").click(function() {
+		
+		$(this).toggleClass("tnedit"); 
+		
+	});
+	
+	
+});
+
+				

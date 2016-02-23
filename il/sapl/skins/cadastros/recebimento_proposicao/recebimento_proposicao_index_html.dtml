@@ -1,0 +1,3 @@
+<dtml-let envrec="'B'">
+    <dtml-var proposicao_receber_form>
+</dtml-let>

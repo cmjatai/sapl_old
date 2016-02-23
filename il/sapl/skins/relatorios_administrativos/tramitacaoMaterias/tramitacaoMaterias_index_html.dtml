@@ -1,0 +1,83 @@
+<dtml-var standard_html_header>
+
+<script type="text/javascript" src="&dtml-portal_url;/javascript/prototype.min.js"></script>
+<script type="text/javascript">
+    $(function() {
+        $('#dat_przlim').datepick();
+    });
+</script>
+<script type="text/javascript">
+  function pesquisar(form) {
+   var selAno   = document.form.selAno[document.form.selAno.selectedIndex].value;
+   var tipo     = document.form.lst_tip_materia[document.form.lst_tip_materia.selectedIndex].value;
+   var local    = document.form.lst_cod_unid_tram_dest[document.form.lst_cod_unid_tram_dest.selectedIndex].value;
+   var c_status = document.form.lst_status[document.form.lst_status.selectedIndex].value;
+    location.href="&dtml-portal_url;/relatorios_administrativos/tramitacaoMaterias/tramitacaoMaterias_mostrar_proc?selAno="+selAno+"&lst_tip_materia="+tipo+"&lst_cod_unid_tram_dest="+local+"&lst_status="+c_status;
+   form.submit(); 
+  } 
+
+  function retornar(){
+       location.href="&dtml-portal_url;/relatorios_administrativos/tramitacaoMaterias/tramitacaoMaterias_index_html"
+  }  
+</script>
+<a id="ajuda" href="<dtml-var sapl url>/ajuda/relatorios#rel_materia">Ajuda</a>
+<h1 class="firstHeading">Tramitação de Matérias</h1>
+
+<fieldset>
+    <legend>Matérias em tramita&ccedil;&atilde;o por Ano, Tipo Matéria, Localização Atual e Status da Tramitação</legend>
+    <form method="get" name="form" action="tramitacaoMaterias_mostrar_proc">
+       <table>
+         <tr>
+           <td><label>Ano </label> <br />
+            <select id="selAno" name="selAno">
+                <dtml-in listaAnosMaterias>
+                   <option value="<dtml-var ano_mat>"><dtml-var ano_mat></option>
+                </dtml-in>
+            </select>
+           </td>
+         </tr>
+         <tr>
+           <td> <label>Tipo Mat&eacute;ria </label><br />
+             <select name="lst_tip_materia">
+	               <option selected value="0">Todos</option>
+	                 <dtml-in listaTiposMaterias>
+	                   <option value="<dtml-var tip_materia>"><dtml-var sgl_tipo_materia> - <dtml-var des_tipo_materia></option>
+	                 </dtml-in>
+	             </select>
+              </td>
+          </tr>
+          <tr> 
+           <td><label>Localiza&ccedil;&atilde;o Atual</label> <br /> 
+             <select name="lst_cod_unid_tram_dest">
+               <option selected value="0">Todos</option>
+                 <dtml-in listaLocaisTramitacao>
+                   <option value="<dtml-var cod_unid_tramitacao>">
+                     <dtml-if cod_orgao><dtml-var nom_orgao missing>
+                     <dtml-elif cod_comissao><dtml-var nom_comissao missing>
+                     <dtml-else><dtml-var nom_parlamentar>
+                     </dtml-if>
+                   </option>
+                 </dtml-in>
+             </select>
+           </td>
+         </tr>
+
+         <tr> 
+          <td><label>Status Tramitação</label><br />
+           <select name="lst_status">
+             <option selected value="0">Todos</option>
+             <dtml-in listaStatusTramitacao>
+               <option value="<dtml-var cod_status>"><dtml-var sgl_status> - <dtml-var des_status></option>
+             </dtml-in>
+           </select>      
+          </td>
+         </tr> 
+       </table>
+    <br />
+    <p align="left">&nbsp;&nbsp;
+       <input class="botao" type="submit" name="btn_materia_pesquisar" value="Pesquisar" onClick="Pesquisar(form)">
+       <input type="reset" class="botaoExtra" name="btn_materia_limpar"  value="Limpar">
+    </p>
+</form>
+</fieldset>
+<dtml-var standard_html_footer>
