@@ -24,7 +24,10 @@ dat_apresentacao = DateTime(context.pysc.iso_to_port_pysc(txt_dat_apresentacao))
 if legislatura.dat_inicio <= dat_apresentacao <= legislatura.dat_fim:
     autores = context.zsql.autores_obter_zsql(txt_dat_apresentacao=txt_dat_apresentacao) or []
 else:
-    autores = context.zsql.autores_obter_zsql(txt_dat_apresentacao=txt_dat_apresentacao, ind_ativo = 0 ) or []
+    autores_ativos = context.zsql.autores_obter_zsql(txt_dat_apresentacao=txt_dat_apresentacao) or []
+    autores_inativos = context.zsql.autores_obter_zsql(txt_dat_apresentacao=txt_dat_apresentacao, ind_ativo = 0 ) or []
+
+    autores = list(autores_ativos) + list(autores_inativos)
 
 for p in autores:
     s = str(p.cod_parlamentar)

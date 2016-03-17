@@ -232,7 +232,7 @@
                 <dtml-unless dat_apresentacao>
                     <dtml-call expr="REQUEST.set('dat_apresentacao', _.DateTime().strftime('%d/%m/%Y'))">
                 </dtml-unless>
-                <input type="text" id="txt_dat_apresentacao" name="txt_dat_apresentacao" size="10" maxlength="10" value="<dtml-var dat_apresentacao missing null="">" onBlur="formata_data(form.txt_dat_apresentacao)" onChange="javascript:form.hdn_alterou.value=1" />
+                <input type="text" id="txt_dat_apresentacao" name="txt_dat_apresentacao" size="10" maxlength="10" value="<dtml-var dat_apresentacao missing null="">" onBlur="formata_data(form.txt_dat_apresentacao); tipo_autor_mudou(document.materia_form);"/>
             </td>
             <td colspan="2"><label for="txt_num_protocolo">Núm. Protocolo </label><br />
                 <dtml-if use_spdo>
@@ -245,14 +245,21 @@
             </td>
         </tr>
         <tr>
-            <td><label for="lst_tip_autor">Tipo de Autor </label><span class="campoObrigatorio">&nbsp;</span><br />
+            <td>
+
+              <label for="lst_tip_autor">Tipo de Autor </label><span class="campoObrigatorio">&nbsp;</span><br />
                 <select name="lst_tip_autor" size="1" onChange="tipo_autor_mudou(document.materia_form)">
                     <dtml-unless tip_autor>
                         <option value="0"></option>
                     </dtml-unless>
                     <dtml-in expr="zsql.tipo_autor_obter_zsql(tip_autor='')">
-                        <option <dtml-if expr="REQUEST.has_key('tip_autor') and tip_autor==_.int(REQUEST['tip_autor'])">
-                        selected </dtml-if>
+                        <option
+                        <dtml-if expr="REQUEST.has_key('tip_autor') and tip_autor==_.int('0'+REQUEST['tip_autor'])">
+                          selected
+                        <dtml-elif expr="tip_autor == 1 and REQUEST.has_key('tip_autor') and tip_autor==_.int('0'+REQUEST['tip_autor'])">
+                          selected
+                          <dtml-call expr="REQUEST.set('des_tipo_autor', 'Parlamentar')">
+                        </dtml-if>
                         value="<dtml-var tip_autor>&<dtml-var des_tipo_autor url_quote>">
                     <dtml-var des_tipo_autor></option>
                     </dtml-in>
@@ -297,6 +304,7 @@
                                     </dtml-in>
 
                                     <dtml-else>
+
                                     <dtml-in expr="zsql.autor_obter_zsql(des_tipo_autor=des_tipo_autor)">
                                         <dtml-call expr="REQUEST.set('cod_autor_geral', cod_autor)">
                                         <option value="<dtml-var cod_autor_geral>">

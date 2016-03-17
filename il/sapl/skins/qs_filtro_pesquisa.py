@@ -146,7 +146,7 @@ if str(request['AUTHENTICATED_USER']) != 'dev':
                     'sort_order':  'descending',
                     'ContentType': 'text/html'}
 
-                if not tn and len(tns) > 1:
+                if ((tn == 0 and len(tns) > 2 and 27 in tns) or (tn == 0 and len(tns) > 1 and 27 not in tns)):
                     continue
 
                 if tn:
@@ -185,6 +185,8 @@ if str(request['AUTHENTICATED_USER']) != 'dev':
 
                 # join dos catálogos
                 for it in norms_html:
+                    if it.tipo_norma == 27 and len(filtro['tc']) and 'ta' not in filtro['tc']:
+                        continue
                     item_results = {}
                     item_results['data'] = it.LastModified
                     item_results['codigo'] = it.num_norma
@@ -196,6 +198,8 @@ if str(request['AUTHENTICATED_USER']) != 'dev':
                     lResults.append(item_results)
 
                 for it in norms_geral:
+                    if it.tipo_norma == 27 and len(filtro['tc']) and 'ta' not in filtro['tc']:
+                        continue
                     item_results = {}
                     item_results['data'] = it.LastModified
                     item_results['codigo'] = it.num_norma

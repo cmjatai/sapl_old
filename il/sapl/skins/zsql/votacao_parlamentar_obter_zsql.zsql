@@ -5,16 +5,21 @@ max_rows : 1000
 max_cache : 100
 </dtml-comment>
 SELECT
-    cod_votacao,
-    cod_parlamentar,
-    vot_parlamentar,
-    txt_login
+    rvp.cod_votacao,
+    rvp.cod_parlamentar,
+    rvp.vot_parlamentar,
+    rvp.txt_login,
+    pl.nom_parlamentar
 
 FROM
-    registro_votacao_parlamentar
+    registro_votacao_parlamentar rvp
+left join parlamentar pl on rvp.cod_parlamentar = pl.cod_parlamentar
+
   <dtml-sqlgroup where>
     <dtml-sqltest cod_parlamentar op="=" type="int" optional><dtml-and>
     <dtml-sqltest cod_votacao     op="=" type="int" optional><dtml-and>
     <dtml-sqltest vot_parlamentar op="=" type="nb" optional><dtml-and>
-    <dtml-sqltest ind_excluido    op="=" type="int" optional>
+    <dtml-sqltest ind_excluido column="rvp.ind_excluido"   op="=" type="int" optional>
   </dtml-sqlgroup>
+
+  order by pl.nom_parlamentar

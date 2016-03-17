@@ -11,11 +11,12 @@ SELECT DISTINCT
    rv.num_votos_nao,
    rv.num_abstencao,
    rv.tip_resultado_votacao,
-   rv.txt_observacao as observacao_votacao
+   rv.txt_observacao as observacao_votacao,
+   rv.cod_votacao
 FROM
-   sessao_plenaria sp,  
-   ordem_dia od, 
-   expediente_materia em, 
+   sessao_plenaria sp,
+   ordem_dia od,
+   expediente_materia em,
    registro_votacao rv
 WHERE
    sp.ind_excluido=0

@@ -1,12 +1,6 @@
 <dtml-var standard_html_header>
 
-
-
-
  <div class="topoMateriaMostrar">
-
-
-
 
              <dtml-let listaFotos="sapl_documentos.parlamentar.fotos.objectValues('Image')">
 
@@ -29,7 +23,6 @@
                                <dtml-in expr="listaFotos">
                                  <dtml-if expr="(cod_parlamentar+'_'+sapl_documentos.parlamentar.fotos.nom_documento) == id()">
                                         <a class="linkImgs pointer"  style="opacity: 1; z-index: 98;" href="&dtml-portal_url;/qs?v=<dtml-var cod_parlamentar>">
-
                                           <dtml-if expr="num_parlamentar > 1">
                                             <div class="avatar3">
 			                                   <img class="imgAvatar" src="<dtml-var absolute_url>" title="<dtml-var nom_completo>">
@@ -368,7 +361,7 @@
                     <tr>
                         <td class="texto">
                             <a href="&dtml-portal_url;/consultas/sessao_plenaria/agenda_sessao_plen_mostrar_proc?cod_sessao_plen=<dtml-var cod_sessao_plen>&dat_sessao=<dtml-var dat_inicio_sessao>">
-                                <dtml-var num_sessao_plen>ª Sessão <dtml-in expr="zsql.tipo_sessao_plenaria_obter_zsql(tip_sessao=tip_sessao)"><dtml-var nom_sessao></dtml-in></a>
+                              <dtml-var num_sessao_plen>ª Sessão <dtml-in expr="zsql.tipo_sessao_plenaria_obter_zsql(tip_sessao=tip_sessao)"><dtml-var nom_sessao></dtml-in></a>
                         </td>
                         <td class="texto"><dtml-var dat_inicio_sessao></td>
                         <td class="texto">
@@ -381,6 +374,11 @@
                             <dtml-if num_abstencao>
                                 | <b>Abstenções:</b> <dtml-var num_abstencao>
                             </dtml-if>
+                            <br>
+                            <dtml-in expr="zsql.votacao_parlamentar_obter_zsql(cod_votacao=cod_votacao)">
+                                    <dtml-var vot_parlamentar> - <dtml-var nom_parlamentar><br>
+                              
+                            </dtml-in>
                         </td>
                         <td class="texto">
                             <dtml-in expr="zsql.tipo_resultado_votacao_obter_zsql(tip_resultado_votacao=tip_resultado_votacao, ind_excluido=0)">

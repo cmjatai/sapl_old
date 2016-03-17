@@ -68,9 +68,9 @@ for protocolo in context.zsql.protocolo_pesquisar_zsql(tip_protocolo=REQUEST['ra
         dic['titulo']=str(protocolo.num_protocolo_spdo)
     else:
         dic['titulo']=str(protocolo.num_protocolo)
-    
+
     dic['ano']=str(protocolo.ano_protocolo)
-        
+
     dic['data']='Data: '+context.pysc.iso_to_port_pysc(protocolo.dat_protocolo)+' Horário: '+protocolo.hor_protocolo[0:2]+':'+protocolo.hor_protocolo[3:5]
 
     dic['txt_assunto']=protocolo.txt_assunto_ementa
@@ -107,7 +107,7 @@ for protocolo in context.zsql.protocolo_pesquisar_zsql(tip_protocolo=REQUEST['ra
 
 
     dic['num_documento']=''
-    for documento in context.zsql.documento_administrativo_obter_zsql(num_protocolo=protocolo.num_protocolo):
+    for documento in context.zsql.documento_administrativo_obter_zsql(num_protocolo=protocolo.num_protocolo, ano_documento=protocolo.ano_protocolo):
         dic['num_documento']=documento.sgl_tipo_documento+' '+str(documento.num_documento)+'/'+ str(documento.ano_documento)
 
     dic['ident_processo']=dic['num_materia'] or dic['num_documento']
