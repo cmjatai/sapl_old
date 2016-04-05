@@ -319,7 +319,7 @@ if str(request['AUTHENTICATED_USER']) != 'dev':
                         item_results['item']['sgl_tipo_materia'] = itMat['sgl_tipo_materia']
                         item_results['item']['tip_materia'] = itMat['tip_materia']
 
-                        if itMat.ind_publico == 0:
+                        if itMat.ind_publico == 0 and itMat.ind_tramitacao:
                             lResults.insert(pointPrivado, item_results)
                             pointPrivado = pointPrivado + 1
                             point = point + 1
