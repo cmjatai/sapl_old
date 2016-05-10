@@ -147,7 +147,7 @@
 <dtml-if step>
     <dtml-call "REQUEST.set('step', _.int(step))">
     <dtml-else>
-    <dtml-call "REQUEST.set('step', 6)">
+    <dtml-call "REQUEST.set('step', 15)">
 </dtml-if>
 <dtml-call "REQUEST.set('start',(page-1) * step + 1)">
 
@@ -173,9 +173,8 @@
 
                 <dtml-var num_sessao_plen>ª <dtml-if expr="nom_sessao!='Audiência Pública'">Sessão</dtml-if>
                 <dtml-var nom_sessao>
-
-                <dtml-if expr="DateTime(dat_inicio_sessao).month() not in [2, 12]">
-                    <dtml-if expr="DateTime(dat_inicio_sessao).day() <= 15">
+                <dtml-if expr="DateTime(pysc.data_converter_pysc(dat_inicio_sessao)).month() not in [2, 12]">
+                    <dtml-if expr="DateTime(pysc.data_converter_pysc(dat_inicio_sessao)).day() <= 15">
                         da 1ª Quinzena
                     <dtml-else>
                         da 2ª Quinzena

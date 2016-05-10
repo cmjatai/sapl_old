@@ -453,76 +453,36 @@
             </th>
             <dtml-if expr="mes_base in [2, 12, '2', '12']">
                 <th colspan="2" style="text-align: center;">
-                    Requerimentos Protocolados - <dtml-var mes_base>/<dtml-var ano_base>
+                    Nº de Requerimentos Protocolados - <dtml-var mes_base>/<dtml-var ano_base>
                 </th>
             <dtml-else>
-                <th style="text-align: center;padding: 0.5em;">
-                    Requerimentos Protocolados<br>1ª Quizena
+                <th>
+                    Nº de Requerimentos Protocolados<br>1ª Quizena
                 </th>
-                <th style="text-align: center;padding: 0.5em;">
-                  Total
-                </th>
-
-                <th style="text-align: center;padding: 0.5em;">
-                    Requerimentos Protocolados<br>2ª Quizena
-                </th>
-                <th style="text-align: center;padding: 0.5em;">
-                  Total
+                <th>
+                    Nº de Requerimentos Protocolados<br>2ª Quizena
                 </th>
             </dtml-if>
         </tr>
-        <dtml-in expr="pysc.protocolo_conta_requerimentos_pysc(ano_base=ano_base,mes_base=mes_base)" >
+        <dtml-in expr="pysc.protocolo_conta_requerimentos_pysc_new(ano_base=ano_base,mes_base=mes_base)" >
             <tr>
                 <th><dtml-var sequence-key></th>
                 <dtml-if expr="mes_base in [2, 12, '2', '12']">
-
-
-                    <td class="texto" style="text-align: center;padding: 0.5em;">
-                        <dtml-in expr="(_['sequence-item'])['primQ'] + (_['sequence-item'])['segQ']">
-                          <a href="&dtml-portal_url;/consultas/materia/materia_mostrar_proc?cod_materia=<dtml-var expr="(_['sequence-item'])">">
-                            <dtml-var expr="(_['sequence-key'])">
-                          </a>
-                          <dtml-if expr="not _['sequence-end']">
-                            -
-                          </dtml-if>
-                        </dtml-in>
+                    <td class="texto" colspan=2 style="text-align: center; padding: 0.5em;">
+                        <dtml-var expr="int((_['sequence-item'])['primQ']) + int((_['sequence-item'])['segQ'])">
                     </td>
-                    <th style="text-align: center;padding: 0.5em;">
-                      <dtml-var expr="_.len((_['sequence-item'])['primQ']) + _.len((_['sequence-item'])['segQ'])">
-                    </th>
                 <dtml-else>
-                    <td class="texto" style="text-align: center;padding: 0.5em;">
-                        <dtml-in expr="(_['sequence-item'])['primQ']">
-                          <a href="&dtml-portal_url;/consultas/materia/materia_mostrar_proc?cod_materia=<dtml-var expr="(_['sequence-item'])">">
-                            <dtml-var expr="(_['sequence-key'])">
-                          </a>
-                          <dtml-if expr="not _['sequence-end']">
-                            -
-                          </dtml-if>
-                        </dtml-in>
+                    <td class="texto" style="text-align: center; padding: 0.5em;">
+                        <dtml-var expr="_.len((_['sequence-item'])['primQ'])">
                     </td>
-                    <th style="text-align: center;padding: 0.5em;">
-                      <dtml-var expr="_.len((_['sequence-item'])['primQ'])">
-                    </th>
-
                     <td class="texto" style="text-align: center;padding: 0.5em;">
-                        <dtml-in expr="(_['sequence-item'])['segQ']">
-                          <a href="&dtml-portal_url;/consultas/materia/materia_mostrar_proc?cod_materia=<dtml-var expr="(_['sequence-item'])">">
-                            <dtml-var expr="(_['sequence-key'])">
-                          </a>
-                          <dtml-if expr="not _['sequence-end']">
-                            -
-                          </dtml-if>
-                        </dtml-in>
+                        <dtml-var expr="(_['sequence-item'])['segQ']">
                     </td>
-                    <th style="text-align: center;padding: 0.5em;">
-                      <dtml-var expr="_.len((_['sequence-item'])['segQ'])">
-                    </th>
                 </dtml-if>
             </tr>
         </dtml-in>
         <tr>
-        <th colspan="5" class="texto">
+        <th colspan="3" class="texto">
             Informações geradas em acordo com §3 do Art. 94 do Regimento Interno nº 002/2010
         </th>
         </tr>

@@ -1,4 +1,4 @@
-<dtml-var standard_html_header> 
+<dtml-var standard_html_header>
 <dtml-in expr="zsql.norma_juridica_obter_zsql(cod_norma = cod_norma)">
     <h1> <dtml-var des_tipo_norma> <dtml-var num_norma missing>/<dtml-var ano_norma missing> </h1>
 </dtml-in>
@@ -9,10 +9,10 @@
             <a href="&dtml-portal_url;/cadastros/norma_juridica/norma_juridica_mostrar_proc?cod_norma=<dtml-var cod_norma>&autostart=off">
                  Edição</a>
         </li>
-        
+
     </ul>
 </dtml-if>
-    
+
 <fieldset>
     <legend>Identificação Básica</legend>
     <table>
@@ -115,43 +115,45 @@
         </dtml-if>
 
         <dtml-if des_veiculo_publicacao>
-            <tr>
-                <th width="20%" class="form-label">Veículo Publicação:</th>
-                <td class="texto">
-                    <dtml-var des_veiculo_publicacao missing null=""> <dtml-if num_pag_inicio_publ> Pág. <dtml-var num_pag_inicio_publ missing null=""></dtml-if> <dtml-if num_pag_fim_public> <dtml-var num_pag_fim_publ missing null=""></dtml-if>
-                </td>
-                <td width="20%" class="texto"><b>Data Publicação:</b></td>
-                <td class="texto">
-                    <dtml-var dat_publicacao missing null="">
-                </td>
-            </tr>
+          <tr>
+            <th width="20%" class="form-label">Veículo Publicação:</th>
+            <td class="texto">
+              <dtml-var des_veiculo_publicacao missing null=""> <dtml-if num_pag_inicio_publ> Pág. <dtml-var num_pag_inicio_publ missing null=""></dtml-if> <dtml-if num_pag_fim_public> <dtml-var num_pag_fim_publ missing null=""></dtml-if>
+            </td>
+            <td width="20%" class="texto"><b>Data Publicação:</b></td>
+            <td class="texto">
+              <dtml-var dat_publicacao missing null="">
+            </td>
+          </tr>
         </dtml-if>
 
         <tr>
-            <th width="20%" class="form-label">Documento Digitalizado:</th>
-            <td class="texto">
-                <dtml-call expr="REQUEST.set('texto_consolidado', _.str(cod_norma)+'_texto_consolidado')">
-                <dtml-call expr="REQUEST.set('texto_original', _.str(cod_norma)+'_texto_integral')">
-                <dtml-if "_.hasattr(sapl_documentos.norma_juridica,texto_consolidado)">
-                <dtml-let documento="_.getattr(sapl_documentos.norma_juridica,texto_consolidado).absolute_url">
-                    <a target="_blank" href="<dtml-var documento>">
-                        <img align="middle" src=sapl/imagens/archiv.gif alt="Texto consolidado" title="Texto consolidado"></a>
+          <th width="20%" class="form-label">Arquivo Digital:</th>
+          <td class="texto">
+            <dtml-call expr="REQUEST.set('texto_consolidado', _.str(cod_norma)+'_texto_consolidado')">
+            <dtml-call expr="REQUEST.set('texto_original', _.str(cod_norma)+'_texto_integral')">
+            <dtml-if "_.hasattr(sapl_documentos.norma_juridica,texto_consolidado)">
+              <dtml-let documento="_.getattr(sapl_documentos.norma_juridica,texto_consolidado).absolute_url">
+                <a target="_blank" href="<dtml-var documento>">
+                  <img align="middle" src=sapl/imagens/archiv.gif alt="Texto consolidado" title="Texto consolidado"></a>
+              </dtml-let>
+            <dtml-elif "_.hasattr(sapl_documentos.norma_juridica,texto_original)">
+              <dtml-let documento="_.getattr(sapl_documentos.norma_juridica,texto_original).absolute_url">
+                <dtml-let icon_file="pysc.icone_para_documento_pysc(object_file=_.getattr(sapl_documentos.norma_juridica,texto_original))">
+                  <a target="_blank" href="<dtml-var documento>" title="<dtml-var expr="icon_file[0]">">
+                    <dtml-var expr="icon_file[1]"></a>
                 </dtml-let>
-                <dtml-elif "_.hasattr(sapl_documentos.norma_juridica,texto_original)">
-                <dtml-let documento="_.getattr(sapl_documentos.norma_juridica,texto_original).absolute_url">
-                    <a target="_blank" href="<dtml-var documento>">
-                        <img align="middle" src=sapl/imagens/archiv.gif alt="Texto original" title="Texto original"></a>
-                </dtml-let>
-                <dtml-else>
-                <img class="img-disabled" src="&dtml-portal_url;/imagens/archiv.gif" alt="Arquivo não disponível" title="Arquivo não disponível">
-                </dtml-if>
-            </td>
-            <td width="20%" class="texto"><b>Situação:</b></td>
-            <td class="texto">
-                <dtml-in expr="zsql.tipo_situacao_norma_obter_zsql(tip_situacao_norma=cod_situacao)">
-                    <dtml-var des_tipo_situacao missing null="0" upper>
-                </dtml-in>
-            </td>
+              </dtml-let>
+            <dtml-else>
+              <img class="img-disabled" src="&dtml-portal_url;/imagens/archiv.gif" alt="Arquivo não disponível" title="Arquivo não disponível">
+            </dtml-if>
+          </td>
+          <td width="20%" class="texto"><b>Situação:</b></td>
+          <td class="texto">
+            <dtml-in expr="zsql.tipo_situacao_norma_obter_zsql(tip_situacao_norma=cod_situacao)">
+              <dtml-var des_tipo_situacao missing null="0" upper>
+            </dtml-in>
+          </td>
         </tr>
     </table>
 </fieldset>
@@ -247,17 +249,17 @@
 </fieldset>
 </dtml-if>
 
- 
+
 <div>
    <legend >Texto em Vigência <a onclick="window.scrollTo(0,1000000)">(*)</a></legend>
    <dtml-call expr="REQUEST.set('id_documento', _.str(cod_norma)+'_texto_html')">
     <dtml-if "_.hasattr(sapl_documentos.norma_juridica,id_documento)">
       <dtml-let documento="_.getattr(sapl_documentos.norma_juridica,id_documento)">
-     
-      
-			
+
+
+
 <script type="text/javascript">
- 
+
 function consolidarTotalmente() {
 	$(".desativado").remove();
 	$(".link_alterador").remove();
@@ -268,25 +270,25 @@ function consolidarParcialmente() {
 
 </script>
 
-			<div style="float: right;">
-			<input style="color: red;" type="button" value="Compilar Parcialmente" onclick="consolidarParcialmente();" title="Acionar essa opção elimina todos os itens revogados.">
-		    <input style="color: red;"  type="button" value="Compilar Totalmente" onclick="consolidarTotalmente();" title="Acionar essa opção limpa todo o texto e mostra apenas os dispositivos em vigor.">
-      </div> 
-       
+			<div class="hidden-print" style="float: right;">
+			  <input class="btn btn-default" type="button" value="Compilar Parcialmente" onclick="consolidarParcialmente();" title="Acionar essa opção elimina todos os itens revogados.">
+		    <input class="btn btn-default" type="button" value="Compilar Totalmente" onclick="consolidarTotalmente();" title="Acionar essa opção limpa todo o texto e mostra apenas os dispositivos em vigor.">
+      </div>
+
      <a name="texto_integral"> </a>
-     
+
      <br><br><br>
         <dtml-var expr="documento">
-     
+
       </dtml-let>
     <dtml-else>
       <b> NÃO DISPONÍVEL</b>
-    </dtml-if>  
-   
-   
-   
+    </dtml-if>
+
+
+
 </div>
- 
+
 
 
 <p align="center">
@@ -299,15 +301,15 @@ function consolidarParcialmente() {
     capacidade de abrangência, porém, não dispensa a consulta aos textos
     oficiais impressos para a prova da existência de direito, nos termos do
     art. 337 do Código de Processo Civil.
-    
-    
+
+
     </div>
-    
+
     <hr>
-    
+
 <div style="text-align: left; color: #a00; font-size:80%; padding-top: 2em;">
     <b>* ALERTA-SE</b>, quanto as compilações:<br>
-    
+
     O <i>Dicionário Jurídico Brasileiro Acquaviva</i> define compilação de leis
 como a “reunião e seleção de textos legais, com o fito de ordenar tal
 material, escoimando-o das leis revogadas ou caducas. A compilação tem por finalidade abreviar e facilitar a consulta às fontes de
@@ -315,14 +317,12 @@ informação legislativa. Na compilação, ao contrário do que ocorre
 na consolidação, as normas nem mesmo são reescritas.”
     </i><br><br>
     <b>PORTANTO</b>:<br>
-    A Compilação de Leis do Município de Jataí é uma iniciativa mantida, 
-    em respeito a sociedade e ao seu direito transparência, 
+    A Compilação de Leis do Município de Jataí é uma iniciativa mantida,
+    em respeito a sociedade e ao seu direito transparência,
     com o fim de contribuir com o moroso processo de pesquisa de leis e suas relações.
     Assim, dado às limitações existentes, <b>a Compilação ofertada é um norte relevante</b> para constituição de
-    tese jurídica mas não resume todo o processo e, não se deve, no estágio atual, ser referência única para tal. 
-    
+    tese jurídica mas não resume todo o processo e, não se deve, no estágio atual, ser referência única para tal.
+
     </div>
 
 <dtml-var standard_html_footer>
-
-

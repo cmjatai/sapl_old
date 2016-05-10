@@ -39,6 +39,8 @@ filtro = session.get('filtro')
 if not filtro:
     filtro = qs_filtro()
 
+dataAtual = DateTime()
+
 if str(request['AUTHENTICATED_USER']) != 'dev':
 
     if str(request['AUTHENTICATED_USER']) == 'Anonymous User':
@@ -257,12 +259,10 @@ if str(request['AUTHENTICATED_USER']) != 'dev':
         for pl in palavras:
             pl.replace('"', '')
 
-
         tms = ([0, ] if 0 not in filtro['tm'] else []) + filtro['tm']
         tss = ([0, ] if 0 not in filtro['ts'] else []) + filtro['ts']
 
         for tm in tms:
-
 
             param = {
                 'rd_ordem':        '4',
@@ -278,7 +278,6 @@ if str(request['AUTHENTICATED_USER']) != 'dev':
             if filtro['v']:
                 param['des_tipo_autor'] = 'Parlamentar'
                 param['cod_autor'] = filtro['v']
-
 
             if palavras:
                 param['des_assunto'] = ' '.join(palavras)
@@ -319,7 +318,7 @@ if str(request['AUTHENTICATED_USER']) != 'dev':
                         item_results['item']['sgl_tipo_materia'] = itMat['sgl_tipo_materia']
                         item_results['item']['tip_materia'] = itMat['tip_materia']
 
-                        if itMat.ind_publico == 0 and itMat.ind_tramitacao:
+                        if itMat.ind_publico == 0 and itMat.ind_tramitacao and dataAtual.year() == itMat.dat_apresentacao.year():
                             lResults.insert(pointPrivado, item_results)
                             pointPrivado = pointPrivado + 1
                             point = point + 1

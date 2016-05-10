@@ -13,34 +13,49 @@ request = container.REQUEST
 response = request.RESPONSE
 session = request.SESSION
 
-prm_dof = {
-    'sort_on':     'LastModified',
-    'sort_order':  'descending',
-    'ContentType': 'application/pdf'}
-
-diarios_oficiais = context.sapl_documentos.\
-    diario_oficial.Catalog(prm_dof)
-
-flag_dof = range(674)
+data = DateTime()
+print data.minute()
+return printed
 
 
-for it in diarios_oficiais:
-
-    if it.num_norma in flag_dof:
-        flag_dof.remove(it.num_norma)
-    # flag_dof[it.num_norma] = 0
 
 
-return flag_dof
+lMaterias = context.zsql.materia_pesquisar_zsql(ano_ident_basica=2016)
+
+data = DateTime()
+for itMat in lMaterias:
+    print data, itMat.dat_apresentacao, (data - itMat.dat_apresentacao)
 
 
-item_results = {}
-item_results['data'] = it.LastModified
-item_results['codigo'] = it.num_norma
-item_results['id'] = it.cod_norma
-item_results['ano_norma'] = it.ano_norma
-item_results['txt_epigrafe'] = it.txt_epigrafe.decode('iso-8859-15')
-item_results['item'] = {}
-item_results['item']['codNorma'] = it.cod_norma
-item_results['item']['tipo_norma'] = it.tipo_norma
-item_results['tipo'] = 3
+return printed
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+objetos = context.sapl.sapl_documentos.norma_juridica.objectValues()
+count = 1
+for o in objetos:
+    obj_id = str(o.id)
+    if 'Catalog' in obj_id:
+        continue
+
+    if o.content_type in ['application/pdf', 'text/html']:
+        continue
+
+    print count, o.id, o.content_type
+    #o.manage_changeProperties(content_type='application/pdf')
+    #o.manage_permission("View", [], 1)
+    count += 1
+
+
+return printed

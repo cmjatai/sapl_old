@@ -316,7 +316,6 @@
   </fieldset>
 </form>
 
-
 <form name="protocolo_trocar_periodo" action="protocolo_pesquisar_form">
     <fieldset>
     <legend>Registro de Protocolo de Requerimentos por Vereador - Mês <dtml-var mes_base>/<dtml-var ano_base>.</legend>
@@ -325,7 +324,7 @@
             <th>
                 <select id="ano_base" name="ano_base">
                     <dtml-in expr="_.range((_.DateTime()).year(),(_.DateTime()).year()-10,-1)">
-                        <option value="<dtml-var sequence-item>"><dtml-var sequence-item></option>
+                        <option value="<dtml-var sequence-item>" <dtml-if expr="_['sequence-item'] == int(ano_base)">selected</dtml-if>><dtml-var sequence-item></option>
                     </dtml-in>
                 </select>
                 <select id="mes_base" name="mes_base">
@@ -338,14 +337,21 @@
             </th>
             <dtml-if expr="mes_base in [2, 12, '2', '12']">
                 <th colspan="2" style="text-align: center;">
-                    Nº de Requerimentos Protocolados - <dtml-var mes_base>/<dtml-var ano_base>
+                    Requerimentos Protocolados - <dtml-var mes_base>/<dtml-var ano_base>
                 </th>
             <dtml-else>
-                <th>
-                    Nº de Requerimentos Protocolados<br>1ª Quizena
+                <th style="text-align: center;padding: 0.5em;">
+                    Requerimentos Protocolados<br>1ª Quizena
                 </th>
-                <th>
-                    Nº de Requerimentos Protocolados<br>2ª Quizena
+                <th style="text-align: center;padding: 0.5em;">
+                  Total
+                </th>
+
+                <th style="text-align: center;padding: 0.5em;">
+                    Requerimentos Protocolados<br>2ª Quizena
+                </th>
+                <th style="text-align: center;padding: 0.5em;">
+                  Total
                 </th>
             </dtml-if>
         </tr>
@@ -353,24 +359,58 @@
             <tr>
                 <th><dtml-var sequence-key></th>
                 <dtml-if expr="mes_base in [2, 12, '2', '12']">
-                    <td class="texto" colspan=2 style="text-align: center; padding: 0.5em;">
-                        <dtml-var expr="int((_['sequence-item'])['primQ']) + int((_['sequence-item'])['segQ'])">
-                    </td>
-                <dtml-else>
-                    <td class="texto" style="text-align: center; padding: 0.5em;">
-                        <dtml-var expr="(_['sequence-item'])['primQ']">
-                    </td>
+
+
                     <td class="texto" style="text-align: center;padding: 0.5em;">
-                        <dtml-var expr="(_['sequence-item'])['segQ']">
+                        <dtml-in expr="(_['sequence-item'])['primQ'] + (_['sequence-item'])['segQ']">
+                          <a href="&dtml-portal_url;/consultas/materia/materia_mostrar_proc?cod_materia=<dtml-var expr="(_['sequence-item'])">">
+                            <dtml-var expr="(_['sequence-key'])">
+                          </a>
+                          <dtml-if expr="not _['sequence-end']">
+                            -
+                          </dtml-if>
+                        </dtml-in>
                     </td>
+                    <th style="text-align: center;padding: 0.5em;">
+                      <dtml-var expr="_.len((_['sequence-item'])['primQ']) + _.len((_['sequence-item'])['segQ'])">
+                    </th>
+                <dtml-else>
+                    <td class="texto" style="text-align: center;padding: 0.5em;">
+                        <dtml-in expr="(_['sequence-item'])['primQ']">
+                          <a href="&dtml-portal_url;/consultas/materia/materia_mostrar_proc?cod_materia=<dtml-var expr="(_['sequence-item'])">">
+                            <dtml-var expr="(_['sequence-key'])">
+                          </a>
+                          <dtml-if expr="not _['sequence-end']">
+                            -
+                          </dtml-if>
+                        </dtml-in>
+                    </td>
+                    <th style="text-align: center;padding: 0.5em;">
+                      <dtml-var expr="_.len((_['sequence-item'])['primQ'])">
+                    </th>
+
+                    <td class="texto" style="text-align: center;padding: 0.5em;">
+                        <dtml-in expr="(_['sequence-item'])['segQ']">
+                          <a href="&dtml-portal_url;/consultas/materia/materia_mostrar_proc?cod_materia=<dtml-var expr="(_['sequence-item'])">">
+                            <dtml-var expr="(_['sequence-key'])">
+                          </a>
+                          <dtml-if expr="not _['sequence-end']">
+                            -
+                          </dtml-if>
+                        </dtml-in>
+                    </td>
+                    <th style="text-align: center;padding: 0.5em;">
+                      <dtml-var expr="_.len((_['sequence-item'])['segQ'])">
+                    </th>
                 </dtml-if>
             </tr>
         </dtml-in>
         <tr>
-        <th colspan="3" class="texto">
+        <th colspan="5" class="texto">
             Informações geradas em acordo com §3 do Art. 94 do Regimento Interno nº 002/2010
         </th>
         </tr>
+
     </table>
     </fieldset>
 </form>

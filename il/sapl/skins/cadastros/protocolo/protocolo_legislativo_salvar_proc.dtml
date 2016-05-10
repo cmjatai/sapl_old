@@ -17,21 +17,22 @@
 		        tip_processo             = hdn_tip_processo,
 		        tip_materia              = lst_tip_materia,
 		        hor_protocolo            = txt_hor_protocolo,
+		        dat_protocolo            = txt_dat_protocolo,
 		        num_paginas              = txt_num_paginas,
 		        txt_assunto_ementa       = txa_txt_ementa,
 		        cod_autor                = hdn_cod_autor,
 		        txt_observacao           = txa_txt_observacao,
 		        num_protocolo_spdo       = num_protocolo_spdo)">
-		
+
 		    <dtml-in expr="zsql.protocolo_incluido_codigo_obter_zsql(ano=pysc.current_year_pysc())">
-		
+
 		        <dtml-call expr="REQUEST.set('num_protocolo', num_protocolo)">
 		           <dtml-call expr="REQUEST.set('ano_protocolo', pysc.current_year_pysc())">
 		           <dtml-let mensagem="'Mat&eacute;ria protocolada com sucesso!'" sucesso="1" url="hdn_url" codigo="num_protocolo" ano="ano_protocolo">
 		               <dtml-var mensagem_prot_emitir>
 		           </dtml-let>
 		    </dtml-in>
-		
+
 		</dtml-try>
 
 
@@ -48,21 +49,21 @@
 		        tip_processo             = hdn_tip_processo,
 		        tip_materia              = lst_tip_materia,
 		        hor_protocolo            = txt_hor_protocolo,
+		        dat_protocolo            = pysc.data_converter_pysc(data=txt_dat_protocolo),
 		        num_paginas              = txt_num_paginas,
 		        txt_assunto_ementa       = txa_txt_ementa,
 		        cod_autor                = hdn_cod_autor,
 		        txt_observacao           = txa_txt_observacao)">
-		
+
 		    <dtml-in expr="zsql.protocolo_incluido_codigo_obter_zsql(ano=pysc.current_year_pysc())">
-		
+
 		        <dtml-call expr="REQUEST.set('num_protocolo', num_protocolo)">
 		           <dtml-call expr="REQUEST.set('ano_protocolo', pysc.current_year_pysc())">
 		           <dtml-let mensagem="'Mat&eacute;ria protocolada com sucesso!'" sucesso="1" url="hdn_url" codigo="num_protocolo" ano="ano_protocolo">
 		               <dtml-var mensagem_prot_emitir>
 		           </dtml-let>
 		    </dtml-in>
-		
-		</dtml-try>
- 
-</dtml-if>
 
+		</dtml-try>
+
+</dtml-if>

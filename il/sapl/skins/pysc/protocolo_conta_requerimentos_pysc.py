@@ -7,6 +7,7 @@
 ##parameters= ano_base, mes_base
 ##title=
 ##
+
 def subtract_date(date, year=0, month=0):
     year, month = divmod(year*12 + month, 12)
     if date.month() <= month:
@@ -17,108 +18,116 @@ def subtract_date(date, year=0, month=0):
         month = date.month() - month
     return DateTime(str(year)+'/'+str(month)+'/'+str(date.day()))
 
-
 request = container.REQUEST
-RESPONSE =  request.RESPONSE
+RESPONSE = request.RESPONSE
 
 lResults = []
 iResults = {}
 
-
 dataAtual = DateTime()
 dia1MesAtual =  DateTime(str(dataAtual.year())+'/'+str(dataAtual.month())+'/01')
-diaIniUser = dia1MesAtual
+d1 = dia1MesAtual
 try:
-   diaIniUser = DateTime(ano_base+'/'+mes_base+'/01')
+    d1 = DateTime(ano_base+'/'+mes_base+'/01')
 except:
-   diaIniUser = dia1MesAtual
+    d1 = dia1MesAtual
 
+df = d1 + 35
+df = DateTime(str(df.year())+'/'+str(df.month())+'/01') - 1
+d2 = DateTime(str(df.year())+'/'+str(df.month())+'/16')
 
 lReqTramitando = []
-if diaIniUser == dia1MesAtual:
-   param = {'tip_id_basica':  3, 'ind_tramitacao':  '1'}
-   lReqTramitando = context.zsql.materia_pesquisar_zsql(param)
+if d1 == dia1MesAtual:
+    param = {'tip_id_basica':  3, 'ind_tramitacao':  '1'}
+    lReqTramitando = context.zsql.materia_pesquisar_zsql(param)
 
-diaFimUser = diaIniUser + 35
-diaFimUser = DateTime(str(diaFimUser.year())+'/'+str(diaFimUser.month())+'/01') - 1
-dia2Quiz =  DateTime(str(diaFimUser.year())+'/'+str(diaFimUser.month())+'/16')
+sessoes = context.zsql.sessao_plenaria_listar_dia_zsql(ano_sessao=d1.year(), mes_sessao=d1.month())
 
+lAprovados = []
 
-param = {'tip_id_basica':  3, 'cod_status': '55' , 'dat_ini_tramitacao': diaIniUser , 'dat_fim_tramitacao': diaFimUser }
-lReqEncaminhados = context.zsql.materia_pesquisar_zsql(param)
+dataAprovados = {}
+for d in sessoes:
+    od = context.zsql.votacao_ordem_dia_obter_zsql(dat_ordem='%s/%s/%s'%(d1.year(),d1.month(),d.dia_sessao ))
+    for o in od:
+        if o.tip_id_basica == 3 and o.tip_resultado_votacao == 1:
+            mat = context.zsql.materia_obter_zsql(cod_materia=o.cod_materia)
+            if len(mat):
+                lAprovados.append(mat[0])
+                dataAprovados[str(o.cod_materia)] = DateTime('%s/%s/%s' % (d1.year(), d1.month(), d.dia_sessao))
 
 lMaterias = []
 for mat in lReqTramitando:
     lMaterias.append(mat)
 
-
-for mat in lReqEncaminhados:
+for mat in lAprovados:
     lMaterias.append(mat)
 
-
+ja_inclusos = []
 
 count = 1
 autores = {}
 for mat in lMaterias:
     autorias = context.zsql.autoria_obter_zsql(cod_materia=mat['cod_materia'])
 
-
     if len(autorias) < 5:
-        #try:
-        #    print "T "+str(count)+" - "+str(mat['cod_materia'])+' - '+str(mat['dat_tramitacao'])+' - '+ str( mat['dat_tramitacao'] >= dia2Quiz)
-        #except:
-        #    print "V "+str(count)+" - "+str(mat['cod_materia'])+' - '+str(mat['dat_apresentacao'])+' - '+ str( mat['dat_apresentacao'] >= dia2Quiz)
+        #print "V "+str(count)+" - "+str(mat['cod_materia'])+' - '+str(mat['dat_apresentacao'])+' - '+ str( mat['dat_apresentacao'] >= d2) + ' - ' + str([a.cod_autor for a in autorias])
 
-        #count = count + 1
+        count = count + 1
 
         for autoria in autorias:
             for autor in context.zsql.autor_obter_zsql(cod_autor=autoria['cod_autor']):
                 if autor['des_tipo_autor'] == 'Parlamentar':
                     for parl in context.zsql.parlamentar_obter_zsql(cod_parlamentar=autor['cod_parlamentar']):
 
-                        if 'debug' in request and request['debug'] == '0':
-                            print str(mat['num_ident_basica']) + ' - ' + str(parl['nom_parlamentar'])
-
                         codigo = str(parl['nom_parlamentar'])
-                        #print codigo
+
+                        cod_materia = str(mat.cod_materia)
+
+                        if cod_materia in ja_inclusos:
+                            continue
+
+                        ja_inclusos.append(cod_materia)
+
                         if codigo in autores:
-                            try:
-                                if mat['dat_tramitacao'] >= dia2Quiz:
-                                    autores[codigo]['segQ'] = autores[codigo]['segQ'] + 1
+                            if cod_materia in dataAprovados:
+                                if dataAprovados[cod_materia] >= d2:
+                                    autores[codigo]['segQ'].append((mat['num_ident_basica'], cod_materia))
                                 else:
-                                    autores[codigo]['primQ'] = autores[codigo]['primQ'] + 1
-                            except:
-                                if mat['dat_apresentacao'] >= dia2Quiz or dataAtual >= dia2Quiz:
-                                    autores[codigo]['segQ'] = autores[codigo]['segQ'] + 1
+                                    autores[codigo]['primQ'].append((mat['num_ident_basica'], cod_materia))
+                            else:
+                                if dataAtual >= d2:
+                                    autores[codigo]['segQ'].append((mat['num_ident_basica'], cod_materia))
                                 else:
-                                    autores[codigo]['primQ'] = autores[codigo]['primQ'] + 1
+                                    autores[codigo]['primQ'].append((mat['num_ident_basica'], cod_materia))
                         else:
                             item = {}
-                            item['nome'] = parl['nom_parlamentar']
+                            item['nome'] = codigo
 
-                            item['primQ'] = 0
-                            item['segQ'] = 0
-                            try:
-                                if mat['dat_tramitacao'] >= dia2Quiz:
-                                    item['segQ'] = 1
+
+                            item['primQ'] = []
+                            item['segQ'] = []
+
+                            if cod_materia in dataAprovados:
+                                if dataAprovados[cod_materia] >= d2:
+                                    item['segQ'] = [(mat['num_ident_basica'], cod_materia), ]
                                 else:
-                                    item['primQ'] = 1
-                            except:
-                                if mat['dat_apresentacao'] >= dia2Quiz or dataAtual >= dia2Quiz:
-                                    item['segQ'] = 1
+                                    item['primQ'] = [(mat['num_ident_basica'], cod_materia), ]
+                            else:
+                                if dataAtual >= d2:
+                                    item['segQ'] = [(mat['num_ident_basica'], cod_materia), ]
                                 else:
-                                    item['primQ'] = 1
+                                    item['primQ'] = [(mat['num_ident_basica'], cod_materia), ]
                             autores[codigo] = item
 
 
-
 #return printed
+
 lResults = []
 for k,v in autores.items():
     iResults = (k, v)
-    lResults.append(iResults)
+    v['primQ'].sort()
+    v['segQ'].sort()
 
-if 'debug' in request and request['debug'] == '0':
-    return printed
+    lResults.append(iResults)
 
 return lResults

@@ -74,19 +74,19 @@ def protocolos(lst_protocolos):
             tmp_data+='\t\t<para style="P1">\n'
             tmp_data+='\t\t\t<font color="white"> </font>\n'
             tmp_data+='\t\t</para>\n'
-            tmp_data+='\t\t<para style="P2"><b>'+dic_cabecalho['nom_casa']+'</b></para>\n'        
+            tmp_data+='\t\t<para style="P2"><b>'+dic_cabecalho['nom_casa']+'</b></para>\n'
             tmp_data+='\t\t<para style="P1">\n'
             tmp_data+='\t\t\t<font color="white"> </font>\n'
             tmp_data+='\t\t</para>\n'
         tmp_data+='\t\t<barCode code="Code128" x="0.15cm" barHeight="0.25in" barWidth="0.018in">' +dic['titulo']+ '</barCode>\n'
-        tmp_data+='\t\t<para style="P2"><b>Procotolo Geral '+dic['natureza']+ " "+dic['titulo']+'/'+dic['ano']+'</b></para>\n'
+        tmp_data+='\t\t<para style="P2"><b>Protocolo Geral '+dic['natureza']+ " "+dic['titulo']+'/'+dic['ano']+'</b></para>\n'
         if dic['data']!=None:
             tmp_data+='\t\t<para style="P2"><b>'+dic['data']+'</b></para>\n'
-        
-            
-        tmp_data+='\t\t<para style="P3"><b>'+dic['ident_processo']+'</b></para>\n'     
-        
-        
+
+
+        tmp_data+='\t\t<para style="P3"><b>'+dic['ident_processo']+'</b></para>\n'
+
+
     tmp_data+='\t</story>\n'
     return tmp_data
 
@@ -120,4 +120,3 @@ def principal(sessao,imagem,data,lst_protocolos,dic_cabecalho,lst_rodape,dic_fil
     return "/temp_folder/"+arquivoPdf
 
 return principal(sessao,imagem,data,lst_protocolos,dic_cabecalho,lst_rodape,dic_filtro)
-

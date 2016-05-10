@@ -8,6 +8,7 @@ max_cache : 100
 SELECT DISTINCT
        REPLACE(ordem_dia.cod_ordem,  'L', '') as cod_ordem,
        REPLACE(ordem_dia.cod_materia,    'L', '') as cod_materia,
+       materia_legislativa.tip_id_basica as tip_id_basica,
        REPLACE(registro_votacao.cod_votacao,    'L', '') as cod_votacao,
        DATE_FORMAT(ordem_dia.dat_ordem, '%d/%m/%Y') as dat_ordem,
        ordem_dia.num_ordem,
