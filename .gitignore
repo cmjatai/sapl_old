@@ -10,3 +10,6 @@ import
 docs
 il.sapl-configure.zcml
 applets
+
+standard_css_slot.dtml
+
