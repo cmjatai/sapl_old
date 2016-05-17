@@ -114,55 +114,88 @@
 <h1 class="firstHeading">Matérias por Autor</h1>
 
 <dtml-if expr="not _.has_key('impressao') or (_.has_key('impressao') and not _.has_key('dt_apres') and not _.has_key('dt_apres2'))">
-    <form class="pf-form" id="hideprint" method="post" name="materia_autor_form" action="resumoPropositurasAutor_index_html">
+    <form class="form-horizontal" id="hideprint" method="post" name="materia_autor_form" action="resumoPropositurasAutor_index_html">
         <fieldset>
             <dtml-if impressao>
                 <input type="hidden" name="impressao" value="<dtml-var impressao>">
             </dtml-if>
-            <div class="pf-element pf-full-width">
-                <label for="txt_autor"><span class="pf-label">Autor</span></label>
-                <div class="pf-group">
-                    <input class="pf-field" id="txt_autor" type="text" name="txt_autor" null="" placeholder="Todos" style="max-width: 224px; width: 60%;" maxlength="50" disabled onFocus="javascript:this.blur()" />
-                    <input type="hidden" name="hdn_txt_autor" value="" />
-                    <a href="autor_pesquisar_form?hdn_tipo_pesquisa=pesq_basica" class="botao-link popup" data-fancybox-type="iframe">Selecionar</a>
-                    <input type="hidden" name="hdn_cod_autor" value="" />
+
+
+            <div class="form-group">
+              <label for="txt_autor" class="col-sm-3 control-label">Autor</label>
+              <div class="col-sm-9">
+                <div class="col-xs-8">
+                  <input class="form-control" id="txt_autor" type="text" name="txt_autor" null="" placeholder="Todos" maxlength="50" disabled onFocus="javascript:this.blur()" />
+                  <input type="hidden" name="hdn_txt_autor" value="" />
+                  <input type="hidden" name="hdn_cod_autor" value="" />
+                </div>
+                <div class="col-xs-4">
+                  <a href="autor_pesquisar_form?hdn_tipo_pesquisa=pesq_basica" class="popup btn btn-primary pull-right" data-fancybox-type="iframe" role="button">Selecionar</a>
+                </div>
+              </div>
+            </div>
+
+
+
+
+
+            <div class="form-group">
+                <label for="lst_tip_materia" class="col-sm-3 control-label">Tipo de matéria</label>
+                <div class="col-sm-9">
+                  <div class="col-sm-12">
+                    <select class="form-control" id="lst_tip_materia" name="lst_tip_materia">
+                      <option value="0">Todos</option>
+                      <dtml-in expr="zsql.tipo_materia_legislativa_obter_zsql(ind_excluido=0)">
+                          <option
+                          <dtml-if expr="_.has_key('lst_tip_materia') and _.int(tip_materia)==_.int(lst_tip_materia)">
+                              selected</dtml-if>
+                          value="<dtml-var tip_materia missing>">
+                      <dtml-var sgl_tipo_materia> - <dtml-var des_tipo_materia>
+                      </option>
+                      </dtml-in>
+                    </select>
+                  </div>
                 </div>
             </div>
 
-            <div class="pf-element pf-full-width">
-                <label for="lst_tip_materia"><span class="pf-label">Tipo de matéria</span></label>
-                <select class="pf-field" id="lst_tip_materia" name="lst_tip_materia" style="max-width: 224px; width: 100%;">
-                    <option value="0">Todos</option>
-                    <dtml-in expr="zsql.tipo_materia_legislativa_obter_zsql(ind_excluido=0)">
-                        <option
-                        <dtml-if expr="_.has_key('lst_tip_materia') and _.int(tip_materia)==_.int(lst_tip_materia)">
-                            selected</dtml-if>
-                        value="<dtml-var tip_materia missing>">
-                    <dtml-var sgl_tipo_materia> - <dtml-var des_tipo_materia>
-                    </option>
-                    </dtml-in>
-                </select>
-            </div>
-            <div class="pf-element pf-full-width">
-                <label><span class="pf-label">Período de apresentação:</span></label>
-                <div class="pf-group">
-                    <label for="dt_apres">
-                        <input class="pf-field" type="text" id="dt_apres" name="dt_apres" maxlength=10 style="min-width: 94px; max-width: 94px; width: 20%;"
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label">Período de apresentação </label>
+                <div class="col-sm-9">
+                  <div class="col-xs-3 col-md-3">
+                    <input class="form-control" type="text" id="dt_apres" name="dt_apres" maxlength=10
                                value="<dtml-var dt_apres missing>" onblur="formata_data(form.dt_apres)" />
-                    </label>
-                    <label for="dt_apres2">a
-                        <input class="pf-field" type="text" id="dt_apres2" name="dt_apres2" maxlength="10" style="min-width: 94px; max-width: 94px; width: 20%;"
+
+                  </div>
+
+                    <div class="col-xs-1 center"> a </div>
+                  <div class="col-xs-3 col-md-3">
+
+                        <input class="form-control" type="text" id="dt_apres2" name="dt_apres2" maxlength="10"
                                value="<dtml-var dt_apres2 missing>" onblur="formata_data(form.dt_apres2)" />
-                    </label>
+
+                  </div>
                 </div>
             </div>
-            <div class="pf-element pf-buttons">
-                <input class="pf-button btn botao" type="button" class="botao" name="button" value="Gerar relatório" onClick="campos_criticar()" />
-                <input class="pf-button btn botao" type="button" name="btn_materia_limpar" value="Limpar campos" onclick="clear_form_elements('#hideprint')" >
+            <div class="form-group">
+              <div class="col-sm-12">
+                <div class="col-sm-12">
+                <div class="pull-right">
+                  <input class="btn btn-inverse" type="button" name="btn_materia_limpar" value="Limpar campos" onclick="clear_form_elements('#hideprint')" >
+                &nbsp;
+                &nbsp;
+                <input class="btn btn-primary" type="button" name="button" value="Gerar relatório" onClick="campos_criticar()" />
+                </div></div>
             </div>
+          </div>
         </fieldset>
     </form>
 </dtml-if>
+
+
+
+
+
 
 <dtml-if expr="_.has_key('dt_apres') or _.has_key('dt_apres2')">
     <h3 align="center">Matérias apresentadas entre <dtml-var dt_apres> e <dtml-var dt_apres2></h3>
