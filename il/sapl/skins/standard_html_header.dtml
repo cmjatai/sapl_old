@@ -20,8 +20,8 @@
 
 <dtml-var standard_css_slot>
 
-    <script type="text/javascript"  src="http://localhost/sapl/bower_components/jquery/dist/jquery.js"></script>
-    <script src="http://localhost/sapl/js/bootstrap.min.js"></script>
+    <script type="text/javascript"  src="<dtml-var expr="sapl_documentos.props_sapl.midias_url">/sapl/bower_components/jquery/dist/jquery.js"></script>
+    <script src="<dtml-var expr="sapl_documentos.props_sapl.midias_url">/sapl/js/bootstrap.min.js"></script>
 
     <script type="text/javascript" src="&dtml-portal_url;/javascript/jquery.plugin.min.js"></script>
     <script type="text/javascript" src="&dtml-portal_url;/javascript/jquery.datepick.js"></script>
@@ -31,7 +31,7 @@
     <script type='text/javascript' src='&dtml-portal_url;/javascript/jquery.cookie.js'></script>
     <script type="text/javascript" src="&dtml-portal_url;/javascript/jquery.fancybox.pack.js"></script>
 
-    <script src="http://localhost/sapl/js/main0.js?r=<dtml-var expr="_.random.random()">"></script>
+    <script src="<dtml-var expr="sapl_documentos.props_sapl.midias_url">/sapl/js/main0.js?r=<dtml-var expr="_.random.random()">"></script>
 
     <script type='text/javascript' src='&dtml-portal_url;/javascript/geral.js?r=<dtml-var expr="_.random.random()">'></script>
 
