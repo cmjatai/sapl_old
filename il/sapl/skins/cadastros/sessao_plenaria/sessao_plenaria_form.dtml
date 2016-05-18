@@ -120,12 +120,12 @@
 </dtml-if>
 
 <form action="sessao_plenaria_salvar_proc" name="sessao_plenaria_form" method="post" enctype="multipart/form-data">
-<input type="hidden" name="hdn_cod_sessao_plen" value="<dtml-var cod_sessao_plen missing>" />
-<input type="hidden" name="hdn_dat_sessao" value="<dtml-var dat_inicio missing>" />
-<input type="hidden" name="hdn_num_legislatura" value="<dtml-var num_legislatura missing>" />
-<input type="hidden" name="hdn_ind_iniciada" value="<dtml-var ind_iniciada missing>" />
-<input type="hidden" name="hdn_url" value="sessao_plenaria_mostrar_proc?cod_sessao_plen=<dtml-var cod_sessao_plen missing>&dat_inicio_sessao=<dtml-var dat_inicio missing>&num_legislatura=<dtml-var num_legislatura missing>&ind_iniciada=<dtml-var ind_iniciada missing>" />
-<input type="hidden" name="hdn_alterou" value="<dtml-if expr="REQUEST.has_key('mudou')">1<dtml-else>0</dtml-if>" />
+  <input type="hidden" name="hdn_cod_sessao_plen" value="<dtml-var cod_sessao_plen missing>" />
+  <input type="hidden" name="hdn_dat_sessao" value="<dtml-var dat_inicio missing>" />
+  <input type="hidden" name="hdn_num_legislatura" value="<dtml-var num_legislatura missing>" />
+  <input type="hidden" name="hdn_ind_iniciada" value="<dtml-var ind_iniciada missing>" />
+  <input type="hidden" name="hdn_url" value="sessao_plenaria_mostrar_proc?cod_sessao_plen=<dtml-var cod_sessao_plen missing>&dat_inicio_sessao=<dtml-var dat_inicio missing>&num_legislatura=<dtml-var num_legislatura missing>&ind_iniciada=<dtml-var ind_iniciada missing>" />
+  <input type="hidden" name="hdn_alterou" value="<dtml-if expr="REQUEST.has_key('mudou')">1<dtml-else>0</dtml-if>" />
 
 <fieldset>
 <legend>Dados Básicos</legend>
@@ -337,4 +337,4 @@
 </p>
 </fieldset>
 </form>
-<dtml-var standard_html_footer> 
+<dtml-var standard_html_footer>
