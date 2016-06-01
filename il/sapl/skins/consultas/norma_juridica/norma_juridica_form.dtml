@@ -1,4 +1,4 @@
-<dtml-var standard_html_header>
+<dtml-var standard_html_header><div id="conteudo">
 <dtml-in expr="zsql.norma_juridica_obter_zsql(cod_norma = cod_norma)">
     <h1> <dtml-var des_tipo_norma> <dtml-var num_norma missing>/<dtml-var ano_norma missing> </h1>
 </dtml-in>
@@ -325,4 +325,4 @@ na consolidação, as normas nem mesmo são reescritas.”
 
     </div>
 
-<dtml-var standard_html_footer>
+</div><dtml-var standard_html_footer>

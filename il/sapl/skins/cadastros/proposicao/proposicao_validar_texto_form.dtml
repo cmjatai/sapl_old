@@ -2,7 +2,7 @@
     <dtml-call expr="REQUEST.set('prop_enviada',(dat_envio!='00/00/0000 00:00:00'))">
     <dtml-call expr="REQUEST.set('usr_eh_autor',(col_username==AUTHENTICATED_USER.getUserName()))">
 </dtml-in>
-<dtml-var standard_html_header>
+<dtml-var standard_html_header><div id="conteudo">
 
 <a id="ajuda" href="&dtml-portal_url;/ajuda/proposicao#validar_texto">Ajuda</a>
 <h1 class="firstHeading"> Proposi&ccedil;&atilde;o </h1>
@@ -48,4 +48,4 @@
         </table>
     </dtml-unless>
 </dtml-if>
-<dtml-var standard_html_footer>
+</div><dtml-var standard_html_footer>

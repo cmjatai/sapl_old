@@ -1,4 +1,4 @@
-<dtml-var standard_html_header>
+<dtml-var standard_html_header><div id="conteudo">
     <script>
         function submeter(endereco){
             endereco += '?cod_sessao_plen=' + <dtml-var cod_sessao_plen>;
@@ -78,4 +78,4 @@
             </tr>
         </table>
     </dtml-in>
-<dtml-var standard_html_footer>
+</div><dtml-var standard_html_footer>

@@ -1,13 +1,13 @@
 <dtml-comment>
 *----------------------------------------------------------------
-  Função: Este form contém os campos de filtro para a realização
+  Funï¿½ï¿½o: Este form contï¿½m os campos de filtro para a realizaï¿½ï¿½o
           da pesquisa de documentos administrativos.
   Autora: Luciano De Fazio 
-  Última Alteração: 07/07/2012
+  ï¿½ltima Alteraï¿½ï¿½o: 07/07/2012
 ----------------------------------------------------------------*
 </dtml-comment>
 
-<dtml-var standard_html_header>
+<dtml-var standard_html_header><div id="conteudo">
 
 <script type="text/javascript" src="&dtml-portal_url;/javascript/prototype.min.js"></script>
 <style  type="text/css"><!-- @import url(&dtml-portal_url;/generico/datepicker.css); --></style>
@@ -75,7 +75,7 @@ table tr:nth-child(even), table tr:nth-child(odd), table th {
       </tr>
 
       <tr>
-        <th class="label">Período Data:</th>
+        <th class="label">Perï¿½odo Data:</th>
         <td>
           <label for="dt_apres1">Inicial</label>
           <input type="text" id="dt_apres1" name="dt_apres1" size="10" maxlength=10 onblur="formata_data(form.dt_apres1)" />
@@ -119,7 +119,7 @@ table tr:nth-child(even), table tr:nth-child(odd), table th {
       <tr>
         <th class="label">Tramitando</th>
         <td class="campoRadio" colspan="3">
-          <dtml-in expr="[('Sim', '1'), ('Não', '0'), ('Tanto Faz', '')]">
+          <dtml-in expr="[('Sim', '1'), ('Nï¿½o', '0'), ('Tanto Faz', '')]">
             <input type="radio" name="rad_tramitando" value="<dtml-var expr="_['sequence-item']">"
               id="rad_tramitando<dtml-var expr="_['sequence-item']">"
               <dtml-if expr="_['sequence-item']==''">checked="1"</dtml-if> />
@@ -158,7 +158,7 @@ table tr:nth-child(even), table tr:nth-child(odd), table th {
         </td>
       </tr>
       <tr>
-       <th class="label">Ordenação do Resultado &nbsp;</th>
+       <th class="label">Ordenaï¿½ï¿½o do Resultado &nbsp;</th>
           <td class="campoRadio" colspan="2">
           <dtml-in expr="[('Descendente', '1'), ('Ascendente', '2')]">
            <input type="radio" name="rd_ordenacao" value="<dtml-var expr="_['sequence-item']">"
@@ -177,4 +177,4 @@ table tr:nth-child(even), table tr:nth-child(odd), table th {
     </table>
   </fieldset>
 </form>
-<dtml-var standard_html_footer>
+</div><dtml-var standard_html_footer>

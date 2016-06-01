@@ -1,4 +1,4 @@
-<dtml-var standard_html_header>
+<dtml-var standard_html_header><div id="conteudo">
 
 <script type="text/javascript">
     jQuery(document).ready(function() {
@@ -662,4 +662,4 @@
     <input class="botao" type="button" value="Retornar" OnClick="history.go(-1)" />
 </p>
 
-<dtml-var standard_html_footer>
+</div><dtml-var standard_html_footer>

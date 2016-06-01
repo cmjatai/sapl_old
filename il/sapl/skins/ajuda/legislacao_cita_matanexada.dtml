@@ -1,4 +1,4 @@
-<dtml-var standard_html_header>
+<dtml-var standard_html_header><div id="conteudo">
 
 <h1 class="firstHeading"><a NAME="legislacao_citada">Para inclus&atilde;o de Legisla&ccedil;&atilde;o Citada,
 acione a fun&ccedil;&atilde;o
@@ -289,5 +289,5 @@ selecionada.<br />
 <br />
 
 
-<dtml-var standard_html_footer>
+</div><dtml-var standard_html_footer>
 

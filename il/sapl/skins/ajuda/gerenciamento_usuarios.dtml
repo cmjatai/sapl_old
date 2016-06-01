@@ -1,4 +1,4 @@
-<dtml-var standard_html_header>
+<dtml-var standard_html_header><div id="conteudo">
 
 <h1 class="firstHeading">Gerenciamento de Usu&aacute;rios</h1>
 Este M&oacute;dulo tem por objetivo possibilitar ao gerente de
@@ -246,5 +246,5 @@ manuten&ccedil;&atilde;o.</font></font></p>
 <br />
 
 
-<dtml-var standard_html_footer>
+</div><dtml-var standard_html_footer>
 

@@ -1,4 +1,4 @@
-<dtml-var standard_html_header>
+<dtml-var standard_html_header><div id="conteudo">
 
 
 <style>
@@ -197,4 +197,4 @@
 
 </dtml-let>
 
-<dtml-var standard_html_footer>
+</div><dtml-var standard_html_footer>

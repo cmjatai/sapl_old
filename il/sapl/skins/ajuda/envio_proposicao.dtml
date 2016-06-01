@@ -1,4 +1,4 @@
-<dtml-var standard_html_header>
+<dtml-var standard_html_header><div id="conteudo">
 
 <h1 class="firstHeading">Envio de Proposi&ccedil;&otilde;es</h1>
 <br />
@@ -140,4 +140,4 @@ no campo subjacente, ou clique no bot&atilde;o
 <dtml-var "navegacao_ajuda(pagina_anterior='recebimento_proposicao', pagina_proxima='autor')">
 <br />
 
-<dtml-var standard_html_footer>
+</div><dtml-var standard_html_footer>

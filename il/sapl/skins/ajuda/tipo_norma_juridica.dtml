@@ -1,4 +1,4 @@
-<dtml-var standard_html_header>
+<dtml-var standard_html_header><div id="conteudo">
 
 <h1 class="firstHeading">Tipo de Norma Jur&iacute;dica</h1>
 Esta tabela tem por objetivo cadastrar os Tipos de normas
@@ -160,4 +160,4 @@ retorna aa tela com os dados da norma jur&iacute;dica selecionada.<br />
 
 
 
-<dtml-var standard_html_footer>
+</div><dtml-var standard_html_footer>

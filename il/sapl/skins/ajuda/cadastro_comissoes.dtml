@@ -1,4 +1,4 @@
-<dtml-var standard_html_header>
+<dtml-var standard_html_header><div id="conteudo">
 
 <h1 class="firstHeading"><a NAME="comis_topo">Cadastro de Comiss&otilde;es</a></h1>
 <br />
@@ -598,4 +598,4 @@ retorna a tela de cadastramento da Comiss&atilde;o.<br />
 <br />
 
 
-<dtml-var standard_html_footer>
+</div><dtml-var standard_html_footer>

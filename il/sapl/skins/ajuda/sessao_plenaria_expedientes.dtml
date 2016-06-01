@@ -1,4 +1,4 @@
-<dtml-var standard_html_header>
+<dtml-var standard_html_header><div id="conteudo">
 
 <h1 class="firstHeading">Sess&atilde;o Plen&aacute;ria - Expedientes</h1><br />
 <br>Esta fun&ccedil;&atilde;o permite a estrutura&ccedil;&atilde;o da Sess&atilde;o Plen&aacute;ria em partes ou t&oacute;picos de modo a melhor organizar os assuntos a serem tratados durante a Sess&atilde;o.<br />
@@ -9,5 +9,5 @@
 <br />
 <br><dtml-var "navegacao_ajuda(pagina_anterior='sessao_plenaria', pagina_proxima='recebimento_proposicao')"><br />
 <br />
-<dtml-var standard_html_footer>
+</div><dtml-var standard_html_footer>
 

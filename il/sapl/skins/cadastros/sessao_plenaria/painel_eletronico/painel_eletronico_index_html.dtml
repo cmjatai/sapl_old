@@ -1,4 +1,4 @@
-<dtml-var standard_html_header>
+<dtml-var standard_html_header><div id="conteudo">
 <script type="text/javascript" src="&dtml-portal_url;/javascript/jquery.runner-min.js"></script>
 <script type="text/javascript" src="&dtml-portal_url;/javascript/jquery.plugin.min.js"></script>
 <script type="text/javascript" src="&dtml-portal_url;/javascript/jquery.countdown.min.js"></script>
@@ -206,4 +206,4 @@
             <tr><td class="texto">Nenhuma sess&atilde;o plen&aacute;ria iniciada.</td></tr>
         </table>
     </dtml-in>
-<dtml-var standard_html_footer>
+</div><dtml-var standard_html_footer>

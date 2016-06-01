@@ -7,7 +7,7 @@
 ----------------------------------------------------------------*
 </dtml-comment>
 
-<dtml-var standard_html_header>
+<dtml-var standard_html_header><div id="conteudo">
 
 <script type="text/javascript" src="&dtml-portal_url;/javascript/prototype.min.js"></script>
 <style  type="text/css"><!-- @import url(&dtml-portal_url;/generico/datepicker.css); --></style>
@@ -164,4 +164,4 @@
     </table>
   </fieldset>
 </form>
-<dtml-var standard_html_footer>
+</div><dtml-var standard_html_footer>

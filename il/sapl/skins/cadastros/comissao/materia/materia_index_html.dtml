@@ -8,7 +8,7 @@
 //-->
 </SCRIPT>
 
-<dtml-var standard_html_header>
+<dtml-var standard_html_header><div id="conteudo">
 
 <dtml-in expr="zsql.comissao_obter_zsql(cod_comissao=cod_comissao)">
     <dtml-call expr="REQUEST.set('nom_comissao', nom_comissao)">
@@ -189,4 +189,4 @@ size="step" start="start" orphan=0>
     </tr>
 </table>
 </dtml-in>
-<dtml-var standard_html_footer>
+</div><dtml-var standard_html_footer>

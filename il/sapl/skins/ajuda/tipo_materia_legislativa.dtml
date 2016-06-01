@@ -1,4 +1,4 @@
-<dtml-var standard_html_header>
+<dtml-var standard_html_header><div id="conteudo">
 
 <h1 class="firstHeading">Tipo de Mat&eacute;ria Legislativa</h1>
 <br />
@@ -93,4 +93,4 @@ Mat&eacute;ria Legislatura.<br />
 <br />
 
 
-<dtml-var standard_html_footer>
+</div><dtml-var standard_html_footer>

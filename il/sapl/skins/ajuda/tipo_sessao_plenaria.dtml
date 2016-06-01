@@ -1,4 +1,4 @@
-<dtml-var standard_html_header>
+<dtml-var standard_html_header><div id="conteudo">
 <h1 class="firstHeading">Tipo de Sess&atilde;o Plen&aacute;ria</h1>
 <br>
 Esta tabela tem por objetivo cadastrar os Tipos de Sess&otilde;es
@@ -90,4 +90,4 @@ A fun&ccedil;&atilde;o &#8220;In&iacute;cio&#8221;
 retorna a tela com a rela&ccedil;&atilde;o de tipo
 de&nbsp;Sess&atilde;o Plen&aacute;ria.<br>
 <br>
-<dtml-var standard_html_footer>
+</div><dtml-var standard_html_footer>

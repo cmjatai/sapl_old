@@ -1,4 +1,4 @@
-<dtml-var standard_html_header>
+<dtml-var standard_html_header><div id="conteudo">
 
 <script type="text/javascript">
 
@@ -299,4 +299,4 @@
 <dtml-else>
     <p class="texto">Nenhuma sessão plenária cadastrada.</p>
 </dtml-in>
-<dtml-var standard_html_footer>
+</div><dtml-var standard_html_footer>

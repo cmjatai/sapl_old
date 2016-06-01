@@ -1,4 +1,4 @@
-<dtml-var standard_html_header>
+<dtml-var standard_html_header><div id="conteudo">
 
 <script type = "text/javascript" src="javascript/data_validar_jvsc"></script>
 <script type="text/javascript" src="&dtml-portal_url;/javascript/prototype.min.js"></script>
@@ -24,22 +24,22 @@
   function campos_criticar(form){
        
       if (form.lst_tip_documento.value=="0"){
-          alert("O tipo do documento acessório deve ser selecionado!");
+          alert("O tipo do documento acessï¿½rio deve ser selecionado!");
           form.lst_tip_documento.focus();
           return false;
       }
       if (form.txt_nom_documento.value==""){
-          alert("O nome do documento acessório deve ser preenchido");
+          alert("O nome do documento acessï¿½rio deve ser preenchido");
           form.txt_nom_documento.focus();
           return false;
       }
       if (form.txt_nom_autor_documento.value==""){
-         alert("A nome do autor do documento acessório deve ser preenchido!");
+         alert("A nome do autor do documento acessï¿½rio deve ser preenchido!");
          form.txt_nom_autor_documento.focus();
          return false;
       }  
       if (form.txt_dat_documento.value!="" && !IsValidDate(form.txt_dat_documento.value)){
-         alert("Digite uma data válida!");
+         alert("Digite uma data vï¿½lida!");
          form.txt_dat_documento.focus();
          form.txt_dat_documento.select();
          return false;
@@ -66,11 +66,11 @@
   
   function documento_acessorio_excluir(){
       /*-----------------------------
-         Função: Chama o Método DTML de exclusão do despacho
+         Funï¿½ï¿½o: Chama o Mï¿½todo DTML de exclusï¿½o do despacho
          Argumentos: ().
-         Retorno: Retorna uma mensagem de exclusão bem sucessida e
-                redireciona à página 'index_html'.
-         Rommel Carvalho e Danilo Custódio em 04/04/2001.
+         Retorno: Retorna uma mensagem de exclusï¿½o bem sucessida e
+                redireciona ï¿½ pï¿½gina 'index_html'.
+         Rommel Carvalho e Danilo Custï¿½dio em 04/04/2001.
       ------------------------------*/
        
        if (confirm("Deseja realmente excluir?")) {          
@@ -81,10 +81,10 @@
 
   function texto_documento_excluir(){
       /*-----------------------------
-         Função: Chama o Método DTML de exclusão do texto do documento
+         Funï¿½ï¿½o: Chama o Mï¿½todo DTML de exclusï¿½o do texto do documento
          Argumentos: ().
-         Retorno: Retorna uma mensagem de exclusão bem sucedida e
-                  redireciona à página 'documento_acessorio_form'.
+         Retorno: Retorna uma mensagem de exclusï¿½o bem sucedida e
+                  redireciona ï¿½ pï¿½gina 'documento_acessorio_form'.
          Man Qi em 16/01/2004.
       ------------------------------*/
        
@@ -148,7 +148,7 @@
           <tr> 
             <td colspan="3"><label for="txt_nom_arquivo">Arquivo <span class="campoObrigatorio">&nbsp;</span></label><br />
               <dtml-if expr="_.has_key('cod_documento_acessorio')"> 
-              <dtml-comment> no caso de alteração do documento.</dtml-comment>
+              <dtml-comment> no caso de alteraï¿½ï¿½o do documento.</dtml-comment>
                 <dtml-if "_.hasattr(sapl_documentos.administrativo,cod_documento_acessorio)">
                  <dtml-let documento="_.getattr(sapl_documentos.administrativo,cod_documento_acessorio).absolute_url">
                    <a target="_blank" href="<dtml-var documento>">
@@ -186,4 +186,4 @@
   <input type="hidden" name="hdn_url" value="index_html?cod_documento=<dtml-var cod_documento>" />
 </form>
 </fieldset>
-<dtml-var standard_html_footer>
+</div><dtml-var standard_html_footer>

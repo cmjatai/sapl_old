@@ -1,4 +1,4 @@
-<dtml-var standard_html_header>
+<dtml-var standard_html_header><div id="conteudo">
  
 <div class="helpsapl"> <a id="ajuda" href="&dtml-portal_url;/ajuda/administrativo_tipo_documento">Ajuda</a> </div>
 <h1 class="firstHeading"> Tabelas Auxiliares </h1> 
@@ -16,10 +16,10 @@
 
 <dtml-comment>
 *******************************************************************
-*    A listagem abaixo é feita em seqüência do loop do dtml-in que*
-*  invoca o resultado de uma query. Se for o 1º resultado da query*
-*  é gerado o código da inicialização da tabela. Se for o último, *
-*  é gerado o código de finalização. Nos outros, ele apenas lista *
+*    A listagem abaixo ï¿½ feita em seqï¿½ï¿½ncia do loop do dtml-in que*
+*  invoca o resultado de uma query. Se for o 1ï¿½ resultado da query*
+*  ï¿½ gerado o cï¿½digo da inicializaï¿½ï¿½o da tabela. Se for o ï¿½ltimo, *
+*  ï¿½ gerado o cï¿½digo de finalizaï¿½ï¿½o. Nos outros, ele apenas lista *
 *  os resultados da query.                                        *
 *******************************************************************
 </dtml-comment>
@@ -33,7 +33,7 @@
        <table width="98%" align="center">
           <tr class="fundo"> 
             <td width="15%" class="form-label">&nbsp;Sigla</td>
-            <td width="85%" class="form-label"> | Descrição</td>
+            <td width="85%" class="form-label"> | Descriï¿½ï¿½o</td>
           </tr>
     </dtml-if sequence-start>
           <tr>
@@ -58,4 +58,4 @@
   </tr>
  </table>
 </fieldset>
-<dtml-var standard_html_footer>
+</div><dtml-var standard_html_footer>

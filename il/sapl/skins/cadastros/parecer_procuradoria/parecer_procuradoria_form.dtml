@@ -1,4 +1,4 @@
-<dtml-var standard_html_header>
+<dtml-var standard_html_header><div id="conteudo">
 
 <script type="text/javascript" language="Javascript" src="javascript/data_validar_jvsc"></script>
 <script type="text/javascript" src="&dtml-portal_url;/javascript/prototype.min.js"></script> 
@@ -7,13 +7,13 @@
 
    function submeter(endereco){
       /*-----------------------------
-         Função: Confirma se o usuário deseja salvar os dados ao clicar em
-               link do formulário que não os botões SALVAR ou EXCLUIR.
-         Argumentos: endereco : txt - é o endereço que deve ser renderizado
-                     apos a confirmação ou não de salvar os dados.
-         Retorno: Uma janela de confirmação. Se o usuário confirmar, ele
-                invoca o método parecer_procuradoria_salvar_proc.
-                Se ele cancelar, a função apenas renderiza o endereço
+         Funï¿½ï¿½o: Confirma se o usuï¿½rio deseja salvar os dados ao clicar em
+               link do formulï¿½rio que nï¿½o os botï¿½es SALVAR ou EXCLUIR.
+         Argumentos: endereco : txt - ï¿½ o endereï¿½o que deve ser renderizado
+                     apos a confirmaï¿½ï¿½o ou nï¿½o de salvar os dados.
+         Retorno: Uma janela de confirmaï¿½ï¿½o. Se o usuï¿½rio confirmar, ele
+                invoca o mï¿½todo parecer_procuradoria_salvar_proc.
+                Se ele cancelar, a funï¿½ï¿½o apenas renderiza o endereï¿½o
                 (caso esteja na atualizacao).
          Luciano De Fazio em 02/11/2011.
       ------------------------------*/
@@ -37,11 +37,11 @@
 
   function campos_criticar(){
       /*-----------------------------
-         Função: Critica os campos obrigatórios do formulário. É chamada
-                ou pela função submeter acima ou pelo botão btn_parecer_procuradoria_salvar
-                do formulário para validação dos campos.
-         Argumentos: form : formulário - é o formulário em si.
-         Retorno: Invoca o SUBMIT do formulário ou retorna valor booleano
+         Funï¿½ï¿½o: Critica os campos obrigatï¿½rios do formulï¿½rio. ï¿½ chamada
+                ou pela funï¿½ï¿½o submeter acima ou pelo botï¿½o btn_parecer_procuradoria_salvar
+                do formulï¿½rio para validaï¿½ï¿½o dos campos.
+         Argumentos: form : formulï¿½rio - ï¿½ o formulï¿½rio em si.
+         Retorno: Invoca o SUBMIT do formulï¿½rio ou retorna valor booleano
                 falso ,caso haja algum campo incorreto, juntamente com uma
                 uma mensagem de erro e o cursor no campo a ser corrigido.
          Luciano De Fazio em 02/11/2011
@@ -57,13 +57,13 @@
       }
 
       if (form.txt_num_documento.value == "") {
-         alert("O número do documento deve ser preenchido!");
+         alert("O nï¿½mero do documento deve ser preenchido!");
          form.txt_num_documento.focus();
          return false;
       }
 
       if (regexp_digitos.test(form.txt_num_documento.value)) {
-         alert("O número do documento deve ser um número natural!");
+         alert("O nï¿½mero do documento deve ser um nï¿½mero natural!");
          form.txt_num_documento.focus();
          return false;
       }
@@ -71,13 +71,13 @@
       form.hdn_num_documento.value = parseInt(form.txt_num_documento.value);
 
       if (regexp_digitos.test(form.txt_num_protocolo.value)) {
-         alert("O número do protocolo deve ser um número natural!");
+         alert("O nï¿½mero do protocolo deve ser um nï¿½mero natural!");
          form.txt_num_protocolo.focus();
          return false;
       }
 
       if (regexp_digitos.test(form.txt_num_dias_prazo.value)) {
-         alert("O número de dias de prazo deve ser um número natural!");
+         alert("O nï¿½mero de dias de prazo deve ser um nï¿½mero natural!");
          form.txt_num_dias_prazo.focus();
          return false;
       }
@@ -102,18 +102,18 @@
 
       if (!(form.rad_ind_tramitacao[0].checked ||
             form.rad_ind_tramitacao[1].checked)){
-         alert("O índice de tramitação deve ser informado!");
+         alert("O ï¿½ndice de tramitaï¿½ï¿½o deve ser informado!");
          form.rad_ind_tramitacao[0].focus();
          return false;
       }
 
       if (form.txt_dat_documento.value!="" && !IsValidDate(form.txt_dat_documento.value)){
-         alert("Digite uma data válida!");
+         alert("Digite uma data vï¿½lida!");
          form.txt_dat_documento.focus();
          form.txt_dat_documento.select();
          return false;
       }
-/* ------------------------------------ validação ano da data apresentação = ano da identificação básica ----------
+/* ------------------------------------ validaï¿½ï¿½o ano da data apresentaï¿½ï¿½o = ano da identificaï¿½ï¿½o bï¿½sica ----------
       var dtapm=form.txt_dat_documento.value;
       var anoi=form.txt_ano_documento.value;
       var ano=dtapm.substring(6,10);
@@ -127,7 +127,7 @@
 ---------------------------------------------------------------------------------------------------------------*/
 
       if (form.txt_dat_fim_prazo.value!="" && !IsValidDate(form.txt_dat_fim_prazo.value)){
-         alert("Digite uma data de fim de prazo válida!");
+         alert("Digite uma data de fim de prazo vï¿½lida!");
          form.txt_dat_fim_prazo.focus();
          form.txt_dat_fim_prazo.select();
          return false;
@@ -138,10 +138,10 @@
 
   function parecer_procuradoria_excluir(){
       /*-----------------------------
-         Função: Chama o Método DTML de exclusão do documento administrativo.
+         Funï¿½ï¿½o: Chama o Mï¿½todo DTML de exclusï¿½o do documento administrativo.
          Argumentos: ().
-         Retorno: Retorna uma mensagem de exclusão bem sucedida e
-                redireciona à página 'index_html'.
+         Retorno: Retorna uma mensagem de exclusï¿½o bem sucedida e
+                redireciona ï¿½ pï¿½gina 'index_html'.
          Luciano De Fazio em 02/11/2011.
       ------------------------------*/
 
@@ -153,10 +153,10 @@
 
   function texto_integral_excluir(){
       /*-----------------------------
-         Função: Chama o Método DTML de exclusão do texto integral
+         Funï¿½ï¿½o: Chama o Mï¿½todo DTML de exclusï¿½o do texto integral
          Argumentos: ().
-         Retorno: Retorna uma mensagem de exclusão bem sucedida e
-                  redireciona à página 'parecer_procuradoria_form'.
+         Retorno: Retorna uma mensagem de exclusï¿½o bem sucedida e
+                  redireciona ï¿½ pï¿½gina 'parecer_procuradoria_form'.
          Luciano De Fazio em 02/11/2011
       ------------------------------*/
 
@@ -267,7 +267,7 @@
                             <input type="text" id="txa_txt_interessado" name="txa_txt_interessado" size="50" maxlength="50" value="<dtml-var txt_interessado missing>" />
                           </td>
                           <td><label>Em Tramita&ccedil;&atilde;o? </label><span class="campoObrigatorio">&nbsp;</span> <br />
-<dtml-in expr="[(1,'Sim'),(0,'Não')]">
+<dtml-in expr="[(1,'Sim'),(0,'Nï¿½o')]">
                             <input type="radio" id="rad_ind_tramitacao" name="rad_ind_tramitacao" value="<dtml-var expr="_['sequence-key']">"
   <dtml-if expr="_.has_key('cod_documento') and ind_tramitacao==_['sequence-key']">
                               checked=1
@@ -338,4 +338,4 @@
 </fieldset>
 </form>
 
-<dtml-var standard_html_footer>
+</div><dtml-var standard_html_footer>

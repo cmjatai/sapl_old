@@ -1,4 +1,4 @@
-<dtml-var standard_html_header>
+<dtml-var standard_html_header><div id="conteudo">
 
 <script type="text/javascript">
     <!--
@@ -104,4 +104,4 @@
     <input type="hidden" name="hdn_alterou" value="<dtml-if expr="REQUEST.has_key('cod_comissao_sel')">1<dtml-else>0</dtml-if>">
 </form>
 
-<dtml-var standard_html_footer>
+</div><dtml-var standard_html_footer>

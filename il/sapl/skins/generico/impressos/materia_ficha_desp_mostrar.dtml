@@ -1,4 +1,4 @@
-<dtml-var standard_html_header>
+<dtml-var standard_html_header><div id="conteudo">
 
 <SCRIPT LANGUAGE = "JavaScript" src="javascript/data_validar_jvsc"></SCRIPT>
 <SCRIPT LANGUAGE = "JavaScript">
@@ -6,14 +6,14 @@
 
 function campos_criticar(form){
 /*-----------------------------
-Função: Critica os campos obrigatórios do formulário. É chamada
-pelo botão btn_tramitacao_lote_salvar do formulário para
-validação dos campos.
-Argumentos: form : formulário - é o formulário em si.
-Retorno: Invoca o SUBMIT do formulário ou retorna valor booleano
+Funï¿½ï¿½o: Critica os campos obrigatï¿½rios do formulï¿½rio. ï¿½ chamada
+pelo botï¿½o btn_tramitacao_lote_salvar do formulï¿½rio para
+validaï¿½ï¿½o dos campos.
+Argumentos: form : formulï¿½rio - ï¿½ o formulï¿½rio em si.
+Retorno: Invoca o SUBMIT do formulï¿½rio ou retorna valor booleano
 falso ,caso haja algum campo incorreto, juntamente com uma
 uma mensagem de erro e o cursor no campo a ser corrigido.
-Sérgio Roberto Damiati em 27/01/2005.
+Sï¿½rgio Roberto Damiati em 27/01/2005.
 ------------------------------*/
 
  var check = 0;
@@ -67,7 +67,7 @@ function Limpa(form) {
    <input type="hidden" name="txt_tamanho" value="<dtml-var sequence-length>">
    <input type="hidden" name="txt_check" value="">
         <tr>
-	 <td colspan="3" class="form-element">Resultado da Pesquisa: <dtml-var sequence-length> matéria(s) encontrada(s).</td>
+	 <td colspan="3" class="form-element">Resultado da Pesquisa: <dtml-var sequence-length> matï¿½ria(s) encontrada(s).</td>
 	</tr>
 
 </dtml-if sequence-start>
@@ -99,10 +99,10 @@ onClick="campos_criticar(document.materia_form)">&nbsp;&nbsp;
 <td class="form-element">Resultado da Pesquisa</td>
 </tr>
 <tr>
-<td align="left" class="form-text">Nenhuma ocorrência encontrada.</td>
+<td align="left" class="form-text">Nenhuma ocorrï¿½ncia encontrada.</td>
 </tr>
 </dtml-in>
 </table>
 </form>
 </fieldset>
-<dtml-var standard_html_footer>
+</div><dtml-var standard_html_footer>

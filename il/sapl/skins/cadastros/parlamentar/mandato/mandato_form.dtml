@@ -1,4 +1,4 @@
-<dtml-var standard_html_header>
+<dtml-var standard_html_header><div id="conteudo">
 
 <script type="text/javascript" src="javascript/data_validar_jvsc"></script>
 
@@ -249,4 +249,4 @@
         <a href="afastamento_form?cod_parlamentar=<dtml-var cod_parlamentar>&cod_mandato=<dtml-var cod_mandato missing>&num_legislatura=<dtml-var num_legislatura>" class="botao popup" data-fancybox-type="iframe">Incluir afastamento</a>
     </p>
 </dtml-if>
-<dtml-var standard_html_footer>
+</div><dtml-var standard_html_footer>

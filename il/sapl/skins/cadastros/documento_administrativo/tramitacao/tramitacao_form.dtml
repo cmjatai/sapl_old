@@ -1,4 +1,4 @@
-<dtml-var standard_html_header>
+<dtml-var standard_html_header><div id="conteudo">
 
 <div class="helpsapl"> <a id="ajuda" href="&dtml-portal_url;/ajuda/tramitacao_relatoria">Ajuda</a> </div>
 <h1 class="firstHeading"> Documento Administrativo </h1>
@@ -300,4 +300,4 @@
         <input type="button" class="botao" name="btn_tramitacao_excluir" value="Excluir" onClick="tramitacao_excluir()" />
     </dtml-if>
 </p>
-<dtml-var standard_html_footer>
+</div><dtml-var standard_html_footer>

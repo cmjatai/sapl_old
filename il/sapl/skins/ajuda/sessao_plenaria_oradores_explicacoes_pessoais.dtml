@@ -1,4 +1,4 @@
-<dtml-var standard_html_header>
+<dtml-var standard_html_header><div id="conteudo">
 
 <h1 class="firstHeading">Sess&atilde;o Plen&aacute;ria - Oradores</h1><br />
 Essa fun&ccedil;&atilde;o possui 3 caixas: Oradores Cadastrados, Cadastro de Oradores e Cadastro de Discursos.<br /> <br>Em <b>Oradores Cadastrados</b>, consta a lista dos parlamentares que ir&atilde;o realizar pronunciamento, ou discurso, na Sess&atilde;o Plen&aacute;ria, por ordem de pronunciamento e, opcionalmente, encontra-se anexado o discurso - texto integral - que ser&aacute; proferido.<br />
@@ -9,5 +9,5 @@ Essa fun&ccedil;&atilde;o possui 3 caixas: Oradores Cadastrados, Cadastro de Ora
 <br />
 <br><dtml-var "navegacao_ajuda(pagina_anterior='sessao_plenaria', pagina_proxima='sessao_plenaria_lista_presenca_sessao')"><br />
 <br />
-<dtml-var standard_html_footer>
+</div><dtml-var standard_html_footer>
 

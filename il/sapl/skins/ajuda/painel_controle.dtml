@@ -1,5 +1,5 @@
-<dtml-var standard_html_header>
+<dtml-var standard_html_header><div id="conteudo">
 <h1 class="firstHeading">Painel de Controle</h1>
 <p>Explicar o Painel de Controle...</p>
-<dtml-var standard_html_footer>
+</div><dtml-var standard_html_footer>
 

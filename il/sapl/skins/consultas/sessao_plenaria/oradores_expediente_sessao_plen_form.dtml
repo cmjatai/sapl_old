@@ -1,4 +1,4 @@
-<dtml-var standard_html_header>
+<dtml-var standard_html_header><div id="conteudo">
 
 <div><a id="ajuda" href="&dtml-portal_url;/ajuda/sessao_plenaria_agenda">Ajuda</a>
 <h1 class="firstHeading">Sess&atilde;o Plen&aacute;ria</h1>
@@ -62,4 +62,4 @@
        </table>
     </dtml-in>
 </fieldset>
-<dtml-var standard_html_footer>
+</div><dtml-var standard_html_footer>

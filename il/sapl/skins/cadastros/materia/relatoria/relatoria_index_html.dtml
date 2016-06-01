@@ -1,4 +1,4 @@
-<dtml-var standard_html_header>
+<dtml-var standard_html_header><div id="conteudo">
 
 <script type="text/javascript" language="Javascript" src="javascript/data_validar_jvsc"></script>
 <script type="text/javascript" language="Javascript">
@@ -52,4 +52,4 @@
         <input type="submit" class="botao" name="btn_incluir" value="Incluir Relatoria" />
     </p>
 </form>
-<dtml-var standard_html_footer>
+</div><dtml-var standard_html_footer>

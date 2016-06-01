@@ -1,4 +1,4 @@
-<dtml-var standard_html_header>
+<dtml-var standard_html_header><div id="conteudo">
 <!-- ============================================================ -->
 <div class="helpsapl"> <a id="ajuda" href="&dtml-portal_url;/ajuda/relatorios#rel_materia">Ajuda</a> </div>
 <h1 class="firstHeading">Mat&eacute;rias em tramita&ccedil;&atilde;o</h1> 
@@ -117,4 +117,4 @@
 </table>
 </fieldset>
 <form><p align="center"><input type="button" class="botao" value="Retornar" onClick="history.go(-1)" /></p></form>
-<dtml-var standard_html_footer>
+</div><dtml-var standard_html_footer>

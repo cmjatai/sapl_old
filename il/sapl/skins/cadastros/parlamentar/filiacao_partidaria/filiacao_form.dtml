@@ -1,5 +1,5 @@
 
-<dtml-var standard_html_header>
+<dtml-var standard_html_header><div id="conteudo">
 
 <script type="text/javascript" src="javascript/data_validar_jvsc"></SCRIPT>
 <script type="text/javascript">
@@ -233,4 +233,4 @@
     </fieldset>
 </form>
 
-<dtml-var standard_html_footer>
+</div><dtml-var standard_html_footer>

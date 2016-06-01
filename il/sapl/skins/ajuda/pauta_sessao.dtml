@@ -1,4 +1,4 @@
-<dtml-var standard_html_header>
+<dtml-var standard_html_header><div id="conteudo">
 
 <h1 class="firstHeading">Pauta Sess&atilde;o</h1>
 <br />
@@ -32,4 +32,4 @@ Para obter a <b>Pauta da Sess&atilde;o</b> desejada, selecione a data de refer&e
 
 
 
-<dtml-var standard_html_footer>
+</div><dtml-var standard_html_footer>

@@ -1,4 +1,4 @@
-<dtml-var standard_html_header>
+<dtml-var standard_html_header><div id="conteudo">
 
 <h1 class="firstHeading">Partidos</h1>
 <br />
@@ -120,4 +120,4 @@ Partidos j&aacute; cadastrados.<br />
 <dtml-var "navegacao_ajuda(pagina_anterior='nivel_instrucao', pagina_proxima='coligacao')">
 <br />
 
-<dtml-var standard_html_footer>
+</div><dtml-var standard_html_footer>

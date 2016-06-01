@@ -1,4 +1,4 @@
-<dtml-var standard_html_header>
+<dtml-var standard_html_header><div id="conteudo">
 
 <h1 class="firstHeading">Sess&atilde;o Plen&aacute;ria - Mesa</h1><br />
 <br>A Mesa da Sess&atilde;o &eacute; a respons&aacute;vel pela condu&ccedil;&atilde;o dos trabalhos na Sess&atilde;o Plen&aacute;ria. De um modo geral, o Presidente da Casa Legislativa &eacute;, tamb&eacute;m, quem preside os trabalhos das Sess&otilde;es Plen&aacute;rias. Entretanto, outro parlamentar poder&aacute; ser indicado para faze-lo, em seu lugar, de acordo com o que estiver estabelecido no Regimento Interno da Casa.<br />
@@ -9,5 +9,5 @@
 <br />
 <br><dtml-var "navegacao_ajuda(pagina_anterior='sessao_plenaria', pagina_proxima='sessao_plenaria_oradores')"><br />
 <br />
-<dtml-var standard_html_footer>
+</div><dtml-var standard_html_footer>
 

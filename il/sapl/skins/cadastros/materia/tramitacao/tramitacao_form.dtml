@@ -1,4 +1,4 @@
-<dtml-var standard_html_header>
+<dtml-var standard_html_header><div id="conteudo">
 
 <a id="ajuda" href="&dtml-portal_url;/ajuda/tramitacao">Ajuda</a>
 <h1 class="firstHeading">Matéria Legislativa</h1>
@@ -318,4 +318,4 @@
 
 </form>
 
-<dtml-var standard_html_footer>
+</div><dtml-var standard_html_footer>

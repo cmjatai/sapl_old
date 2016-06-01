@@ -1,4 +1,4 @@
-<dtml-var standard_html_header>
+<dtml-var standard_html_header><div id="conteudo">
 
 <h1 class="firstHeading">Norma Jur&iacute;dica</h1>
 <br />
@@ -17,5 +17,5 @@ transa&ccedil;&atilde;o, que s&atilde;o:<br />
 <dtml-var "navegacao_ajuda(pagina_anterior='numeracao_docsacess', pagina_proxima='tipo_norma_juridica')">
 <br />
 
-<dtml-var standard_html_footer>
+</div><dtml-var standard_html_footer>
 
