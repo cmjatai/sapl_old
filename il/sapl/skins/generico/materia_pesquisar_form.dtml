@@ -55,21 +55,16 @@
             openEffect	: 'fade',
             closeEffect	: 'fade'
         });
+
+
+        $('#txt_assunto').popover();
     });
 </script>
 
 <script type="text/javascript">
     //<![CDATA[
     $(function(){
-        $('#txt_assunto').poshytip({
-            className: 'tip-twitter',
-            showOn: 'focus',
-            alignTo: 'target',
-            alignX: 'right',
-            alignY: 'center',
-            offsetX: 5,
-            showTimeout: 100
-        });
+
         $('#lst_tip_materia').poshytip({
             className: 'tip-twitter',
             showOn: 'focus',
@@ -81,7 +76,10 @@
         });
     });
     //]]>
+
 </script>
+
+
 
 <a id="ajuda" href="&dtml-portal_url;/ajuda/consultas#cons_materia">Ajuda</a>
 
@@ -103,12 +101,23 @@
             <dtml-if expr="_.has_key('tip_materia_sel')">
                 <input type="hidden" name="lst_tip_materia" value="<dtml-var tip_materia_sel>" />
             </dtml-if>
-            <div class="pf-element pf-full-width">
-                <label for="lst_tip_materia"><span class="pf-label">Tipo de Matéria</span></label>
-                <select class="pf-field" id="lst_tip_materia" name="lst_tip_materia" title="Selecione um tipo de matéria ou mantenha a opção 'Todos' pesquisar qualquer tipo"
+
+
+
+
+            <div class="form-group col-sm-12">
+                <label for="lst_tip_materia" class="control-label">Tipo de Matéria</label>
+
+                <select class="form-control" id="lst_tip_materia" name="lst_tip_materia"
+
+
+
+
+
+                  title="Selecione um tipo de matéria ou mantenha a opção 'Todos' pesquisar qualquer tipo"
                 <dtml-if expr="_.has_key('tip_materia_sel')">
                     disabled
-                </dtml-if> style="max-width: 224px; width: 100%;">
+                </dtml-if> style="width: 60%;">
                 <option value="">Todos</option>
                 <dtml-in expr="zsql.tipo_materia_legislativa_obter_zsql(ind_excluido=0)">
                     <option
@@ -120,55 +129,69 @@
                 </dtml-in>
                 </select>
             </div>
-            <div class="pf-element pf-full-width">
-                <label for="txt_numero"><span class="pf-label">Número</span></label>
-                <div class="pf-group">
-                    <input class="pf-field" id="txt_numero" type="text" name="txt_numero" null="" missing="" style="min-width: 94px; max-width: 94px; width: 20%;" maxlength="6" />
-                    <label for="txt_ano">&nbsp;Ano
-                        <input class="pf-field" id="txt_ano" type="text" name="txt_ano" null="" style="min-width: 85px; max-width: 85px; width: 20%;" maxlength="4" />
-                    </label>
-                </div>
+
+
+
+          <div class="form-group col-sm-2">
+                  <label for="txt_numero" class="control-label">Número</label>
+             <div class="form-group">
+                  <input class="form-control col-sm-3" id="txt_numero" type="text" name="txt_numero" null="" missing="" maxlength="6" />
+                  <label for="txt_ano" class="control-label">Ano</label>
+                      <input class="form-control" id="txt_ano" type="text" name="txt_ano" null="" maxlength="4" />
+                  </label>
+              </div>
+          </div>
+
+          <div class="form-group col-sm-2">
+            <label for="txt_npc" class="control-label">Processo</label>
+            <div class="form-group">
+              <input class="form-control"  id="txt_npc" type="text" name="txt_npc" null="" missing="" maxlength="6" />
+              <label for="txt_num_protocolo" class="control-label">Protocolo</label>
+                <input class="form-control" id="txt_num_protocolo" type="text" name="txt_num_protocolo" null="" missing="" maxlength="6" />
+              </label>
             </div>
-            <div class="pf-element pf-full-width">
-                <label for="txt_npc"><span class="pf-label">Processo</span></label>
-                <div class="pf-group">
-                    <input class="pf-field"  id="txt_npc" type="text" name="txt_npc" null="" missing="" style="min-width: 94px; max-width: 94px; width: 20%;" maxlength="6" />
-                    <label for="txt_num_protocolo">&nbsp;Protocolo
-                        <input class="pf-field" id="txt_num_protocolo" type="text" name="txt_num_protocolo" null="" missing="" style="min-width: 53px; max-width: 53px; width: 20%;" maxlength="6" />
-                    </label>
-                </div>
+          </div>
+
+          <div class="form-group col-sm-6">
+
+              <label class="control-label  col-sm-12">Período de Apresentação</label>
+              <div class="col-sm-5">
+                <input class="form-control" type="text" id="dt_apres" name="dt_apres" maxlength="10" onblur="formata_data(form.dt_apres)" />
+              </div>
+              <div class="col-sm-1 center">a</div>
+              <div class="col-sm-5">
+                <input class="form-control col-sm-1" type="text" id="dt_apres2" name="dt_apres2" maxlength="10" onblur="formata_data(form.dt_apres2)" />
+              </div>
+
+
+              <label class="control-label col-sm-12">Período Publicação:</label>
+              <div class="col-sm-5">
+                <input class="form-control" type="text" id="dt_public" name="dt_public" maxlength="10" onblur="formata_data(form.dt_public)" />
+              </div>
+              <div class="col-sm-1 center">a</div>
+              <div class="col-sm-5">
+                <input class="form-control" type="text" id="dt_public2" name="dt_public2" maxlength="10" onblur="formata_data(form.dt_public2)" />
+              </div>
+
+
             </div>
-            <div class="pf-element pf-full-width">
-                <label><span class="pf-label">Período de Apresentação:</span></label>
-                <div class="pf-group">
-                    <label for="dt_apres">
-                        <input class="pf-field" type="text" id="dt_apres" name="dt_apres" style="min-width: 94px; max-width: 94px; width: 20%;" maxlength=10 onblur="formata_data(form.dt_apres)" />
-                    </label>
-                    <label for="dt_apres2">&nbsp;a&nbsp;
-                        <input class="pf-field" type="text" id="dt_apres2" name="dt_apres2" style="min-width: 94px; max-width: 94px; width: 20%;" maxlength="10" onblur="formata_data(form.dt_apres2)" />
-                    </label>
-                </div>
-            </div>
-            <div class="pf-element pf-full-width">
-                <label><span class="pf-label">Período de Publicação:</span></label>
-                <div class="pf-group">
-                    <label for="dt_public">
-                        <input class="pf-field" type="text" id="dt_public" name="dt_public" style="min-width: 94px; max-width: 94px; width: 20%;" maxlength="10" onblur="formata_data(form.dt_public)" />
-                    </label>
-                    <label for="dt_public2">&nbsp;a&nbsp;
-                        <input class="pf-field" type="text" id="dt_public2" name="dt_public2" style="min-width: 94px; max-width: 94px; width: 20%;" maxlength="10" onblur="formata_data(form.dt_public2)" />
-                    </label>
-                </div>
-            </div>
-            <div class="pf-element pf-full-width">
-                <label for="txt_autor"><span class="pf-label">Autor</span></label>
-                <div class="pf-group">
-                    <input class="pf-field" id="txt_autor" type="text" name="txt_autor" null="" placeholder="Todos" style="max-width: 224px; width: 60%;" maxlength="50" disabled onFocus="javascript:this.blur()" />
+
+
+
+
+
+          <div class="form-group">
+            <label for="txt_autor" class="col-sm-12 control-label">Autor:</label>
+              <div class="form-group">
+                  <div class="col-sm-10">
+                    <input class="form-control" id="txt_autor" type="text" name="txt_autor" null="" placeholder="Todos" maxlength="50" disabled onFocus="javascript:this.blur()" />
                     <input type="hidden" name="hdn_txt_autor" value="" />
-                    <a href="autor_pesquisar_form?hdn_tipo_pesquisa=pesq_basica" class="botao-link popup" data-fancybox-type="iframe">Selecionar</a>
                     <input type="hidden" name="hdn_cod_autor" value="" />
-                </div>
-                <select class="pf-field" id="lst_tip_autor" name="lst_tip_autor" style="visibility:hidden; max-width: 224px; width: 100%;" onChange="tipo_autor_trocar(document.pesq_basica_form)">
+                  </div>
+                <div class="col-sm-2">
+                <a href="autor_pesquisar_form?hdn_tipo_pesquisa=pesq_basica" class="btn btn-primary popup" data-fancybox-type="iframe">Selecionar</a>
+              </div>
+                <select class="control-label" id="lst_tip_autor" name="lst_tip_autor" style="visibility:hidden; onChange="tipo_autor_trocar(document.pesq_basica_form)">
                     <option value="">Todos</option>
                     <dtml-in expr="zsql.tipo_autor_obter_zsql(ind_excluido=0)">
                         <option value="<dtml-var des_tipo_autor missing>">
@@ -176,36 +199,43 @@
                         </option>
                     </dtml-in>
                 </select>
-            </div>
+              </div>
+          </div>
+
+          <div class="form-group col-sm-12">
+            <label for="chk_textual" class="control-label">Pesquisa Textual?
+              <input class="pf-field" type="checkbox" name="chk_textual" value="1" id="chk_textual">
+                <span style="vertical-align: top;">Pesquisar no conteúdo das Materias</span></label>
+          </div>
+
+
             <dtml-comment>
                 <div class="pf-element pf-full-width">
-                    <label for="txt_relator"><span class="pf-label">Relator</span></label>
-                    <input class="pf-field" id="txt_relator" type="text" name="txt_relator" null="" style="max-width: 224px; width: 100%;" maxlength="50" />
+                    <label for="txt_relator" class="control-label">Relator</label>
+                    <input class="form-control" id="txt_relator" type="text" name="txt_relator" null="" style="max-width: 224px; width: 100%;" maxlength="50" />
                 </div>
             </dtml-comment>
-            <div class="pf-element pf-full-width">
-                <label for="txt_assunto"><span class="pf-label">Assunto / Ementa</span></label></th>
-                <input class="pf-field" id="txt_assunto" type="text" name="txt_assunto" null="" style="max-width: 224px; width: 85%;" title="DICA: A frase colocada entre aspas duplas pesquisa por registros com a frase exata. Um asterisco (*) é um operador de truncamento que pode ser inserido ao fim de uma palavra. Um sinal de mais (+) precedente indica que a palavra deve estar presente no texto. Um sinal de menos (-) precedente indica que a palavra não deve estar presente em qualquer parte do texto." />
-            </div>
-            <div class="pf-element pf-full-width">
-            <label for="chk_textual"><span class="pf-label">Pesquisa Textual?</span>
-                <input class="pf-field" type="checkbox" name="chk_textual" value="1" id="chk_textual">
-                <span style="vertical-align: top;">Pesquisar no conteúdo das Materias</span></label>
-            </div>
-            <div class="pf-element pf-full-width">
-                <label><span class="pf-label">Tramitando?</span></label>
-                <div class="pf-group">
-                    <dtml-in expr="[('Sim', '1'), ('Não', '0'), ('Tanto Faz', '')]">
-                        <input type="radio" name="rad_tramitando" value="<dtml-var expr="_['sequence-item']">"
-                        id="rad_tramitando<dtml-var expr="_['sequence-item']">"
-                    <dtml-if expr="_['sequence-item']==''">checked="1"</dtml-if> />
-                    <label style="vertical-align: top;" for="rad_tramitando<dtml-var expr="_['sequence-item']">"><dtml-var expr="_['sequence-key']"></label>
-                    </dtml-in>
-                </div>
-            </div>
-            <div class="pf-element pf-full-width">
-                <label for="lst_localizacao"><span class="pf-label">Localização Atual</span></label>
-                <select class="pf-field" id="lst_localizacao" name="lst_localizacao" style="max-width: 224px; width: 100%;">
+
+
+        <div class="form-group col-sm-10">
+          <label for="txt_assunto" class="control-label">Assunto / Ementa</label></th>
+          <input class="form-control" id="txt_assunto" type="text" name="txt_assunto" null=""
+            data-toggle="popover"
+            data-trigger="focus"
+
+            title="DICA:"
+
+            data-content="A frase colocada entre aspas duplas pesquisa por registros com a frase exata. Um asterisco (*) é um operador de truncamento que pode ser inserido ao fim de uma palavra. Um sinal de mais (+) precedente indica que a palavra deve estar presente no texto. Um sinal de menos (-) precedente indica que a palavra não deve estar presente em qualquer parte do texto." />
+
+
+        </div>
+
+
+
+
+            <div class="form-group col-sm-8">
+                <label for="lst_localizacao" class="control-label">Localização Atual:</label>
+                <select class="form-control" id="lst_localizacao" name="lst_localizacao" style="max-width: 224px; width: 100%;">
                     <option value="">Todas</option>
                     <dtml-in expr="zsql.unidade_tramitacao_obter_zsql()">
                         <option value="<dtml-var cod_unid_tramitacao missing>">
@@ -214,9 +244,11 @@
                     </dtml-in>
                 </select>
             </div>
-            <div class="pf-element pf-full-width">
-                <label for="lst_status"><span class="pf-label">Situação</span></label>
-                <select class="pf-field" id="lst_status" name="lst_status" style="max-width: 224px; width: 100%;">
+
+
+            <div class="form-group col-sm-2">
+                <label for="lst_status" class="control-label">Situação:</label>
+                <select class="form-control" id="lst_status" name="lst_status" style="max-width: 224px; width: 100%;">
                     <option value="">Todas</option>
                     <dtml-in expr="zsql.status_tramitacao_obter_zsql(ind_excluido=0)">
                         <option value="<dtml-var cod_status missing>">
@@ -225,24 +257,53 @@
                     </dtml-in>
                 </select>
             </div>
-            <div class="pf-element pf-full-width">
-                <label><span class="pf-label">Ordenação do Resultado</span></label>
-                <div class="pf-group">
+
+
+            <div class="form-group col-sm-12">
+              <label class="control-label">Tramitando?</label>
+              <div class="pf-group">
+                <dtml-in expr="[('Sim', '1'), ('Não', '0'), ('Tanto Faz', '')]">
+                  <input type="radio" name="rad_tramitando" value="<dtml-var expr="_['sequence-item']">"
+                    id="rad_tramitando<dtml-var expr="_['sequence-item']">"
+                    <dtml-if expr="_['sequence-item']==''">checked="1"</dtml-if> />
+                    <label style="vertical-align: top;" for="rad_tramitando<dtml-var expr="_['sequence-item']">"><dtml-var expr="_['sequence-key']"></label>
+                  </dtml-in>
+                </div>
+              </div>
+
+
+
+            <div class="form-group col-sm-6">
+                <label><span class="control-label">Ordenação do Resultado</span></label>
+                <div class="form-group">
                     <dtml-in expr="[('Descendente', '1'), ('Ascendente', '2')]">
                         <input type="radio" name="rd_ordenacao" value="<dtml-var expr="_['sequence-item']">"
                         id="rd_ordenacao<dtml-var expr="_['sequence-item']">"
                     <dtml-if expr="_['sequence-item']=='1'">checked="1"</dtml-if> />
-                    <label style="vertical-align: top;" for="rd_ordenacao_t<dtml-var expr="_['sequence-item']">"><dtml-var expr="_['sequence-key']"> &nbsp;</label>
+                    <label style="vertical-align: top;" for="rd_ordenacao<dtml-var expr="_['sequence-item']">"><dtml-var expr="_['sequence-key']"> &nbsp;</label>
                     </dtml-in>
                 </div>
             </div>
+
+        <div class="form-group">
+          <div class="col-sm-12">
+            <div class="col-sm-12">
+              <div class="pull-right">
+
             <input type="hidden" name="txt_relator" value="" />
             <input type="hidden" name="lst_cod_partido" value="" />
             <input type="hidden" name="chk_coautor" value="" />
-            <div class="pf-element pf-buttons">
-                <input class="pf-button btn botao" type="submit" name="btn_materia_pesquisar" value="Pesquisar" onClick="textual(document.pesq_basica_form)" />
-                <input class="pf-button btn botao" type="reset" name="btn_materia_limpar" value="Limpar" />
+            <div class="form-group col-sm-12 pull-right">
+                <input class="btn btn-primary" type="submit" name="btn_materia_pesquisar" value="Pesquisar" onClick="textual(document.pesq_basica_form)" />
+                <input class="btn-inverse btn" type="reset" name="btn_materia_limpar" value="Limpar" />
             </div>
+          </div>
+         </div>
+        </div>
+      </div>
+
+
+
         </div>
     </fieldset>
 </form>

@@ -158,8 +158,8 @@
                                 </li>
                             </dtml-if>
 
-                           <dtml-comment><li><a href='&dtml-portal_url;/generico/materia_pesquisar_form?incluir=0'>Pesquisa Avançada</a>
-                       </li></dtml-comment>
+                           <li><a href='&dtml-portal_url;/generico/materia_pesquisar_form?incluir=0'>Pesquisa Avançada</a>
+                       </li>
                            <li><a href='&dtml-portal_url;/relatorios_administrativos'>Relat&oacute;rios</a>
                            </li>
 
