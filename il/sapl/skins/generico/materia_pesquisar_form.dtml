@@ -1,5 +1,4 @@
 <dtml-var standard_html_header>
-
 <script type="text/javascript">
     $(function() {
         $('#dt_apres').datepick();
@@ -307,4 +306,5 @@
         </div>
     </fieldset>
 </form>
+</div>
 <dtml-var standard_html_footer>

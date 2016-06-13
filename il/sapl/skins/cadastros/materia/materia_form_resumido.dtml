@@ -194,10 +194,13 @@
         <input type="hidden" name="txa_txt_observacao" value="" />
         <input type="hidden" name="txa_txt_cep" value="" />
 
-    <table>
-        <tr>
-            <td width="50%"><label for="lst_tip_id_basica">Tipo </label><span class="campoObrigatorio">&nbsp;</span><br />
-                <select id="lst_tip_id_basica" name="lst_tip_id_basica" onChange="numero_materia_buscar(document.materia_form)">
+
+          <div class="row col-sm-12">
+
+            <td>
+              <div class="col-sm-5">
+              <label for="lst_tip_id_basica" class="control-label">Tipo </label>
+                <select class="form-control" id="lst_tip_id_basica" name="lst_tip_id_basica" onChange="numero_materia_buscar(document.materia_form)">
                     <option value="0">
                     </option>
                     <dtml-in expr="zsql.tipo_materia_legislativa_obter_zsql()">
@@ -215,147 +218,175 @@
                     </option>
                     </dtml-in>
                 </select>
+              </div>
             </td>
-            <td><label for="txt_num_ident_basica">Número </label><span class="campoObrigatorio">&nbsp;</span><br />
+            <td>
+              <div class="col-sm-1">
+              <label for="txt_num_ident_basica" class="control-label">Número </label>
                 <input type="hidden" name="hdn_num_ident_basica" value="" />
-                <input type="text" id="txt_num_ident_basica" name="txt_num_ident_basica" size="6" maxlength="6" value="<dtml-var num_ident_basica missing null="1">" />
+                <input class="form-control" type="text" id="txt_num_ident_basica" name="txt_num_ident_basica" size="6" maxlength="6" value="<dtml-var num_ident_basica missing null="1">" />
+              </div>
             </td>
-            <td><label for="txt_ano_ident_basica">Ano </label><span class="campoObrigatorio">&nbsp;</span><br />
+            <td>
+              <div class="col-sm-1">
+                <label for="txt_ano_ident_basica" class="control-label">Ano </label>
                 <dtml-unless ano_ident_basica>
                     <dtml-call expr="REQUEST.set('ano_ident_basica', _.DateTime.year(_.DateTime()))">
                 </dtml-unless>
-                <input type="text" id="txt_ano_ident_basica" name="txt_ano_ident_basica" size="4" maxlength="4" value="<dtml-var ano_ident_basica missing>" />
+                <input class="form-control" type="text" id="txt_ano_ident_basica" name="txt_ano_ident_basica" size="4" maxlength="4" value="<dtml-var ano_ident_basica missing>" />
+              </div>
             </td>
-        </tr>
-        <tr>
-            <td><label for="txt_dat_apresentacao">Data Apresentação </label><span class="campoObrigatorio">&nbsp;</span><br />
-                <dtml-unless dat_apresentacao>
-                    <dtml-call expr="REQUEST.set('dat_apresentacao', _.DateTime().strftime('%d/%m/%Y'))">
-                </dtml-unless>
-                <input type="text" id="txt_dat_apresentacao" name="txt_dat_apresentacao" size="10" maxlength="10" value="<dtml-var dat_apresentacao missing null="">" onBlur="formata_data(form.txt_dat_apresentacao); tipo_autor_mudou(document.materia_form);"/>
-            </td>
-            <td colspan="2"><label for="txt_num_protocolo">Núm. Protocolo </label><br />
-                <dtml-if use_spdo>
-                    <input type="text" id="txt_num_protocolo_spdo" name="txt_num_protocolo_spdo" size="18" maxlength="18" value="<dtml-var num_protocolo_spdo missing null="">" />
-                    <input type="hidden" id="txt_num_protocolo" name="txt_num_protocolo" value="<dtml-var num_protocolo missing null="">" />
-                <dtml-else>
-                    <input type="text" id="txt_num_protocolo" name="txt_num_protocolo" size="6" maxlength="6" value="<dtml-var num_protocolo missing null="">" />
-                    <input type="hidden" id="txt_num_protocolo_spdo" name="txt_num_protocolo_spdo" value="<dtml-var num_protocolo_spdo missing null="">" />
-                </dtml-if>
-            </td>
-        </tr>
-        <tr>
-            <td>
+          </div>
 
-              <label for="lst_tip_autor">Tipo de Autor </label><span class="campoObrigatorio">&nbsp;</span><br />
-                <select name="lst_tip_autor" size="1" onChange="tipo_autor_mudou(document.materia_form)">
-                    <dtml-unless tip_autor>
-                        <option value="0"></option>
-                    </dtml-unless>
-                    <dtml-in expr="zsql.tipo_autor_obter_zsql(tip_autor='')">
-                        <option
-                        <dtml-if expr="REQUEST.has_key('tip_autor') and tip_autor==_.int('0'+REQUEST['tip_autor'])">
-                          selected
-                        <dtml-elif expr="tip_autor == 1 and REQUEST.has_key('tip_autor') and tip_autor==_.int('0'+REQUEST['tip_autor'])">
-                          selected
-                          <dtml-call expr="REQUEST.set('des_tipo_autor', 'Parlamentar')">
-                        </dtml-if>
-                        value="<dtml-var tip_autor>&<dtml-var des_tipo_autor url_quote>">
-                    <dtml-var des_tipo_autor></option>
-                    </dtml-in>
-                </select>
-            </td>
-            <td colspan="2"><label for="des_tip_autor">Nome Autor </label><span class="campoObrigatorio">&nbsp;</span><br />
-                <dtml-if expr="_.has_key('des_tipo_autor')">
-                    <select name="lst_cod_autor" size="1" onChange="javascript:form.hdn_alterou.value=1">
-                        <option value=0>Selecione</option>
 
-                        <dtml-if expr="des_tipo_autor=='Parlamentar'">
-                            <dtml-in expr="zsql.autor_obter_zsql(parlamentar='1',ind_autor_materia='S')">
-                                <dtml-call expr="REQUEST.set('cod_autor_parlamentar', cod_autor)">
-                                <dtml-if  expr="pysc.autoria_parlamentar_validar_pysc(txt_dat_apresentacao=dat_apresentacao, cod_parlamentar=cod_parlamentar)">
-                                    <option value="<dtml-var cod_autor_parlamentar>">
-                                        <dtml-in expr="zsql.parlamentar_obter_zsql(cod_parlamentar=cod_parlamentar)">
-                                            <dtml-var nom_completo> - <dtml-var sgl_partido null="">
-                                        </dtml-in></option>
-                                </dtml-if>
-                            </dtml-in>
 
-                            <dtml-elif expr="des_tipo_autor=='Comissao'">
-                                <dtml-in expr="zsql.autor_obter_zsql(comissao='1')">
-                                    <dtml-call expr="REQUEST.set('cod_autor_comissao', cod_autor)">
-                                    <dtml-in expr="zsql.comissao_obter_zsql(cod_comissao=cod_comissao,ind_excluido=0)">
-                                        <dtml-if expr="dat_extincao is None">
-                                            <option value="<dtml-var cod_autor_comissao>">
-                                                <dtml-var nom_comissao>
-                                            </option>
+
+
+              <div class="row col-sm-12">
+                    <div class="col-sm-2">
+                                      <label for="txt_dat_apresentacao" class="control-label">Data Apresentação </label>
+
+                          <dtml-unless dat_apresentacao>
+                            <dtml-call expr="REQUEST.set('dat_apresentacao', _.DateTime().strftime('%d/%m/%Y'))">
+                          </dtml-unless>
+                          <input class="form-control" type="text" id="txt_dat_apresentacao" name="txt_dat_apresentacao" value="<dtml-var dat_apresentacao missing null="">" onBlur="formata_data(form.txt_dat_apresentacao); tipo_autor_mudou(document.materia_form);"/>
+                      </div>
+                    <div class="col-sm-2">
+                    <label for="txt_num_protocolo" class="control-label">Núm. Protocolo </label>
+                      <dtml-if use_spdo>
+                          <input type="text" id="txt_num_protocolo_spdo" name="txt_num_protocolo_spdo" size="18" maxlength="18" value="<dtml-var num_protocolo_spdo missing null="">" />
+                          <input type="hidden" id="txt_num_protocolo" name="txt_num_protocolo" value="<dtml-var num_protocolo missing null="">" />
+                      <dtml-else>
+                          <input class="form-control" type="text" id="txt_num_protocolo" name="txt_num_protocolo" size="6" maxlength="6" value="<dtml-var num_protocolo missing null="">" />
+                          <input type="hidden" id="txt_num_protocolo_spdo" name="txt_num_protocolo_spdo" value="<dtml-var num_protocolo_spdo missing null="">" />
+                      </dtml-if>
+                    </div>
+              </div>
+
+
+
+
+
+<div class="row col-sm-12">
+              <div class="col-sm-4 ">
+                  <label for="lst_tip_autor" class="control-label">Tipo de Autor </label>
+                    <select class="form-control" name="lst_tip_autor" size="1" onChange="tipo_autor_mudou(document.materia_form)">
+                        <dtml-unless tip_autor>
+                            <option value="0"></option>
+                        </dtml-unless>mail
+                        <dtml-in expr="zsql.tipo_autor_obter_zsql(tip_autor='')">
+                            <option
+                            <dtml-if expr="REQUEST.has_key('tip_autor') and tip_autor==_.int('0'+REQUEST['tip_autor'])">
+                              selected
+                            <dtml-elif expr="tip_autor == 1 and REQUEST.has_key('tip_autor') and tip_autor==_.int('0'+REQUEST['tip_autor'])">
+                              selected
+                              <dtml-call expr="REQUEST.set('des_tipo_autor', 'Parlamentar')">
+                            </dtml-if>
+                            value="<dtml-var tip_autor>&<dtml-var des_tipo_autor url_quote>">
+                        <dtml-var des_tipo_autor></option>
+                        </dtml-in>
+                    </select>
+              </div>
+
+              <div class="col-sm-4">
+                    <label for="des_tip_autor" class="control-label">Nome Autor </label>
+                        <dtml-if expr="_.has_key('des_tipo_autor')">
+                            <select class="form-control" name="lst_cod_autor" size="1" onChange="javascript:form.hdn_alterou.value=1">
+                                <option value=0>Selecione</option>
+
+                                <dtml-if expr="des_tipo_autor=='Parlamentar'">
+                                    <dtml-in expr="zsql.autor_obter_zsql(parlamentar='1',ind_autor_materia='S')">
+                                        <dtml-call expr="REQUEST.set('cod_autor_parlamentar', cod_autor)">
+                                        <dtml-if  expr="pysc.autoria_parlamentar_validar_pysc(txt_dat_apresentacao=dat_apresentacao, cod_parlamentar=cod_parlamentar)">
+                                            <option value="<dtml-var cod_autor_parlamentar>">
+                                                <dtml-in expr="zsql.parlamentar_obter_zsql(cod_parlamentar=cod_parlamentar)">
+                                                    <dtml-var nom_completo> - <dtml-var sgl_partido null="">
+                                                </dtml-in></option>
                                         </dtml-if>
                                     </dtml-in>
-                                </dtml-in>
 
-                                <dtml-elif expr="des_tipo_autor=='Bancada'">
-                                    <dtml-in expr="zsql.autor_obter_zsql(bancada='1')">
-                                        <dtml-call expr="REQUEST.set('cod_autor_bancada', cod_autor)">
-                                        <dtml-in expr="zsql.bancada_obter_zsql(num_legislatura=num_legislatura_sel,cod_bancada=cod_bancada,ind_excluido=0)">
-                                            <option value="<dtml-var cod_autor_bancada>">
-                                                <dtml-var nom_bancada>
-                                            </option>
+                                    <dtml-elif expr="des_tipo_autor=='Comissao'">
+                                        <dtml-in expr="zsql.autor_obter_zsql(comissao='1')">
+                                            <dtml-call expr="REQUEST.set('cod_autor_comissao', cod_autor)">
+                                            <dtml-in expr="zsql.comissao_obter_zsql(cod_comissao=cod_comissao,ind_excluido=0)">
+                                                <dtml-if expr="dat_extincao is None">
+                                                    <option value="<dtml-var cod_autor_comissao>">
+                                                        <dtml-var nom_comissao>
+                                                    </option>
+                                                </dtml-if>
+                                            </dtml-in>
                                         </dtml-in>
-                                    </dtml-in>
 
-                                    <dtml-else>
+                                        <dtml-elif expr="des_tipo_autor=='Bancada'">
+                                            <dtml-in expr="zsql.autor_obter_zsql(bancada='1')">
+                                                <dtml-call expr="REQUEST.set('cod_autor_bancada', cod_autor)">
+                                                <dtml-in expr="zsql.bancada_obter_zsql(num_legislatura=num_legislatura_sel,cod_bancada=cod_bancada,ind_excluido=0)">
+                                                    <option value="<dtml-var cod_autor_bancada>">
+                                                        <dtml-var nom_bancada>
+                                                    </option>
+                                                </dtml-in>
+                                            </dtml-in>
 
-                                    <dtml-in expr="zsql.autor_obter_zsql(des_tipo_autor=des_tipo_autor)">
-                                        <dtml-call expr="REQUEST.set('cod_autor_geral', cod_autor)">
-                                        <option value="<dtml-var cod_autor_geral>">
-                                            <dtml-var nom_autor>
-                                        </option>
-                                    </dtml-in>
+                                            <dtml-else>
+
+                                            <dtml-in expr="zsql.autor_obter_zsql(des_tipo_autor=des_tipo_autor)">
+                                                <dtml-call expr="REQUEST.set('cod_autor_geral', cod_autor)">
+                                                <option value="<dtml-var cod_autor_geral>">
+                                                    <dtml-var nom_autor>
+                                                </option>
+                                            </dtml-in>
+                                </dtml-if>
+                            </select>
+                            <dtml-else>
+                            <input class="form-control" type="text" name="txt_nom_autor" size="30" value="<dtml-var nom_autor missing>" disabled>
                         </dtml-if>
-                    </select>
-                    <dtml-else>
-                    <input type="text" name="txt_nom_autor" size="30" value="<dtml-var nom_autor missing>" disabled>
-                </dtml-if>
-            </td>
-        </tr>
-        <tr>
-            <td><label for="lst_cod_regime_tramitacao">Regime Tramitação </label><span class="campoObrigatorio">&nbsp;</span><br />
-                <select id="lst_cod_regime_tramitacao" name="lst_cod_regime_tramitacao" onChange="javascript:form.hdn_alterou.value=1">
+                </div>
+</div>
+
+
+
+
+
+        <div class="row col-sm-12">
+          <div class="col-sm-6">
+            <label for="lst_cod_regime_tramitacao" class="control-label">Regime Tramitação </label>
+                <select class="form-control" id="lst_cod_regime_tramitacao" name="lst_cod_regime_tramitacao" onChange="javascript:form.hdn_alterou.value=1">
                     <option value="0">
                     </option>
                     <dtml-in expr="zsql.regime_tramitacao_obter_zsql()">
-                        <option
+                        <option>
                         <dtml-if expr="_.int(cod_regime_tramitacao) == 1">selected</dtml-if>
                         value="<dtml-var cod_regime_tramitacao>"><dtml-var des_regime_tramitacao>
                     </option>
                     </dtml-in>
                 </select>
-            </td>
-            <td colspan="2"><label for="rad_ind_tramitacao">Em Tramitação?</label><span class="campoObrigatorio">&nbsp;</span><br />
-                <dtml-in expr="[(1,'Sim'),(0,'Não')]">
-                    <input type="radio" id="rad_ind_tramitacao" name="rad_ind_tramitacao" value="<dtml-var expr="_['sequence-key']">"
-                    <dtml-if expr="_['sequence-item']=='Não'">checked=1</dtml-if>
-                    onChange="javascript:form.hdn_alterou.value=1" />
-                    <span class="texto"><dtml-var expr="_['sequence-item']"></span>
-                </dtml-in>
-            </td>
-        </tr>
+          </div>
+                <div class="col-sm-6 center">
+                      <label for="rad_ind_tramitacao" class="control-label">Em Tramitação?</label>
+                      <div class="col-sm-12">
+                          <dtml-in expr="[(1,'Sim'),(0,'Não')]">
+                              <input type="radio" id="rad_ind_tramitacao" name="rad_ind_tramitacao" value="<dtml-var expr="_['sequence-key']">"
+                              <dtml-if expr="_['sequence-item']=='Não'">checked=1</dtml-if>
+                              onChange="javascript:form.hdn_alterou.value=1" />
+                              <span class="texto"><dtml-var expr="_['sequence-item']">
+                          </dtml-in>
+                    </div>
+                </div>
+        </div>
 
+
+
+          <label for="txa_txt_ementa" class="control-label">Ementa </label>
+                <textarea class="form-control" id="txa_txt_ementa" name="txa_txt_ementa" cols="65" rows="4" onBlur="form.txa_txt_ementa.value = form.txa_txt_ementa.value.toUpperCase()" onChange="javascript:form.hdn_alterou.value=1"><dtml-var txt_ementa missing></textarea>
         <tr>
-            <td colspan="3"><label for="txa_txt_ementa">Ementa </label><span class="campoObrigatorio">&nbsp;</span><br />
-                <textarea id="txa_txt_ementa" name="txa_txt_ementa" cols="65" rows="4" onBlur="form.txa_txt_ementa.value = form.txa_txt_ementa.value.toUpperCase()" onChange="javascript:form.hdn_alterou.value=1"><dtml-var txt_ementa missing></textarea>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2><label for="radTipTxtIntegral">Texto original (PDF)</label><br />
+            <td colspan="2"><label class="control-label" for="radTipTxtIntegral">Texto original (PDF)</label>
                 <dtml-if expr="_.has_key('cod_materia')">
                     <dtml-call expr="REQUEST.set('id_documento', _.str(cod_materia)+'_texto_integral')">
                     <dtml-if "_.hasattr(sapl_documentos.materia,id_documento)">
                     <dtml-let documento="_.getattr(sapl_documentos.materia,id_documento).absolute_url">
                         <a target="_blank" href="<dtml-var documento>">
                             <img align="top" src="sapl/imagens/archiv.gif" alt="Arquivo PDF" title="Visualizar PDF" /></a>
-                        <a class="botao-link" href="javascript:texto_integral_excluir()">
-                            Excluir</a>
+                        <a class="botao-link" href="javascript:texto_integral_excluir()">  Excluir</a>
                     </dtml-let>
                     <dtml-else>
                     <input type="file" id="file_nom_arquivo" name="file_nom_arquivo" accept="application/pdf" size="15" maxlength="100" />
@@ -381,6 +412,7 @@
     </dtml-if>
     </dtml-if>
 </td>
+
 <td colspan="2" valign="top">
     <dtml-if expr="_.has_key('cod_materia')">
         <label for="radTipTxtIntegral">Texto atualizado (ODT)</label><br />
@@ -407,18 +439,18 @@
     </dtml-if>
 </dtml-let>
 </dtml-if>
+
         </td>
         </tr>
     </table>
     </fieldset>
 
     <p align="center">
-        <input type="button" class="botao" name="button" value="Salvar" onClick="campos_criticar()" />
+        <input type="button" class="btn btn-primary" name="button" value="Salvar" onClick="campos_criticar()" />
         <dtml-if cod_materia>
-            <input type="button" class="botao" name="btn_excluir" value="Excluir" onClick="materia_excluir()" />
+            <input type="button" class="btn btn-warning" name="button" value="Excluir" onClick="materia_excluir()" />
         </dtml-if>
     </p>
 
-</form>
 
 <dtml-var standard_html_footer>

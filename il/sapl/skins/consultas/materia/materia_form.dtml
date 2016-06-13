@@ -1,5 +1,4 @@
 <dtml-var standard_html_header>
-
  <div class="topoMateriaMostrar">
 
              <dtml-let listaFotos="sapl_documentos.parlamentar.fotos.objectValues('Image')">
@@ -553,5 +552,4 @@
 <p align="center">
     <input class="botao" type="button" value="Retornar" onClick="history.go(-1)">
 </p>
-
 <dtml-var standard_html_footer>
