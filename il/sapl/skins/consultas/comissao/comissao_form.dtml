@@ -84,7 +84,7 @@
             </dtml-if>
             <dtml-if end_secretaria>
                 <tr>
-                    <th class="form-label"">End. Secretaria</th>
+                    <th class="form-label">End. Secretaria</th>
                     <td colspan="3" class="texto"><dtml-var end_secretaria missing null=""></td>
                 </tr>
             </dtml-if>

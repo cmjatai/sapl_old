@@ -26,9 +26,10 @@
 <a id="ajuda" href="&dtml-portal_url;/ajuda/consultas#cons_comissoes">Ajuda</a>
 <h1 class="firstHeading">Comissões</h1>
 
+
 <form name="index_form">
-    <div><label for="chk_mostrar_extintas">Mostrar extintas?</label>
-        <input type="checkbox" id="chk_mostrar_extintas" name="chk_mostrar_extintas"
+    <div><label for="control-label">Mostrar extintas?</label>
+        <input type="radio" id="chk_mostrar_extintas" name="chk_mostrar_extintas"
         <dtml-if hdn_mostrar_extintas>
             <dtml-if expr="hdn_mostrar_extintas=='1'">
                 checked
@@ -107,4 +108,3 @@
     </fieldset>
 </form>
 <dtml-var standard_html_footer>
-
