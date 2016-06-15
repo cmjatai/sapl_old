@@ -1,4 +1,4 @@
-<dtml-var standard_html_header>
+<dtml-var standard_html_header><div id="conteudo">
     <form name="painel_eletronico_form" method="post" action="painel_eletronico_salvar_proc"  enctype="multipart/form-data">
         <input type="hidden" name="hdn_url" value="painel_eletronico_form" />
 
@@ -351,4 +351,4 @@
             </dtml-in>
         </fieldset>
     </form>
-    <dtml-var standard_html_footer>
+    </div><dtml-var standard_html_footer>

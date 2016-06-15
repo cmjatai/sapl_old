@@ -1,4 +1,4 @@
-<dtml-var standard_html_header>
+<dtml-var standard_html_header><div id="conteudo">
 <script type="text/javascript">
 <!--
     function submeter(cod_cargo, campo , campo1, form) {
@@ -107,4 +107,4 @@
  </table><br />
 </fieldset>
 </form>
-<dtml-var standard_html_footer>
+</div><dtml-var standard_html_footer>

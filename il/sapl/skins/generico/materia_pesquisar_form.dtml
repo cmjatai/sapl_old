@@ -1,4 +1,5 @@
-<dtml-var standard_html_header>
+
+<dtml-var standard_html_header><div id="conteudo">
 <script type="text/javascript">
     $(function() {
         $('#dt_apres').datepick();
@@ -306,5 +307,4 @@
         </div>
     </fieldset>
 </form>
-</div>
-<dtml-var standard_html_footer>
+</div><dtml-var standard_html_footer>

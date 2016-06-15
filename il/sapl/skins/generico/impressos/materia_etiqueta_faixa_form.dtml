@@ -1,4 +1,4 @@
-<dtml-var standard_html_header>
+<dtml-var standard_html_header><div id="conteudo">
 <SCRIPT LANGUAGE = "JavaScript">
 <!--
   var form = document.etiqueta_form;
@@ -55,4 +55,4 @@
         <input type="button" class="botao" name="OK" value="Enviar" onClick="campos_criticar(document.etiqueta_form)">
   </p>
 </form>
-<dtml-var standard_html_footer>
+</div><dtml-var standard_html_footer>

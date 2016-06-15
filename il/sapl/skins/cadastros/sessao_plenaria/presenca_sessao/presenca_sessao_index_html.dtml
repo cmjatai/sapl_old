@@ -1,4 +1,4 @@
-<dtml-var standard_html_header>
+<dtml-var standard_html_header><div id="conteudo">
 <script type="text/javascript" language="Javascript">
 function submeter(endereco){
 
@@ -103,4 +103,4 @@ for (i = 0; i < field.length; i++)
     </dtml-in>
     </fieldset>
 </form>
-<dtml-var standard_html_footer>
+</div><dtml-var standard_html_footer>

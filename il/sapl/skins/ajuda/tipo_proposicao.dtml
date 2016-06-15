@@ -1,4 +1,4 @@
-<dtml-var standard_html_header>
+<dtml-var standard_html_header><div id="conteudo">
 
 <h1 class="firstHeading">Tipo de Proposi&ccedil;&atilde;o</h1>
 Esta tabela tem por objetivo cadastrar os Tipos de Proposi&ccedil;&otilde;es
@@ -103,4 +103,4 @@ j&aacute; cadastradas.<br />
 <dtml-var "navegacao_ajuda(pagina_anterior='proposicao_editor', pagina_proxima='recebimento_proposicao')">
 <br />
 
-<dtml-var standard_html_footer>
+</div><dtml-var standard_html_footer>

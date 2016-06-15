@@ -1,4 +1,4 @@
-<dtml-var standard_html_header>
+<dtml-var standard_html_header><div id="conteudo">
 
 <h1 class="firstHeading">LexML</h1>
 <p>O que é o LexML?</p>
@@ -11,4 +11,4 @@
 
 <br /><dtml-var "navegacao_ajuda(pagina_anterior='ajuda', pagina_proxima='ajuda/consultas#cons_topo')"><br/>
 <br />
-<dtml-var standard_html_footer>
+</div><dtml-var standard_html_footer>

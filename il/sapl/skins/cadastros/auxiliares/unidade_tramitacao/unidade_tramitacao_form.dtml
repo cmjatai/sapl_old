@@ -1,4 +1,4 @@
-<dtml-var standard_html_header>
+<dtml-var standard_html_header><div id="conteudo">
 
 <script type="text/javascript">
     <!--
@@ -126,4 +126,4 @@
         <input type="hidden" name="hdn_cod_unid_tramitacao" value="<dtml-var cod_unid_tramitacao missing null=''>" />
     </fieldset>
 </form>
-<dtml-var standard_html_footer>
+</div><dtml-var standard_html_footer>

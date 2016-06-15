@@ -1,6 +1,6 @@
 <dtml-comment> script alterado para incorporar documento acessório a partir de proposição elaborada. Man Qi em 08/01/04 </dtml-comment>
 
-<dtml-var standard_html_header>
+<dtml-var standard_html_header><div id="conteudo">
 
 <script type = "text/javascript" src="javascript/data_validar_jvsc"></script>
 <style  type="text/css"><!-- @import url(&dtml-portal_url;/generico/estilo.css); --></style>
@@ -401,4 +401,4 @@ function tipo_texto_documento(tipo) {
     <input type="hidden" name="hdn_url" value="index_html?cod_materia=<dtml-var cod_materia>" />
     <br />
 </form>
-<dtml-var standard_html_footer>
+</div><dtml-var standard_html_footer>

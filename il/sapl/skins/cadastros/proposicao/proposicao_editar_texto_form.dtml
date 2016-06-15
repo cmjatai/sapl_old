@@ -4,7 +4,7 @@
 </dtml-in>
 <dtml-call expr="REQUEST.set('tipo_txtint',(pysc.proposicao_tipo_texto_integral_pysc(cod_proposicao)))">
 <dtml-if expr="usr_eh_autor or (AUTHENTICATED_USER.has_role( ['Operador', 'Operador Materia']))">
-<dtml-var standard_html_header>
+<dtml-var standard_html_header><div id="conteudo">
 
 <div class="helpsapl"><a id="ajuda" href="&dtml-portal_url;/ajuda/proposicao#editar_xml">Ajuda</a></div>
 
@@ -44,7 +44,7 @@
         </table>
     </form>
 </fieldset>
-<dtml-var standard_html_footer>
+</div><dtml-var standard_html_footer>
 <dtml-else>
   <dtml-let mensagem="'Você não tem permissão para ver esta proposição!'">
      <dtml-var mensagem_emitir>

@@ -1,4 +1,4 @@
-<dtml-var standard_html_header>
+<dtml-var standard_html_header><div id="conteudo">
 <a id="ajuda" href="&dtml-portal_url;/ajuda/andamento_sessao_plenaria">Ajuda</a>
 <h1 class="firstHeading"> Tabelas Auxiliares </h1> 
 
@@ -40,4 +40,4 @@
    </td>
   </tr>
  </table>
-<dtml-var standard_html_footer>
+</div><dtml-var standard_html_footer>

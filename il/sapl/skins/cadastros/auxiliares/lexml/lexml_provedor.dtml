@@ -1,4 +1,4 @@
-<dtml-var standard_html_header>
+<dtml-var standard_html_header><div id="conteudo">
 
 <dtml-if expr="AUTHENTICATED_USER.has_role( ['Operador', 'Operador Lexml'])">
 <script type="text/javascript">
@@ -196,4 +196,4 @@ function campos_criticar(form){
 </dtml-try>
 </dtml-let>
 </form>
-<dtml-var standard_html_footer>
+</div><dtml-var standard_html_footer>

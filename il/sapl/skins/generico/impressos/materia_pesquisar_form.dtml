@@ -11,7 +11,7 @@
 ----------------------------------------------------------------*
 </dtml-comment>
 
-<dtml-var standard_html_header>
+<dtml-var standard_html_header><div id="conteudo">
 
 <SCRIPT language="javascript">
 
@@ -188,4 +188,4 @@ Frase Exata: <input type="checkbox" name="txt_frase_exata" value="sim" checked>
  </td>
 </table>
 <br>
-<dtml-var standard_html_footer>
+</div><dtml-var standard_html_footer>

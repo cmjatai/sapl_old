@@ -1,4 +1,4 @@
-<dtml-var standard_html_header>
+<dtml-var standard_html_header><div id="conteudo">
 
 <dtml-comment>
    ******************************************************************************
@@ -199,4 +199,4 @@
 </table></table></table>
 </form>
 
-<dtml-var standard_html_footer>
+</div><dtml-var standard_html_footer>

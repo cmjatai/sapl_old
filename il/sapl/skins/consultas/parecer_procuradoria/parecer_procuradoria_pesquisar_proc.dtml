@@ -1,4 +1,4 @@
-<dtml-var standard_html_header>
+<dtml-var standard_html_header><div id="conteudo">
 
 <a id="ajuda" href="&dtml-portal_url;/ajuda/consultas#cons_documento_administrativo">Ajuda</a>
 <h1>Pareceres da Procuradoria</h1>
@@ -70,14 +70,14 @@
 
                 <dtml-call expr="REQUEST.set('des_status', '')">
                 <dtml-call expr="REQUEST.set('txt_tramitacao', '')">
-                <dtml-comment>obtém a última tramitação do documento.</dtml-comment>
+                <dtml-comment>obtï¿½m a ï¿½ltima tramitaï¿½ï¿½o do documento.</dtml-comment>
                 <dtml-in expr="zsql.tramitacao_parecer_obter_zsql(cod_documento=cod_documento, ind_ult_tramitacao=1)">
                   <dtml-if cod_unid_tram_dest>
                     <dtml-call expr="REQUEST.set('cod_unid_tram', cod_unid_tram_dest)">
                   <dtml-else>
                     <dtml-call expr="REQUEST.set('cod_unid_tram', cod_unid_tram_local)">
                   </dtml-if>
-                  <dtml-comment>obtém a unidade de tramitação do documento.</dtml-comment>
+                  <dtml-comment>obtï¿½m a unidade de tramitaï¿½ï¿½o do documento.</dtml-comment>
                   <dtml-in expr="zsql.unidade_tramitacao_obter_zsql(cod_unid_tramitacao=cod_unid_tram)">
                     <dtml-if cod_orgao>
                       <b>Localiza&ccedil;&atilde;o Atual: </b><dtml-var nom_orgao><br>
@@ -90,7 +90,7 @@
                   <dtml-call expr="REQUEST.set('des_status', des_status)">
                   <dtml-call expr="REQUEST.set('txt_tramitacao', txt_tramitacao)">
                 <dtml-if des_status>
-                  <b>Situação: </b><dtml-var des_status null=""><br>
+                  <b>Situaï¿½ï¿½o: </b><dtml-var des_status null=""><br>
                 </dtml-if>
                 <dtml-if txt_tramitacao>
                   <b>&Uacute;ltima A&ccedil;&atilde;o: </b><dtml-var txt_tramitacao>&nbsp;&nbsp;-&nbsp;&nbsp;<b>Em:</b>&nbsp;<dtml-var dat_tramitacao><br>
@@ -127,7 +127,7 @@
 <td class="texto"><b>Resultado da Pesquisa</b></td>
 </tr>
 <tr>
-<td class="texto">Nenhuma ocorrência encontrada.</td>
+<td class="texto">Nenhuma ocorrï¿½ncia encontrada.</td>
 </tr>
 </dtml-in>
 </td>
@@ -135,4 +135,4 @@
 </table>
 </fieldset>
 
-<dtml-var standard_html_footer>
+</div><dtml-var standard_html_footer>

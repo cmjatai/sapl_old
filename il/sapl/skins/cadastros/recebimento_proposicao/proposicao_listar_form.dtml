@@ -1,4 +1,4 @@
-<dtml-var standard_html_header>
+<dtml-var standard_html_header><div id="conteudo">
 
 <link rel="stylesheet" href="&dtml-portal_url;/javascript/jquery.tablesorter/themes/blue/style.css" type="text/css" media="print, projection, screen" />
 
@@ -242,4 +242,4 @@
                 <p class="form-text">Nenhuma proposição foi incorporada até o momento.</p>
             </dtml-in>
 </dtml-if>
-<dtml-var standard_html_footer>
+</div><dtml-var standard_html_footer>

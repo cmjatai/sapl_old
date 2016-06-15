@@ -1,4 +1,4 @@
-<dtml-var standard_html_header>
+<dtml-var standard_html_header><div id="conteudo">
 
 <a id="ajuda" href="&dtml-portal_url;/ajuda/proposicao#consulta">Ajuda</a>
 <h1 class="firstHeading"> Proposição </h1>
@@ -58,4 +58,4 @@
     <dtml-else>
     <p class="form-text">Nenhuma proposição foi enviada ainda.</p>
 </dtml-in>
-<dtml-var standard_html_footer>
+</div><dtml-var standard_html_footer>

@@ -1,4 +1,4 @@
-<dtml-var standard_html_header>
+<dtml-var standard_html_header><div id="conteudo">
 
 <h1 class="firstHeading">Cadastro de Parlamentares</h1>
 <br />
@@ -463,4 +463,4 @@ alimentando outras informa&ccedil;&otilde;es tais como:
 <dtml-var "navegacao_ajuda(pagina_anterior='coligacao', pagina_proxima='mandatos_parlamentar')">
 <br />
 
-<dtml-var standard_html_footer>
+</div><dtml-var standard_html_footer>

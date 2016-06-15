@@ -1,4 +1,4 @@
-﻿<dtml-var standard_html_header>
+﻿<dtml-var standard_html_header><div id="conteudo">
 
 <dtml-in expr="zsql.bancada_obter_zsql(cod_bancada=cod_bancada)">
   <dtml-call expr="REQUEST.set('nom_bancada', nom_bancada)">
@@ -49,4 +49,4 @@
 
 </fieldset>
 
-<dtml-var standard_html_footer>
+</div><dtml-var standard_html_footer>

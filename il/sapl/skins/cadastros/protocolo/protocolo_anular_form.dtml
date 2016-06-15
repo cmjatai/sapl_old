@@ -1,4 +1,4 @@
-<dtml-var standard_html_header>
+<dtml-var standard_html_header><div id="conteudo">
 
 <script type="text/javascript" language="Javascript">
 
@@ -115,4 +115,4 @@ Luciano De Fazio em 15/11/2011
 
   </form>
 
-<dtml-var standard_html_footer>
+</div><dtml-var standard_html_footer>

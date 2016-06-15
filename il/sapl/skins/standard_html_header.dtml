@@ -120,8 +120,4 @@
                 </div>
             </div>
             <div class="ajax-Bottom"><i class="fa fa-cog fa-spin fa-3x fa-fw"></i></div>
-
-            <dtml-if expr="'sapl/qs' not in URL and '/sapl/consultas/parlamentar/parlamentar_index_html' not in URL">
-                <div>
-                </dtml-if>
 </dtml-if>

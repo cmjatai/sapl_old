@@ -1,4 +1,4 @@
-<dtml-var standard_html_header>
+<dtml-var standard_html_header><div id="conteudo">
 
 <SCRIPT LANGUAGE = "JavaScript" src="javascript/data_validar_jvsc"></SCRIPT>
 <SCRIPT LANGUAGE = "JavaScript">
@@ -57,4 +57,4 @@ SÃ©rgio Roberto Damiati em 24/02/2010.
         </table>
 </form>
 </fieldset>
-<dtml-var standard_html_footer>
+</div><dtml-var standard_html_footer>

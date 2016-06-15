@@ -1,4 +1,4 @@
-<dtml-var standard_html_header>
+<dtml-var standard_html_header><div id="conteudo">
 
 <SCRIPT LANGUAGE = "JavaScript" src="javascript/data_validar_jvsc"></SCRIPT>
 <SCRIPT LANGUAGE = "JavaScript">
@@ -104,4 +104,4 @@ function Limpa(form) {
 </table>
 </form>
 </fieldset>
-<dtml-var standard_html_footer>
+</div><dtml-var standard_html_footer>

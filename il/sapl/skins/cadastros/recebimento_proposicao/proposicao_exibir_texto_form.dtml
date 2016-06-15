@@ -1,4 +1,4 @@
-<dtml-var standard_html_header>
+<dtml-var standard_html_header><div id="conteudo">
 <table align="center">
     <tr class="fundo">
         <td class="form-label">
@@ -25,4 +25,4 @@
     </tr>
 </table>
 <table width="95%" border="0" cellspacing="0" cellpadding="0"><tr><td height="10"></td></tr></table>
-<dtml-var standard_html_footer>
+</div><dtml-var standard_html_footer>

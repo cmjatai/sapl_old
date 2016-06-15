@@ -1,16 +1,16 @@
-<dtml-var standard_html_header>
+<dtml-var standard_html_header><div id="conteudo">
 
 <script type="text/javascript">
 <!--
 
 function campos_criticar(form){  
 /*-----------------------------
-  Função: Verifica se os campos estão preenchidos corretamente.
-  Argumentos: form : formulário em si.                     
-  Retorno: False - caso detecte na validação algum erro no 
-         preenchimento dos campos; caso contrário, invoca o
-         SUBMIT do formulário.
-  Luciano De Fázio em 02/11/2011.
+  Funï¿½ï¿½o: Verifica se os campos estï¿½o preenchidos corretamente.
+  Argumentos: form : formulï¿½rio em si.                     
+  Retorno: False - caso detecte na validaï¿½ï¿½o algum erro no 
+         preenchimento dos campos; caso contrï¿½rio, invoca o
+         SUBMIT do formulï¿½rio.
+  Luciano De Fï¿½zio em 02/11/2011.
 ------------------------------*/   
 
   if (form.txt_sgl_tipo_documento.value == "") {
@@ -20,7 +20,7 @@ function campos_criticar(form){
   }
 
   if (form.txt_des_tipo_documento.value == "") {
-    alert("A descrição deve ser preenchida.");
+    alert("A descriï¿½ï¿½o deve ser preenchida.");
     form.txt_des_tipo_documento.focus();
     return false;
   }
@@ -30,11 +30,11 @@ function campos_criticar(form){
 
 function tipo_parecer_excluir() {
 /*-----------------------------
-  Função: Solicita a confirmação e chama o Método DTML de exclusão 
+  Funï¿½ï¿½o: Solicita a confirmaï¿½ï¿½o e chama o Mï¿½todo DTML de exclusï¿½o 
         do tipo de documento administrativo.
   Argumentos: 
-  Retorno: Retorna uma mensagem de exclusão bem sucedida e redire-
-        ciona à página 'index_html'.
+  Retorno: Retorna uma mensagem de exclusï¿½o bem sucedida e redire-
+        ciona ï¿½ pï¿½gina 'index_html'.
   Luciano De Fazio em 02/11/2011.
 ------------------------------*/
        
@@ -54,14 +54,14 @@ function tipo_parecer_excluir() {
 
 <table width="95%" align="center">
   <tr class="fundo"> 
-    <td align="right" class="form-label">| <a href="index_html">Início</a> |</td>
+    <td align="right" class="form-label">| <a href="index_html">Inï¿½cio</a> |</td>
    </tr>
 </table>  
   
 <dtml-comment>
 *************************************************************
-*    O parâmetro hdn_tip_documento serve para levar para o  *
-*  salvar_proc a identificação de um tipo de documento admi-*
+*    O parï¿½metro hdn_tip_documento serve para levar para o  *
+*  salvar_proc a identificaï¿½ï¿½o de um tipo de documento admi-*
 *  nistrativo caso ele esteja sendo atualizado.             *
 *************************************************************
 </dtml-comment>
@@ -76,7 +76,7 @@ function tipo_parecer_excluir() {
            <td width="20%" height="40" class="form-element">Sigla (*)<br />
             <input type="text" name="txt_sgl_tipo_documento" value="<dtml-var sgl_tipo_documento missing>" size="5" maxlength="5"
            onBlur="form.txt_sgl_tipo_documento.value = form.txt_sgl_tipo_documento.value.toUpperCase()" /></td>
-           <td width="80%" class="form-element">Descrição (*)<br />
+           <td width="80%" class="form-element">Descriï¿½ï¿½o (*)<br />
            <input type="text" name="txt_des_tipo_documento" value="<dtml-var des_tipo_documento missing>" size="50" maxlength="50" /></td>
         </tr>
       </table>
@@ -92,4 +92,4 @@ function tipo_parecer_excluir() {
 </table>
 </fieldset>
 </form>
-<dtml-var standard_html_footer>
+</div><dtml-var standard_html_footer>

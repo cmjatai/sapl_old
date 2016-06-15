@@ -1,4 +1,4 @@
-<dtml-var standard_html_header>
+<dtml-var standard_html_header><div id="conteudo">
 
 <h1 class="firstHeading">Filia&ccedil;&otilde;es Partid&aacute;rias</h1>
 <br />
@@ -127,5 +127,5 @@ retorna a tela com os dados b&aacute;sicos do parlamentar.<br />
 <dtml-var "navegacao_ajuda(pagina_anterior='mandatos_parlamentar', pagina_proxima='dependentes')">
 <br />
 
-<dtml-var standard_html_footer>
+</div><dtml-var standard_html_footer>
 

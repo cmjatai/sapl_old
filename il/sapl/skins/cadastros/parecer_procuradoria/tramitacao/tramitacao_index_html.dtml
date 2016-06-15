@@ -1,4 +1,4 @@
-<dtml-var standard_html_header>
+<dtml-var standard_html_header><div id="conteudo">
 
 <script type="text/javascript">
 <!--
@@ -40,7 +40,7 @@
          <td class="texto"><a href="tramitacao_mostrar_proc?cod_tramitacao=<dtml-var cod_tramitacao>&amp;cod_documento=<dtml-var cod_documento>">
          <b><dtml-var dat_tramitacao></b></a></td>
          <td class="texto">
-         <dtml-comment>obtém o nome da unidade de tramitacao local. Man Qi em 01/08/2001 </dtml-comment>
+         <dtml-comment>obtï¿½m o nome da unidade de tramitacao local. Man Qi em 01/08/2001 </dtml-comment>
          <dtml-in expr="unidade_tramitacao_obter_zsql(cod_unid_tramitacao=cod_unid_tram_local)">
            <dtml-if cod_orgao><dtml-var nom_orgao>
            <dtml-elif cod_comissao><dtml-var nom_comissao>   
@@ -48,7 +48,7 @@
            </dtml-if>
          </dtml-in></td>
          <td class="texto"><dtml-if cod_unid_tram_dest>
-           <dtml-comment>obtém o nome da unidade de tramitacao destino. Man Qi em 01/08/2001 </dtml-comment>
+           <dtml-comment>obtï¿½m o nome da unidade de tramitacao destino. Man Qi em 01/08/2001 </dtml-comment>
            <dtml-in expr="unidade_tramitacao_obter_zsql(cod_unid_tramitacao=cod_unid_tram_dest)">
              <dtml-if cod_orgao><dtml-var nom_orgao>
              <dtml-elif cod_comissao><dtml-var nom_comissao>   
@@ -73,8 +73,8 @@
 </dtml-in>
       </fieldset>
       <p align="center">
-          <input type="submit" class="botao" name="btn_incluir" value="Incluir Tramitação" />
+          <input type="submit" class="botao" name="btn_incluir" value="Incluir Tramitaï¿½ï¿½o" />
       </p>
 </fieldset>
 </form>
-<dtml-var standard_html_footer>
+</div><dtml-var standard_html_footer>

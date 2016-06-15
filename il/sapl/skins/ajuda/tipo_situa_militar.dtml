@@ -1,4 +1,4 @@
-<dtml-var standard_html_header>
+<dtml-var standard_html_header><div id="conteudo">
 
 <h1 class="firstHeading">Tipo de Situa&ccedil;&atilde;o Militar</h1>
 <br />
@@ -35,4 +35,4 @@ confirma&ccedil;&atilde;o.<br />
 <dtml-var "navegacao_ajuda(pagina_anterior='tipo_dependente', pagina_proxima='nivel_instrucao')">
 <br />
 
-<dtml-var standard_html_footer>
+</div><dtml-var standard_html_footer>

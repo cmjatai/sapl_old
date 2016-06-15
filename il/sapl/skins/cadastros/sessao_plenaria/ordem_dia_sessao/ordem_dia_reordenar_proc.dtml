@@ -12,7 +12,7 @@
 <dtml-else>
        <dtml-call expr="REQUEST.set('sucesso', 1)"> 
 </dtml-try>
-<dtml-var standard_html_header>
+<dtml-var standard_html_header><div id="conteudo">
 <table align="center">
    <tr><td colspan="2" class="titulo">&nbsp;</td></tr>
     <tr>
@@ -26,6 +26,6 @@
            <a href="javascript:history.go(-1)">Continuar</a>
        </td></tr>
 </table>
-<dtml-var standard_html_footer>
+</div><dtml-var standard_html_footer>
                                                                                                                                                                                          
 ~                 

@@ -1,4 +1,4 @@
-<dtml-var standard_html_header>
+<dtml-var standard_html_header><div id="conteudo">
 <link rel="stylesheet" href="&dtml-portal_url;/javascript/jquery.tablesorter/themes/blue/style.css" type="text/css" media="print, projection, screen" />
 <script type="text/javascript" src="&dtml-portal_url;/javascript/jquery.tablesorter/jquery.tablesorter.min.js"></script>
 <script type="text/javascript" src="&dtml-portal_url;/javascript/jquery.tablesorter/jquery.tablesorter.pager.js"></script>
@@ -77,4 +77,4 @@
   <p class="texto">Nenhuma comiss&atilde;o cadastrada.</p>
 </dtml-in>
 </fieldset>
-<dtml-var standard_html_footer>
+</div><dtml-var standard_html_footer>

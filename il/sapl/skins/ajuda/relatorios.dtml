@@ -1,4 +1,4 @@
-<dtml-var standard_html_header>
+<dtml-var standard_html_header><div id="conteudo">
 <h1><a NAME="rel_topo">Emitindo Relatórios Administrativos</a></h1>
 <br />
 Tanto o usuário autenticado como o não autenticado podem selecionar e gerar qualquer um
@@ -119,4 +119,4 @@ Para emissão deste relatório, alguns parâmetros devem ser informados como: an
 <h1><a NAME="rel_historico_tramitacoes">Emitindo Relatório de Histórico de Tramitações</a></h1>
 A finalidade deste relatório é informar dados sobre o histórico de tramitações das matérias legislativas havido na casa legislativa de acordo com parâmetros indicados. Alguns parâmetros devem ser informados como: período, localização, tipo de matéria e status da tramitação, preferencialmente nessa ordem, sendo obrigatório apenas o período, que já vem previamente informado com as datas limites - mais antiga e a mais atual - das tramitações existentes. Para alterar o período, basta sobrescreve-lo. Ainda relativo aos parâmetros, vale ressaltar que estão disponíveis somente aqueles que tiveram alguma matéria em tramitação, caso contrário, não constará na lista disponíbilizada para seleção. Por exemplo: suponha que esteja definido um local denominado <i>Comissão Especial</i> e que nunca houve tramitação para lá. Neste caso, na lista de <b>Localizações</b> o local em questão <b>não</b> estará disponível para seleção. Procedimento análogo é dado aos outros parâmetros Tipo Matéria e Status da Tramitação. Em razão da diversidade de informações, o relatório detalha apenas as proposições cujas informações atendam aos parâmetros fornecidos, sendo que para os demais casos, onde o parâmetro permaneceu <i>todos</i> fornece somente as quantidades de tramitações encontradas, sem detalhar quais são as proposições, exceto se a ordem informada localização, tipo matéria e status da tramitação, for respeitada. Isto é, não informar <b>tipo</b> sem informar <b>local</b> e não informar <b>status</b> sem informar <b>tipo</b> e <b>local</b>. Para impressão utilize a função do navegador logo após clicar em impressão na barra de menu horizontal acima para a retirada do cabeçalho e do menu lateral.<br />
 <br />
-<dtml-var standard_html_footer>
+</div><dtml-var standard_html_footer>

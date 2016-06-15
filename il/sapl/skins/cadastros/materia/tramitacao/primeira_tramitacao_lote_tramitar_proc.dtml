@@ -1,4 +1,4 @@
-<dtml-var standard_html_header>
+<dtml-var standard_html_header><div id="conteudo">
 
 <a id="ajuda" href="&dtml-portal_url;/ajuda/tramitacao_lote">Ajuda</a>
 
@@ -326,4 +326,4 @@
         </p>
     </fieldset>
 </dtml-if check>
-<dtml-var standard_html_footer>
+</div><dtml-var standard_html_footer>

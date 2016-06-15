@@ -1,4 +1,5 @@
-<dtml-var standard_html_header>
+
+<dtml-var standard_html_header><div id="conteudo">
 <script type="text/javascript">
     $(document).ready(function() {
         $(".popup").fancybox({
@@ -325,4 +326,4 @@
 <p align="center">
     <input class="botao" type="button" value="Retornar" onClick="history.back()">
 </p>
-<dtml-var standard_html_footer>
+</div><dtml-var standard_html_footer>

@@ -1,4 +1,4 @@
-<dtml-var standard_html_header>
+<dtml-var standard_html_header><div id="conteudo">
 
 <h1 class="firstHeading">Autor</h1>
 Esta tabela tem por objetivo cadastrar os Autores de
@@ -159,4 +159,4 @@ j&aacute; cadastrado.<br />
 <dtml-var "navegacao_ajuda(pagina_anterior='envio_proposicao', pagina_proxima='tipo_autor')">
 <br />
 
-<dtml-var standard_html_footer>
+</div><dtml-var standard_html_footer>

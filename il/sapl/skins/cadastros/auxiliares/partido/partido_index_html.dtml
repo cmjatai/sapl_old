@@ -1,4 +1,4 @@
-<dtml-var standard_html_header>
+<dtml-var standard_html_header><div id="conteudo">
 
 <a id="ajuda" href="&dtml-portal_url;/ajuda/partidos">Ajuda</a>
 <h1 class="firstHeading"> Tabelas Auxiliares </h1>
@@ -70,4 +70,4 @@
     </table>
     </dtml-in>
 </fieldset>
-<dtml-var standard_html_footer>
+</div><dtml-var standard_html_footer>

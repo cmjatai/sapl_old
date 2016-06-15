@@ -1,4 +1,4 @@
-<dtml-var standard_html_header>
+<dtml-var standard_html_header><div id="conteudo">
 
 <h1 class="firstHeading">Sess&atilde;o Plen&aacute;ria</h1>
 <br>A fun&ccedil;&atilde;o Sess&atilde;o Plen&aacute;ria tem por objetivo permitir o registro do que acontece na Sess&atilde;o Plen&aacute;ria da Casa Legislativa.<br />
@@ -126,5 +126,5 @@ a data de encerramento da sess&atilde;o plen&aacute;ria no formato dd/mm/aaaa e 
 <br>Acione a fun&ccedil;&atilde;o &ldquo;Sair&rdquo; para sair do cadastramento de Sess&otilde;es e voltar a tela anterior.<br />
 <br><dtml-var "navegacao_ajuda(pagina_anterior='ordem_dia', pagina_proxima='recebimento_proposicao')"><br />
 <br />
-<dtml-var standard_html_footer>
+</div><dtml-var standard_html_footer>
 

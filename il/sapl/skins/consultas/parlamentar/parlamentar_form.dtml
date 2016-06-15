@@ -1,4 +1,4 @@
-<dtml-var standard_html_header>
+<dtml-var standard_html_header><div id="conteudo">
 <script type="text/javascript" src="&dtml-portal_url;/javascript/tabs.js"></script>
 <a id="ajuda" href="&dtml-portal_url;/ajuda/consultas#cons_dadosparl">Ajuda</a>
 <h1 class="firstHeading"><dtml-var nom_parlamentar></h1>
@@ -53,4 +53,4 @@
     <input type="button" class="botao" name="retornar" value="retornar" onClick="javascript:history.go(-1)">
 </p>
 
-<dtml-var standard_html_footer>
+</div><dtml-var standard_html_footer>

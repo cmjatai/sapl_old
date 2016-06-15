@@ -1,4 +1,4 @@
-<dtml-var standard_html_header>
+<dtml-var standard_html_header><div id="conteudo">
 
 <h1 class="firstHeading">Unidade de Tramita&ccedil;&atilde;o</h1>
 <br />
@@ -116,4 +116,4 @@ tramita&ccedil;&atilde;o j&aacute; cadastrada.<br />
 <dtml-var "navegacao_ajuda(pagina_anterior='tipo_autor', pagina_proxima='orgao')">
 <br />
 
-<dtml-var standard_html_footer>
+</div><dtml-var standard_html_footer>

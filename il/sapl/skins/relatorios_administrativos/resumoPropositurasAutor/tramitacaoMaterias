@@ -1,4 +1,4 @@
-<dtml-var standard_html_header>
+<dtml-var standard_html_header><div id="conteudo">
 
 <form method="post" action="resumoPropositurasAutor_index_html">
   <dtml-if impressao>
@@ -53,4 +53,4 @@
   </table>
 </dtml-if>
 
-<dtml-var standard_html_footer>
+</div><dtml-var standard_html_footer>

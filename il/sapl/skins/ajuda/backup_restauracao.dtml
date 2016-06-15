@@ -1,4 +1,4 @@
-<dtml-var standard_html_header>
+<dtml-var standard_html_header><div id="conteudo">
 
 <h1 class="firstHeading">Backup e Restaura&ccedil;&atilde;o</h1>
 <br />
@@ -20,4 +20,4 @@ Al&eacute;m disso, &eacute; necess&aacute;rio que os
 seguintes arquivos estejam no diret&oacute;rio import do servidor
 do zope: sapl.zexp e backup_banco_sapl.<br />
 
-<dtml-var standard_html_footer>
+</div><dtml-var standard_html_footer>

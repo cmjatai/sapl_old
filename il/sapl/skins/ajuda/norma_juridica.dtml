@@ -1,4 +1,4 @@
-<dtml-var standard_html_header>
+<dtml-var standard_html_header><div id="conteudo">
   
 <h1 class="firstHeading">Cadastro de Normas Jur&iacute;dicas</h1>
 <br />
@@ -328,4 +328,4 @@ Jur&iacute;dica exclu&iacute;da com sucesso!</i><br />
 <br />
 
 
-<dtml-var standard_html_footer>
+</div><dtml-var standard_html_footer>

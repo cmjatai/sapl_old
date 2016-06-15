@@ -1,4 +1,4 @@
-<dtml-var standard_html_header>
+<dtml-var standard_html_header><div id="conteudo">
 
 <div class="row">
   <div class="col-xs-2">
@@ -24,4 +24,4 @@
   </div>
 </div>
 
-<dtml-var standard_html_footer>
+</div><dtml-var standard_html_footer>

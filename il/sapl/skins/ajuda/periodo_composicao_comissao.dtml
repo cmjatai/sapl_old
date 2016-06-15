@@ -1,4 +1,4 @@
-<dtml-var standard_html_header>
+<dtml-var standard_html_header><div id="conteudo">
 
 <h1 class="firstHeading">Per&iacute;odo da Composi&ccedil;&atilde;o da
 Comiss&atilde;o</h1>
@@ -100,4 +100,4 @@ per&iacute;odos de comiss&atilde;o j&aacute; cadastradas.<br />
 <br />
 
 
-<dtml-var standard_html_footer>
+</div><dtml-var standard_html_footer>

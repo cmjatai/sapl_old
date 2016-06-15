@@ -1,4 +1,4 @@
-<dtml-var standard_html_header>
+<dtml-var standard_html_header><div id="conteudo">
 
 <script type="text/javascript" src="&dtml-portal_url;/javascript/prototype.min.js"></script>
 <script type="text/javascript">
@@ -80,4 +80,4 @@
     </p>
 </form>
 </fieldset>
-<dtml-var standard_html_footer>
+</div><dtml-var standard_html_footer>

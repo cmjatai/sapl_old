@@ -1,4 +1,4 @@
-<dtml-var standard_html_header>
+<dtml-var standard_html_header><div id="conteudo">
 
 <script type="text/javascript" src="javascript/data_validar_jvsc"></script>
 <script type="text/javascript" src="javascript/cpf_validar_jvsc"></script>
@@ -171,4 +171,4 @@ function dependente_excluir() {
   </dtml-if>
   </p><br/>
 </form>
-<dtml-var standard_html_footer>
+</div><dtml-var standard_html_footer>

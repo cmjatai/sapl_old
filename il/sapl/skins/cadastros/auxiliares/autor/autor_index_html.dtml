@@ -2,7 +2,7 @@
 07/09 - inclusão da paginação (Daniel C. Azevedo)
 ***************</dtml-comment>
 
-<dtml-var standard_html_header>
+<dtml-var standard_html_header><div id="conteudo">
 
 <div class="helpsapl"> <a id="ajuda" href="&dtml-portal_url;/ajuda/autor">Ajuda</a> </div>
 <h1 class="firstHeading"> Tabelas Auxiliares </h1> 
@@ -91,4 +91,4 @@
  </tr>
 </table>
 </fieldset>
-<dtml-var standard_html_footer>
+</div><dtml-var standard_html_footer>

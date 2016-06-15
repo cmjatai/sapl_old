@@ -1,4 +1,4 @@
-<dtml-var standard_html_header>
+<dtml-var standard_html_header><div id="conteudo">
 
 <script type="text/javascript" src="&dtml-portal_url;/javascript/jquery.cleditor.js"></script>
 <script type="text/javascript" src="&dtml-portal_url;/javascript/jquery.cleditor.xhtml.min.js"></script>
@@ -620,4 +620,4 @@
     </dtml-let>
     </dtml-if>
 
-    <dtml-var standard_html_footer>
+    </div><dtml-var standard_html_footer>

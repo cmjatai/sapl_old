@@ -1,4 +1,4 @@
-<dtml-var standard_html_header>
+<dtml-var standard_html_header><div id="conteudo">
 
 <script language="javascript">
 
@@ -363,4 +363,4 @@
         </dtml-if>
 <p align="center"><input class="botao" type="button" value="Retornar" OnClick="reloadParentAndClose()" /></p>
         </form>
-<dtml-var standard_html_footer>
+</div><dtml-var standard_html_footer>
