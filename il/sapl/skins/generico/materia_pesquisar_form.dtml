@@ -1,5 +1,5 @@
-<dtml-var standard_html_header><div id="conteudo">
 
+<dtml-var standard_html_header><div id="conteudo">
 <script type="text/javascript">
     $(function() {
         $('#dt_apres').datepick();

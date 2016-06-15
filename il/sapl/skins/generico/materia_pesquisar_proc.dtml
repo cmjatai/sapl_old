@@ -1,5 +1,5 @@
-<dtml-var standard_html_header><div id="conteudo">
 
+<dtml-var standard_html_header><div id="conteudo">
 <script type="text/javascript">
     $(document).ready(function() {
         $(".popup").fancybox({
@@ -23,10 +23,10 @@
 	<dtml-call "REQUEST.set('itens_privados', '1')">
 	<dtml-call "REQUEST.set('rd_ordem_td', '')">
 	<dtml-call "REQUEST.set('rd_ordenacao', '4')">
-<dtml-else>  
+<dtml-else>
 	<dtml-call "REQUEST.set('itens_privados', '0')">
 </dtml-if>
-  
+
 
 <a id="ajuda" href="&dtml-portal_url;/ajuda/consultas#cons_materia">Ajuda</a>
 
@@ -74,9 +74,9 @@
                       ano_ident_basica=txt_ano, ind_tramitacao=rad_tramitando,
                       des_assunto=txt_assunto, nom_relator=txt_relator,
                       cod_status=lst_status, des_tipo_autor=lst_tip_autor,
-                      cod_partido=lst_cod_partido, cod_autor=hdn_cod_autor, 
+                      cod_partido=lst_cod_partido, cod_autor=hdn_cod_autor,
                       ind_coautor=chk_coautor, num_protocolo=txt_num_protocolo,
-                      npc=txt_npc, dat_apresentacao=dt_apres, dat_apresentacao2=dt_apres2, 
+                      npc=txt_npc, dat_apresentacao=dt_apres, dat_apresentacao2=dt_apres2,
                       dat_publicacao=dt_public, dat_publicacao2=dt_public2,
                       cod_unid_tramitacao=lst_localizacao, rd_ordem=rd_ordenacao, itens_privados=itens_privados)"
 
@@ -97,27 +97,27 @@
         </dtml-if previous-sequence>
 </dtml-if sequence-start>
 
-
-
-
 <tr <dtml-if sequence-odd>class="even"</dtml-if>>
+
+
 <td class="texto">
-    <dtml-if expr="incluir=='1'">
-        <a href="&dtml-portal_url;/cadastros/materia/materia_mostrar_proc?cod_materia=<dtml-var cod_materia>">
-            <dtml-else>
-            <a href="&dtml-portal_url;/consultas/materia/materia_mostrar_proc?cod_materia=<dtml-var cod_materia>" >
-    </dtml-if>
-    <dtml-if txt_cep>
-        <img align="absmiddle" src="&dtml-portal_url;/imagens/img_mapa.jpg"alt="Icone do Mapa" title="Proposição possui cadastro de georreferenciamento"  style="width: 16px;"/>
-    </dtml-if>
-    <b><dtml-var sgl_tipo_materia> <dtml-var num_ident_basica>/<dtml-var ano_ident_basica> - <dtml-var des_tipo_materia upper></b></a>
+
+
+  <div class="box qs-container qs-materia clearfix <dtml-if expr="itens_privados == '1' and ind_publico == 0"> qs-adm</dtml-if>">
+    <div class="qs-topo">
+      <div>
+        <a class="qs-titulo" href="&dtml-portal_url;/consultas/materia/materia_mostrar_proc?cod_materia=<dtml-var cod_materia>"><dtml-var des_tipo_materia> <dtml-var num_ident_basica >/<dtml-var ano_ident_basica></a>
+    </div>
+    </div>
+  </div>
+
 
 	<dtml-if expr="itens_privados == '1' and ind_publico == 0">
-	     <span id="message" style="color: red;">(Documento Privado)</span>  
+	     <span id="message" style="color: red;">(Documento Privado)</span>
 	</dtml-if>
 	</br>
-                
-                
+
+
     <dtml-comment>verifica se usuário é anônimo</dtml-comment>
     <dtml-if expr="portal_membership.isAnonymousUser()">
         <dtml-call expr="REQUEST.set('substituiEmentaTitulo', '0')">
@@ -135,24 +135,23 @@
                 </dtml-if>
             </dtml-in>
         </dtml-if>
-        
-        
-        
+
+
+
         <dtml-comment>mostra a ementa completa somente após aprovação ou promulgação</dtml-comment>
         <dtml-if expr="substituiEmentaTitulo=='1'">
             CONCEDE TÍTULO HONORÍFICO<br />
             <dtml-else>
-            
+
             <dtml-var txt_ementa missing><br />
         </dtml-if>
         <dtml-else>
-         
-        
+
         <dtml-var txt_ementa missing><br />
     </dtml-if>
 
-          	    
-            
+
+
     <dtml-comment>obtém a autoria da matéria.</dtml-comment>
     <dtml-if expr="pysc.conta_autores_pysc(cod_materia)">
         <dtml-if expr="pysc.conta_autores_pysc(cod_materia)>1">
@@ -327,5 +326,4 @@
 <p align="center">
     <input class="botao" type="button" value="Retornar" onClick="history.back()">
 </p>
-
 </div><dtml-var standard_html_footer>

@@ -120,5 +120,4 @@
                 </div>
             </div>
             <div class="ajax-Bottom"><i class="fa fa-cog fa-spin fa-3x fa-fw"></i></div>
-
 </dtml-if>
