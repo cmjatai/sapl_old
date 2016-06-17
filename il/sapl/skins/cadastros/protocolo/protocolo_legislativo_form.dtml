@@ -109,6 +109,9 @@
 
 
     <ul>
+      <li>
+          <a  href="&dtml-portal_url;/consultas/protocolo/protocolo_pesquisar_form?incluir=1">Pesquisar Protocolo</a>
+      </li>
         <li>
             <a class="selecionado" href="&dtml-portal_url;/cadastros/protocolo/protocolo_administrativo_form">Protocolar Documento</a>
         </li>

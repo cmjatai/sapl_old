@@ -75,9 +75,12 @@
 
 
     <ul>
-        <li>
-            <a class="selecionado" href="&dtml-portal_url;/cadastros/protocolo/protocolo_administrativo_form">Protocolar Documento</a>
-        </li>
+      <li>
+          <a  href="&dtml-portal_url;/consultas/protocolo/protocolo_pesquisar_form?incluir=1">Pesquisar Protocolo</a>
+      </li>
+      <li>
+          <a class="" href="&dtml-portal_url;/cadastros/protocolo/protocolo_administrativo_form">Protocolar Documento</a>
+      </li>
         <li>
             <a href="&dtml-portal_url;/cadastros/protocolo/protocolo_legislativo_form">Protocolar Mat&eacute;ria</a>
         </li>
@@ -99,6 +102,8 @@
         <input type="hidden" name="incluir" value="<dtml-var incluir>" />
         <input type="hidden" name="existe_ocorrencia" value="0" />
         <table>
+
+
             <tr>
                 <th class="label" width="20%">Tipo Protocolo</th>
                 <td>
