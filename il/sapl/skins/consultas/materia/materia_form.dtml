@@ -553,9 +553,4 @@
 <p align="center">
     <input class="botao" type="button" value="Retornar" onClick="history.go(-1)">
 </p>
-<<<<<<< HEAD
-<dtml-var standard_html_footer>
-=======
-
 </div><dtml-var standard_html_footer>
->>>>>>> master

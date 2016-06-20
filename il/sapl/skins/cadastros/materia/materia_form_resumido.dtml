@@ -354,7 +354,7 @@
                     <option value="0">
                     </option>
                     <dtml-in expr="zsql.regime_tramitacao_obter_zsql()">
-                        <option>
+                        <option
                         <dtml-if expr="_.int(cod_regime_tramitacao) == 1">selected</dtml-if>
                         value="<dtml-var cod_regime_tramitacao>"><dtml-var des_regime_tramitacao>
                     </option>
