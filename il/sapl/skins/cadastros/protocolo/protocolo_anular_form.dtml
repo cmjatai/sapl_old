@@ -75,44 +75,51 @@ Luciano De Fazio em 15/11/2011
 <fieldset>
 
     <legend>Identifica&ccedil;&atilde;o do Protocolo</legend>
+    <div class="form-group">
+      <div align="center" class="text-info">
+        <b>AVISO:</b> Uma vez anulado, o n&uacute;mero de protocolo n&atilde;o poder&aacute; ser reutilizado.
+      </div>
+    </div>
 
      <table>
 
+
+        <div class="row col-sm-8">
+         <label class="control-label col-sm-12" for="txt_num_protocolo">N&uacute;m. Protocolo</label>
+          <div class="col-sm-2">
+            <input class="form-control" id="txt_num_protocolo" type="text" name="txt_num_protocolo" size="9" maxlength="7" />&nbsp;&nbsp;
+          </div>
+            <div class="col-sm-2">
+            <input class="form-control" ano="txt_ano_protocolo" type="text" name="txt_ano_protocolo" size="6" maxlength="4" />
+          </div>
+        </div>
+
+
       <tr>
-        <td class="form-element">
-         <b>AVISO:</b> Uma vez anulado, o n&uacute;mero de protocolo n&atilde;o poder&aacute; ser reutilizado.
+        <td><label class="control-label" for="txa_txt_just_anulacao">Motivo da Anula&ccedil;&atilde;o</label>
+         <textarea class="form-control" id="txa_txt_just_anulacao" name="txa_txt_just_anulacao" cols="60" onChange="javascript:form.hdn_alterou.value=1"><dtml-var txt_observacao missing></textarea>
         </td>
       </tr>
 
-      <tr>
-        <td>
-         <label for="txt_num_protocolo">N&uacute;m. Protocolo</label> <span class="campoObrigatorio"></span><br />
-            <input id="txt_num_protocolo" type="text" name="txt_num_protocolo" size="9" maxlength="7" />&nbsp;&nbsp;
-            <input ano="txt_ano_protocolo" type="text" name="txt_ano_protocolo" size="6" maxlength="4" />
-        </td>
-      </tr>
 
-      <tr>
-        <td><label for="txa_txt_just_anulacao">Motivo da Anula&ccedil;&atilde;o</label> <span class="campoObrigatorio"></span>
-         <textarea id="txa_txt_just_anulacao" name="txa_txt_just_anulacao" cols="60" onChange="javascript:form.hdn_alterou.value=1"><dtml-var txt_observacao missing></textarea>
-        </td>
-      </tr>
+
 
 <tr>
  <td align="center" colspan="0">
-          <input type="button" class="botao" name="button" value="Anular Protocolo" onClick="campos_criticar()" />
+          <input type="button" class="btn btn-primary" name="button" value="Anular Protocolo" onClick="campos_criticar()" />
            &nbsp;
-          <input class="botaoExtra" type="reset" name="btn_protocolo_limpar" value="Limpar" />
+          <input class="btn btn-inverse" type="reset" name="btn_protocolo_limpar" value="Limpar" />
  </td>
 </tr>
 
-      <tr>
-        <td class="label">
-          Seu usuário "<dtml-var "AUTHENTICATED_USER.getUserName()">" e IP "<dtml-var REMOTE_ADDR> <dtml-var HTTP_X_FORWARDED_FOR>" serão registrados no banco de dados.
-        </td>
-      </tr>
-
 </table>
+
+
+<div class="form-group col-sm-12">
+  <div align="center" class="control-label">
+    Seu usuário "<dtml-var "AUTHENTICATED_USER.getUserName()">" e IP "<dtml-var REMOTE_ADDR> <dtml-var HTTP_X_FORWARDED_FOR>" serão registrados no banco de dados.
+  </div>
+</div>
 
 </fieldset>
 
