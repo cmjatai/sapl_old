@@ -13,12 +13,12 @@
         <!--</li>-->
         <li>
             <a href="javascript: void(0)" onclick="window.open('&dtml-portal_url;/relatorios/pdf_etiqueta_protocolo_preparar_pysc?rad_tip_protocolo=&amp;txt_num_protocolo=<dtml-var txt_num_protocolo>&amp;txt_ano_protocolo=<dtml-var txt_ano_protocolo>&amp;dt_apres=&amp;dt_apres2=&amp;rad_tip_processo=&amp;lst_tip_documento=&amp;lst_tip_materia=&amp;txt_assunto=&amp;txa_txt_interessado=&amp;hdn_cod_autor=',
- 'ProtocoloWin', 'width=384, height=219'); 
+ 'ProtocoloWin', 'width=384, height=219');
    return false;">Gerar Etiquetas de Protocolo</a>
         </li>
         <li>
             <a href="javascript: void(0)" onclick="window.open('&dtml-portal_url;/relatorios/pdf_capa_processo_preparar_pysc?rad_tip_protocolo=&amp;txt_num_protocolo=<dtml-var txt_num_protocolo>&amp;txt_ano_protocolo=<dtml-var txt_ano_protocolo>&amp;dt_apres=&amp;dt_apres2=&amp;rad_tip_processo=&amp;lst_tip_documento=&amp;lst_tip_materia=&amp;txt_assunto=&amp;txa_txt_interessado=&amp;hdn_cod_autor=',
- 'ProtocoloWin', 'width=384, height=420'); 
+ 'ProtocoloWin', 'width=384, height=420');
    return false;">Gerar Etiquetas de Processo</a>
         </li>
     </ul>
@@ -54,7 +54,7 @@
       <dtml-call "REQUEST.set('existe_seq_anterior', 1)">
     </dtml-if previous-sequence>
    </dtml-if sequence-start>
-            <tr>            
+            <tr>
               <td class="texto">
                <a href="&dtml-portal_url;/consultas/protocolo/protocolo_mostrar_proc?num_protocolo=<dtml-var num_protocolo>&ano_protocolo=<dtml-var ano_protocolo>">
                    <b>Protocolo <dtml-if use_spdo>
@@ -81,7 +81,7 @@
 
                        <dtml-if cod_parlamentar>
                        <dtml-in expr="zsql.parlamentar_obter_zsql(cod_parlamentar=cod_parlamentar)">
-                               <dtml-var nom_completo><br /> 
+                               <dtml-var nom_completo><br />
                        </dtml-in>
 
                        <dtml-elif cod_comissao>
@@ -93,7 +93,7 @@
                        </dtml-if>
                   </dtml-in>
        </dtml-if>
-  
+
               <dtml-if txt_interessado>
                   <b>Interessado: </b>
                      <dtml-var txt_interessado> <br />
@@ -109,11 +109,11 @@
                   <dtml-else>Criar Documento
                   </dtml-if>
                 </dtml-in>
-<br /> 
+<br />
               </dtml-if>
 
               <dtml-if expr="tip_processo==1">
-              <b>Natureza do Processo: </b>Legislativo <br /> 
+              <b>Natureza do Processo: </b>Legislativo <br />
               <b>Classifica&ccedil;&atildeo:</b> <dtml-var des_tipo_materia>
                <dtml-in expr="zsql.materia_obter_zsql(num_protocolo=num_protocolo,ano_ident_basica=ano_protocolo)">
                   <dtml-if num_ident_basica>
@@ -141,7 +141,7 @@
       <dtml-call "REQUEST.set('existe_seq_posterior', 1)">
     </dtml-if next-sequence>
     <dtml-if expr="existe_seq_anterior or existe_seq_posterior">
-      <tr> <td align="center" class="texto"><b>          
+      <tr> <td align="center" class="texto"><b>
           <dtml-var "pysc.PageListOutput_pysc('protocolo_pesquisar_proc', page, step, _['sequence-length'], incluir=incluir, existe_ocorrencia=existe_ocorrencia, rad_tip_protocolo=rad_tip_protocolo, rad_tip_processo=rad_tip_processo, lst_tip_materia=lst_tip_materia, lst_tip_documento=lst_tip_documento, txt_num_protocolo=txt_num_protocolo, txt_ano_protocolo=txt_ano_protocolo, txt_assunto=txt_assunto, txa_txt_interessado=txa_txt_interessado, hdn_cod_autor=hdn_cod_autor, dt_apres=dt_apres, dt_apres2=dt_apres2, btn_protocolo_pesquisar=btn_protocolo_pesquisar)">
       </b></td> </tr>
     </dtml-if>
