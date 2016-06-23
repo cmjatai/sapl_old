@@ -295,7 +295,7 @@
           </tr>
           <tr>
               <td colspan="2">
-                  <label for="files">Anexos</label><br />
+                  <label for="files">Anexaos</label><br />
                   <input type="file" name="files" id="files" multiple>
               </td>
           </tr>
@@ -319,26 +319,8 @@
 
 <input type="hidden" name="rd_opcao_num_protocolo" value="1" id="rd_opcao_num_protocolo">
 
-<dtml-comment>
-<fieldset>
-    <legend>Protocolo - Op&ccedil;&atilde;o de Numera&ccedil;&atilde;o</legend>
-    <table>
-        <tr>
-            <td align="left" class="campoRadio">
-            <dtml-in expr="[('Sequencial por Ano', '1'), ('Sequencial &Uacute;nico', '2')]">
-                <input type="radio" name="rd_opcao_num_protocolo" value="<dtml-var expr="_['sequence-item']">"
-                 id="rd_opcao_num_protocolo<dtml-var expr="_['sequence-item']">"
-                <dtml-if expr="_['sequence-item']=='1'">checked="1"</dtml-if> />
-                <label for="rd_opcao_num_protocolo_t<dtml-var expr="_['sequence-item']">"><dtml-var expr="_['sequence-key']"> &nbsp;</label>
-            </dtml-in>
-            </td>
-        </tr>
-    </table>
-</fieldset>
-</dtml-comment>
 <fieldset>
 <legend>Identifica&ccedil;&atilde;o da Mat&eacute;ria</legend>
-
 <input type="hidden" name="hdn_num_protocolo" value="<dtml-var num_protocolo missing>" />
 <input type="hidden" name="hdn_tip_protocolo" value="0" />
 <input type="hidden" name="hdn_tip_processo" value="1" />
@@ -346,55 +328,71 @@
 
 <table>
 
-<tr>
-<td><label for="lst_tip_materia">Tipo Mat&eacute;ria </label> <span class="campoObrigatorio">&nbsp;</span> <br />
-<select id="lst_tip_materia" name="lst_tip_materia" style="width:80%; max-width: 100% !important;">
-<option>Selecione</option>
-<dtml-in expr="zsql.tipo_materia_legislativa_obter_zsql(ind_excluido=0)">
-<option value="<dtml-var tip_materia>">
-<dtml-var sgl_tipo_materia> - <dtml-var des_tipo_materia>
-</option>
-</dtml-in>
-</select>
-</td>
-
-<td align="center"><label for="txt_num_paginas">N&uacute;m. P&aacute;ginas </label> <span class="campoObrigatorio">&nbsp;</span> <br />
-<input type="text" id="txt_num_paginas" name="txt_num_paginas" size="6 maxlength="3" value="<dtml-var num_dias_prazo missing null="">"/>
-</td>
+<div class="form-group">
+    <div class="col-sm-6">
+      <label class="control-label" for="lst_tip_materia">Tipo Mat&eacute;ria </label>
+      <select class="form-control" id="lst_tip_materia" name="lst_tip_materia" style="width:80%; max-width: 100% !important;">
+      <option>Selecione</option>
+      <dtml-in expr="zsql.tipo_materia_legislativa_obter_zsql(ind_excluido=0)">
+      <option value="<dtml-var tip_materia>">
+      <dtml-var sgl_tipo_materia> - <dtml-var des_tipo_materia>
+      </option>
+      </dtml-in>
+      </select>
+  </div>
 
 
-<td align="center"><label for="txt_dat_protocolo">Data Chegada</label> <span class="campoObrigatorio">&nbsp;</span> <br />
-	<input type="text" id="txt_dat_protocolo" name="txt_dat_protocolo" size="10" maxlength="10" value="<dtml-var expr="pysc.data_atual_port_pysc()">" />
-</td>
+    <div class="col-sm-2">
+      <label class="control-label" for="txt_num_paginas">N&uacute;m. P&aacute;ginas </label>
+    <input class="form-control" type="text" id="txt_num_paginas" name="txt_num_paginas" size="6 maxlength="3" value="<dtml-var num_dias_prazo missing null="">"/>
+  </div>
 
 
-<td align="center"><label for="txt_hor_protocolo">Horário Chegada</label> <span class="campoObrigatorio">&nbsp;</span> <br />
-	<input type="text" id="txt_hor_protocolo" name="txt_hor_protocolo" size="8" maxlength="8" value="<dtml-var expr="_.DateTime().Time()">"/>
-</td>
+
+    <div class="col-sm-2">
+      <label class="control-label" for="txt_dat_protocolo">Data Chegada</label>
+    	<input class="form-control" type="text" id="txt_dat_protocolo" name="txt_dat_protocolo" size="10" maxlength="10" value="<dtml-var expr="pysc.data_atual_port_pysc()">" />
+    </div>
 
 
-</tr>
 
-<tr>
-<td colspan="4"><label for="txa_txt_ementa">Ementa </label> <span class="campoObrigatorio">&nbsp;</span>
-<textarea id="txa_txt_ementa" name="txa_txt_ementa" cols="67" rows="4" onBlur="form.txa_txt_ementa.value = form.txa_txt_ementa.value.toUpperCase()"><dtml-var txt_assunto_ementa missing></textarea>
-</td>
-</tr>
+    <div class="col-sm-2">
+      <label class="control-label" for="txt_hor_protocolo">Horário Chegada</label>
+    	<input class="form-control" type="text" id="txt_hor_protocolo" name="txt_hor_protocolo" size="8" maxlength="8" value="<dtml-var expr="_.DateTime().Time()">"/>
+    </div>
 
-      <tr>
-        <td colspan="4">
-         <label for="txt_autor">Autor </label> <span class="campoObrigatorio">&nbsp;</span><br />
-          <input id="txt_autor" type="text" name="txt_autor" null="" size="40" maxlength="50" disabled onFocus="javascript:this.blur()" />
+</div>
+
+
+
+<div class="form-group">
+  <div class="col-sm-12">
+  <label class="control-label" for="txa_txt_ementa">Ementa </label>
+  <textarea class="form-control" id="txa_txt_ementa" name="txa_txt_ementa" cols="67" rows="4" onBlur="form.txa_txt_ementa.value = form.txa_txt_ementa.value.toUpperCase()"><dtml-var txt_assunto_ementa missing></textarea>
+</div>
+</div>
+
+
+
+      <div class="form-group">
+        <div class="col-sm-6">
+         <label class="control-label" for="txt_autor">Autor </label>
+          <input class="form-control col-sm-2" id="txt_autor" type="text" name="txt_autor" null="" size="40" maxlength="50" disabled onFocus="javascript:this.blur()" />
           <input type="hidden" name="hdn_txt_autor" value="" />
-          <input class="botaoSelecionar" type="button" value="Selecionar" onClick="javascript:window.open('autor_pesquisar_form?hdn_tipo_pesquisa=protocolo_legislativo' , 'AutorWin', 'width=420,height=250,resizable=0');" />
-          <input type="hidden" name="hdn_cod_autor" value="" />
-        </td>
-      </tr>
+            <div clas="col-sm-2">
+            <input class="btn btn-primary" type="button" value="Selecionar" onClick="javascript:window.open('autor_pesquisar_form?hdn_tipo_pesquisa=protocolo_legislativo' , 'AutorWin', 'width=420,height=250,resizable=0');" />
+            <input type="hidden" name="hdn_cod_autor" value="" />
+          </div>
+        </div>
+      </div>
 
-      <tr>
-        <td colspan="4">
-          <label for="lst_tip_autor">Tipo Autor </label> <br />
-          <select id="lst_tip_autor" name="lst_tip_autor" onChange="tipo_autor_trocar(document.protocolo_legislativo_form)" disabled >
+
+
+
+      <div class="form-group">
+        <div class="col-sm-4">
+          <label class="control-label" for="lst_tip_autor">Tipo Autor </label> <br />
+          <select class="form-control" id="lst_tip_autor" name="lst_tip_autor" onChange="tipo_autor_trocar(document.protocolo_legislativo_form)" disabled >
             <option>Todos</option>
             <dtml-in expr="zsql.tipo_autor_obter_zsql(ind_excluido=0)">
               <option value="<dtml-var tip_autor>">
@@ -402,22 +400,25 @@
               </option>
             </dtml-in>
           </select>
-        </td>
-      </tr>
+        </div>
+      </div>
 
-<tr>
-<td colspan="4"><label for="txa_txt_observacao">Observa&ccedil;&atilde;o</label>
-<textarea id="txa_txt_observacao" name="txa_txt_observacao" cols="67" onChange="javascript:form.hdn_alterou.value=1"><dtml-var txt_observacao missing null="N&atilde;o h&aacute;"></textarea>
-</td>
-</tr>
 
-<tr>
-<td align="center" colspan="4">
-<input type="button" class="botao" name="button" value="Protocolar Mat&eacute;ria" onClick="campos_criticar()" />
-&nbsp;
-<input class="botaoExtra" type="reset" name="btn_protocolo_limpar" value="Limpar" />
-</td>
-</tr>
+
+    <div class="form-group">
+      <div class="col-sm-12">
+        <label class="control-label" for="txa_txt_observacao">Observa&ccedil;&atilde;o</label>
+        <textarea class="form-control" id="txa_txt_observacao" name="txa_txt_observacao" cols="67" onChange="javascript:form.hdn_alterou.value=1"><dtml-var txt_observacao missing null="N&atilde;o h&aacute;"></textarea>
+      </div>
+    </div>
+
+    <tr>
+      <td align="center" colspan="4">
+        <input type="button" class="btn btn-primary" name="button" value="Protocolar Mat&eacute;ria" onClick="campos_criticar()" />
+        &nbsp;
+        <input class="btn btn-inverse" type="reset" name="btn_protocolo_limpar" value="Limpar" />
+      </td>
+    </tr>
 
 </table>
 
