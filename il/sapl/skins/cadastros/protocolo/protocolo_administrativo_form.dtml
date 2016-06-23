@@ -63,20 +63,14 @@
 
 <h1> Protocolo Documento Administrativo </h1>
 
-    <ul>
-      <li>
-          <a  href="&dtml-portal_url;/consultas/protocolo/protocolo_pesquisar_form?incluir=1">Pesquisar Protocolo</a>
-      </li>
-        <li>
-            <a class="selecionado" href="&dtml-portal_url;/cadastros/protocolo/protocolo_administrativo_form">Protocolar Documento</a>
-        </li>
-        <li>
-            <a href="&dtml-portal_url;/cadastros/protocolo/protocolo_legislativo_form">Protocolar Mat&eacute;ria</a>
-        </li>
-        <li>
-            <a href="&dtml-portal_url;/cadastros/protocolo/protocolo_anular_form">Anular Protocolo</a>
-        </li>
-    </ul>
+<div class="btn-group" role="group">
+      <a class="btn btn-default" href="&dtml-portal_url;/consultas/protocolo/protocolo_pesquisar_form?incluir=1">Pesquisar Protocolo</a>
+        <a  class="btn btn-primary"  href="&dtml-portal_url;/cadastros/protocolo/protocolo_administrativo_form">Protocolar Documento</a>
+        <a  class="btn btn-default" href="&dtml-portal_url;/cadastros/protocolo/protocolo_legislativo_form">Protocolar Mat&eacute;ria</a>
+        <a  class="btn btn-default" href="&dtml-portal_url;/cadastros/protocolo/protocolo_anular_form">Anular Protocolo</a>
+</div>
+<br>
+<br>
 
 <form action="protocolo_administrativo_salvar_proc" name="protocolo_administrativo_form" method="post" enctype="multipart/form-data">
 
@@ -84,114 +78,72 @@
 <input type="hidden" name="rd_opcao_num_protocolo" value="1" />
 <input type="hidden" name="hdn_url" value="&dtml-portal_url;/consultas/protocolo/protocolo_pesquisar_form?incluir=1" />
 
-
 <fieldset>
+  <legend>Identifica&ccedil;&atilde;o do Documento</legend>
+  <div class="form-group row">
+    <label class="control-label col-sm-2" for="rad_tipo_protocolo">Tipo Protocolo:</label>
+    <div class="col-sm-6">
+      <dtml-in expr="[('Recebimento', '0'), ('Envio', '1')]">
+        <input type="radio" name="rad_tip_protocolo" value="<dtml-var expr="_['sequence-item']">"
+          id="rad_tip_protocolo<dtml-var expr="_['sequence-item']">"
+          <dtml-if expr="_['sequence-item']=='0'">checked="1"</dtml-if> />
+         <span class="texto"<dtml-var expr="_['sequence-item']">"><dtml-var expr="_['sequence-key']"></span>
+       </dtml-in>
+     </div>
+  </div>
 
-    <legend>Identifica&ccedil;&atilde;o do Documento</legend>
+  <div class="form-group row">
+    <div class="col-sm-6">
+      <label class="control-label" for="lst_tip_documento">Tipo Documento</label>
+      <select class="form-control" id="lst_tip_documento" name="lst_tip_documento">
+        <option>Selecione</option>
+               <dtml-in expr="zsql.tipo_documento_administrativo_obter_zsql(ind_excluido=0)">
+              <option value="<dtml-var tip_documento>">
+               <dtml-var sgl_tipo_documento> - <dtml-var des_tipo_documento>
+              </option>
+               </dtml-in>
+      </select>
+    </div>
 
-     <table>
+    <div class="col-sm-3">
+      <label class="control-label" for="txt_num_paginas">N&uacute;m. P&aacute;ginas </label>
+      <input class="form-control" type="text" id="txt_num_paginas" name="txt_num_paginas" size="6 maxlength="3" value="<dtml-var num_dias_prazo missing null="">"/>
+    </div>
 
+    <div class="col-sm-3">
+      <label class="control-label" for="txt_hor_protocolo">Horário Chegada</label>
+      <input class="form-control" type="text" id="txt_hor_protocolo" name="txt_hor_protocolo" size="8" maxlength="8" value="<dtml-var expr="_.DateTime().Time()">"/>
+    </div>
+  </div>
 
+  <div class="form-group row">
+    <div class="col-sm-12">
+      <label  class="control-label" for="txa_txt_assunto">Assunto </label> <span>
+      <textarea class="form-control" id="txa_txt_assunto" name="txa_txt_assunto" cols="67" rows="4" onBlur="form.txa_txt_assunto.value = form.txa_txt_assunto.value.toUpperCase()"><dtml-var txt_assunto_ementa missing></textarea>
+    </div>
+  </div>
 
+  <div class="form-group row">
+    <div class="col-sm-7">
+     <label class="control-label" for="txa_txt_interessado">Interessado </label>
+      <input class="form-control" id="txa_txt_interessado" type="text" name="txa_txt_interessado" size="48" maxlength="60" />
+    </div>
+  </div>
 
-      <div class="row col-sm-12">
-        <div class="col-sm-6">
-        <label class="control-label" for="rad_tipo_protocolo">Tipo Protocolo:</label>
-          <dtml-in expr="[('Recebimento', '0'), ('Envio', '1')]">
-            <input type="radio" name="rad_tip_protocolo" value="<dtml-var expr="_['sequence-item']">"
-              id="rad_tip_protocolo<dtml-var expr="_['sequence-item']">"
-              <dtml-if expr="_['sequence-item']=='0'">checked="1"</dtml-if> />
-             <span class="texto"<dtml-var expr="_['sequence-item']">"><dtml-var expr="_['sequence-key']"></span>
-           </dtml-in>
-         </div>
-        </td>
-      </div>
+  <div class="form-group row">
+    <div class="col-sm-12">
+      <label class="control-label" for="txa_txt_observacao">Observa&ccedil;&atilde;o</label>
+      <textarea class="form-control" id="txa_txt_observacao" name="txa_txt_observacao" cols="67" onChange="javascript:form.hdn_alterou.value=1"><dtml-var txt_observacao missing null="N&atilde;o h&aacute;"></textarea>
+    </div>
+  </div>
 
+  <div class="form-group row">
+    <div class="col-sm-12">
+      <input type="button" class="btn btn-primary pull-right" name="button" value="Protocolar Documento" onClick="campos_criticar()" />
 
-
-
-
-
-
-
-
-                        <div class="row col-sm-12">
-                          <div class="col-sm-8">
-                            <label class="control-label" for="lst_tip_documento">Tipo Documento</label>
-                            <select class="form-control" id="lst_tip_documento" name="lst_tip_documento">
-            			            <option>Selecione</option>
-                                     <dtml-in expr="zsql.tipo_documento_administrativo_obter_zsql(ind_excluido=0)">
-                                    <option value="<dtml-var tip_documento>">
-                                     <dtml-var sgl_tipo_documento> - <dtml-var des_tipo_documento>
-                                    </option>
-                                     </dtml-in>
-                            </select>
-                         </div>
-
-                         <div class="col-sm-2">
-                          <label class="control-label" for="txt_num_paginas">N&uacute;m. P&aacute;ginas </label>
-                            <input class="form-control" type="text" id="txt_num_paginas" name="txt_num_paginas" size="6 maxlength="3" value="<dtml-var num_dias_prazo missing null="">"/>
-                          </div>
-
-                          <div class="col-sm-2">
-                          <label class="control-label" for="txt_hor_protocolo">Horário Chegada</label>
-                          	<input class="form-control" type="text" id="txt_hor_protocolo" name="txt_hor_protocolo" size="8" maxlength="8" value="<dtml-var expr="_.DateTime().Time()">"/>
-                          </div>
-
-                       </div>
-
-
-
-
-
-
-                        <div class="row col-sm-12">
-                          <div class="col-sm-12">
-                            <label  class="control-label" for="txa_txt_assunto">Assunto </label> <span>
-                            <textarea class="form-control" id="txa_txt_assunto" name="txa_txt_assunto" cols="67" rows="4" onBlur="form.txa_txt_assunto.value = form.txa_txt_assunto.value.toUpperCase()"><dtml-var txt_assunto_ementa missing></textarea>
-                          </div>
-                        </div>
-
-
-
-
-
-
-
-
-
-      <div class="row col-sm-12">
-        <div class="col-sm-7">
-         <label class="control-label" for="txa_txt_interessado">Interessado </label>
-          <input class="form-control" id="txa_txt_interessado" type="text" name="txa_txt_interessado" size="48" maxlength="60" />
-        </div>
-      </div>
-
-
-
-
-
-                        <div class="row col-sm-12">
-                          <div class="col-sm-12">
-                            <label class="control-label" for="txa_txt_observacao">Observa&ccedil;&atilde;o</label>
-                            <textarea class="form-control" id="txa_txt_observacao" name="txa_txt_observacao" cols="67" onChange="javascript:form.hdn_alterou.value=1"><dtml-var txt_observacao missing null="N&atilde;o h&aacute;"></textarea>
-                          </div>
-                        </div>
-
-
-
-
-<tr>
- <td align="center" colspan="3">
-          <input type="button" class="btn btn-primary" name="button" value="Protocolar Documento" onClick="campos_criticar()" />
-           &nbsp;
-          <input class="btn btn-inverse" type="reset" name="btn_protocolo_limpar" value="Limpar" />
- </td>
-</tr>
-
-
-</table>
-
+      <input class="btn btn-inverse" type="reset" name="btn_protocolo_limpar" value="Limpar" />
+    </div>
+  </div>
 </fieldset>
               </form>
 

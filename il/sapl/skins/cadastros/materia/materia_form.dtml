@@ -239,37 +239,17 @@
 <input type="hidden" name="protAutor" value="<dtml-var protAutor missing>" />
 <dtml-call expr="REQUEST.set('use_spdo', sapl_documentos.props_sapl.use_spdo)">
 <dtml-if cod_materia>
-    <div id="barra-conteudo">
-        <ul>
-            <li>
-                <a href="&dtml-portal_url;/cadastros/materia/anexada/index_html?cod_materia=<dtml-var cod_materia>">Anexada</a>
-            </li>
-            <li>
-                <a href="&dtml-portal_url;/cadastros/materia/apenso/index_html?cod_materia=<dtml-var cod_materia>">Apenso</a>
-            </li>
-            <li>
-                <a href="&dtml-portal_url;/cadastros/materia/autoria/index_html?cod_materia=<dtml-var cod_materia>&dat_apresentacao=<dtml-var dat_apresentacao>">Autoria</a>
-            </li>
-            <li>
-                <a href="&dtml-portal_url;/cadastros/materia/despacho_inicial/index_html?cod_materia=<dtml-var cod_materia>">Despacho Inicial</a>
-            </li>
-            <li>
-                <a href="&dtml-portal_url;/cadastros/materia/documento_acessorio/index_html?cod_materia=<dtml-var cod_materia>">Documento Acessório</a>
-            </li>
-            <li>
-                <a href="&dtml-portal_url;/cadastros/materia/legislacao_citada/index_html?cod_materia=<dtml-var cod_materia>">Legisla&ccedil;&atilde;o Citada</a>
-            </li>
-            <li>
-                <a href="&dtml-portal_url;/cadastros/materia/numeracao/index_html?cod_materia=<dtml-var cod_materia>">Numeração</a>
-            </li>
-            <li>
-                <a href="&dtml-portal_url;/cadastros/materia/tramitacao/index_html?cod_materia=<dtml-var cod_materia>">Tramitação</a>
-            </li>
-            <li>
-                <a href="&dtml-portal_url;/cadastros/materia/relatoria/index_html?cod_materia=<dtml-var cod_materia>">Relatoria</a>
-            </li>
-        </ul>
-    </div>
+<div class="btn-group btn-group-sm "  role="group"  >
+                <a class="btn btn-default" href="&dtml-portal_url;/cadastros/materia/anexada/index_html?cod_materia=<dtml-var cod_materia>">Anexada</a>
+                <a  class="btn btn-default" href="&dtml-portal_url;/cadastros/materia/apenso/index_html?cod_materia=<dtml-var cod_materia>">Apenso</a>
+                <a  class="btn btn-default" href="&dtml-portal_url;/cadastros/materia/autoria/index_html?cod_materia=<dtml-var cod_materia>&dat_apresentacao=<dtml-var dat_apresentacao>">Autoria</a>
+                <a class="btn btn-default"  href="&dtml-portal_url;/cadastros/materia/despacho_inicial/index_html?cod_materia=<dtml-var cod_materia>">Despacho Inicial</a>
+                <a  class="btn btn-default" href="&dtml-portal_url;/cadastros/materia/documento_acessorio/index_html?cod_materia=<dtml-var cod_materia>">Documento Acessório</a>
+                <a  class="btn btn-default" href="&dtml-portal_url;/cadastros/materia/legislacao_citada/index_html?cod_materia=<dtml-var cod_materia>">Legisla&ccedil;&atilde;o Citada</a>
+                <a  class="btn btn-default" href="&dtml-portal_url;/cadastros/materia/numeracao/index_html?cod_materia=<dtml-var cod_materia>">Numeração</a>
+                <a  class="btn btn-default" href="&dtml-portal_url;/cadastros/materia/tramitacao/index_html?cod_materia=<dtml-var cod_materia>">Tramitação</a>
+                <a  class="btn btn-default" href="&dtml-portal_url;/cadastros/materia/relatoria/index_html?cod_materia=<dtml-var cod_materia>">Relatoria</a>
+        </div>
 </dtml-if>
 <fieldset>
     <legend>Identificação Básica</legend>
@@ -343,11 +323,11 @@
             </dtml-unless>
             <input type="text" id="txt_ano_ident_basica" name="txt_ano_ident_basica" size="4" maxlength="4" value="<dtml-var ano_ident_basica missing>" />
         </td>
-        
-        
-        
-        
-                          
+
+
+
+
+
                          <td class="texto" style="color: red"><label for="rad_ind_publico">Documento Público? <span class="campoObrigatorio">&nbsp;</span></label><br />
 <dtml-in expr="[(1,'Sim'),(0,'Não')]">
                             <input type="radio" id="rad_ind_publico" name="rad_ind_publico" value="<dtml-var expr="_['sequence-key']">"
@@ -358,8 +338,8 @@
                               <dtml-var expr="_['sequence-item']">
 </dtml-in>
                           </td>
-        
-        
+
+
     </tr>
     <tr>
         <td colspan="2"><label for="txt_dat_apresentacao">Data Apresentação <span class="campoObrigatorio">&nbsp;</span></label><br />

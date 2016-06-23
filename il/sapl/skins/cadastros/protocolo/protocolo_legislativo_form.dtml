@@ -96,6 +96,25 @@
     });
 </script>
 
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $(".popup").fancybox({
+            maxWidth	: 640,
+            maxHeight	: 450,
+            fitToView	: false,
+            width		: '70%',
+            height		: '72%',
+            autoSize	: false,
+            closeClick	: false,
+            scrolling       : 'auto',
+            preload         : true,
+            openEffect	: 'fade',
+            closeEffect	: 'fade'
+        });
+    });
+</script>
+
 <a id="ajuda" href="&dtml-portal_url;/ajuda/protocolo_legislativo">Ajuda</a>
 <dtml-call expr="REQUEST.set('use_spdo', sapl_documentos.props_sapl.use_spdo)">
 <dtml-if use_spdo>
@@ -105,26 +124,16 @@
 </dtml-if>
 <h1> Protocolo Mat&eacute;ria Legislativa </h1>
 <dtml-unless use_spdo>
-<ul>
 
+  <div class="btn-group" role="group">
+        <a class="btn btn-default" href="&dtml-portal_url;/consultas/protocolo/protocolo_pesquisar_form?incluir=1">Pesquisar Protocolo</a>
+          <a  class="btn btn-default"  href="&dtml-portal_url;/cadastros/protocolo/protocolo_administrativo_form">Protocolar Documento</a>
+          <a  class="btn btn-primary" href="&dtml-portal_url;/cadastros/protocolo/protocolo_legislativo_form">Protocolar Mat&eacute;ria</a>
+          <a  class="btn btn-default" href="&dtml-portal_url;/cadastros/protocolo/protocolo_anular_form">Anular Protocolo</a>
+  </div>
+  <br>
+  <br>
 
-    <ul>
-      <li>
-          <a  href="&dtml-portal_url;/consultas/protocolo/protocolo_pesquisar_form?incluir=1">Pesquisar Protocolo</a>
-      </li>
-        <li>
-            <a class="selecionado" href="&dtml-portal_url;/cadastros/protocolo/protocolo_administrativo_form">Protocolar Documento</a>
-        </li>
-        <li>
-            <a href="&dtml-portal_url;/cadastros/protocolo/protocolo_legislativo_form">Protocolar Mat&eacute;ria</a>
-        </li>
-        <li>
-            <a href="&dtml-portal_url;/cadastros/protocolo/protocolo_anular_form">Anular Protocolo</a>
-        </li>
-    </ul>
-
-
-</ul>
 </dtml-unless>
 
 <dtml-if use_spdo>
@@ -326,105 +335,99 @@
 <input type="hidden" name="hdn_tip_processo" value="1" />
 <input type="hidden" name="hdn_url" value="&dtml-portal_url;/consultas/protocolo/protocolo_pesquisar_form?incluir=1" />
 
-<table>
+<div class="form-group row">
 
-<div class="form-group">
     <div class="col-sm-6">
       <label class="control-label" for="lst_tip_materia">Tipo Mat&eacute;ria </label>
-      <select class="form-control" id="lst_tip_materia" name="lst_tip_materia" style="width:80%; max-width: 100% !important;">
-      <option>Selecione</option>
-      <dtml-in expr="zsql.tipo_materia_legislativa_obter_zsql(ind_excluido=0)">
-      <option value="<dtml-var tip_materia>">
-      <dtml-var sgl_tipo_materia> - <dtml-var des_tipo_materia>
-      </option>
-      </dtml-in>
+      <select class="form-control" id="lst_tip_materia" name="lst_tip_materia" >
+        <option>Selecione</option>
+        <dtml-in expr="zsql.tipo_materia_legislativa_obter_zsql(ind_excluido=0)">
+          <option value="<dtml-var tip_materia>">
+            <dtml-var sgl_tipo_materia> - <dtml-var des_tipo_materia>
+          </option>
+        </dtml-in>
       </select>
-  </div>
-
+    </div>
 
     <div class="col-sm-2">
       <label class="control-label" for="txt_num_paginas">N&uacute;m. P&aacute;ginas </label>
-    <input class="form-control" type="text" id="txt_num_paginas" name="txt_num_paginas" size="6 maxlength="3" value="<dtml-var num_dias_prazo missing null="">"/>
-  </div>
-
-
+      <input class="form-control" type="text" id="txt_num_paginas" name="txt_num_paginas" size="6 maxlength="3" value="<dtml-var num_dias_prazo missing null="">"/>
+    </div>
 
     <div class="col-sm-2">
       <label class="control-label" for="txt_dat_protocolo">Data Chegada</label>
     	<input class="form-control" type="text" id="txt_dat_protocolo" name="txt_dat_protocolo" size="10" maxlength="10" value="<dtml-var expr="pysc.data_atual_port_pysc()">" />
     </div>
 
-
-
     <div class="col-sm-2">
       <label class="control-label" for="txt_hor_protocolo">Horário Chegada</label>
     	<input class="form-control" type="text" id="txt_hor_protocolo" name="txt_hor_protocolo" size="8" maxlength="8" value="<dtml-var expr="_.DateTime().Time()">"/>
     </div>
-
 </div>
 
-
-
-<div class="form-group">
+<div class="form-group row">
   <div class="col-sm-12">
-  <label class="control-label" for="txa_txt_ementa">Ementa </label>
-  <textarea class="form-control" id="txa_txt_ementa" name="txa_txt_ementa" cols="67" rows="4" onBlur="form.txa_txt_ementa.value = form.txa_txt_ementa.value.toUpperCase()"><dtml-var txt_assunto_ementa missing></textarea>
+    <label class="control-label" for="txa_txt_ementa">Ementa </label>
+    <textarea class="form-control" id="txa_txt_ementa" name="txa_txt_ementa" cols="67" rows="4" onBlur="form.txa_txt_ementa.value = form.txa_txt_ementa.value.toUpperCase()"><dtml-var txt_assunto_ementa missing></textarea>
+  </div>
 </div>
+
+
+
+
+
+<div class="form-group row">
+
+  <div class="col-sm-8">
+    <label for="txt_autor" class="col-sm-12 control-label">Autor</label>
+    <div class="col-xs-8">
+      <input class="form-control " id="txt_autor" type="text" name="txt_autor" null="" placeholder="  <dtml-if expr="_.has_key('hdn_txt_autor') and hdn_txt_autor"><dtml-var hdn_txt_autor><dtml-else>Todos</dtml-if>" maxlength="50" disabled onFocus="javascript:this.blur()" />
+      <input type="hidden" name="hdn_txt_autor" value="" />
+      <input type="hidden" name="hdn_cod_autor" value="<dtml-var hdn_cod_autor missing="">" />
+    </div>
+    <div class="col-xs-4">
+      <a href="autor_pesquisar_form?hdn_tipo_pesquisa=pesq_basica" class="popup btn btn-primary" data-fancybox-type="iframe" role="button">Selecionar</a>
+    </div>
+  </div>
+
+
+
+  <div class="col-sm-4">
+    <label class="control-label col-sm-12 " for="lst_tip_autor">Tipo Autor </label> <br />
+    <select class="form-control" id="lst_tip_autor" name="lst_tip_autor" onChange="tipo_autor_trocar(document.protocolo_legislativo_form)" disabled >
+      <option>Todos</option>
+      <dtml-in expr="zsql.tipo_autor_obter_zsql(ind_excluido=0)">
+        <option value="<dtml-var tip_autor>">
+          <dtml-var des_tipo_autor>
+        </option>
+      </dtml-in>
+    </select>
+  </div>
 </div>
 
 
 
-      <div class="form-group">
-        <div class="col-sm-6">
-         <label class="control-label" for="txt_autor">Autor </label>
-          <input class="form-control col-sm-2" id="txt_autor" type="text" name="txt_autor" null="" size="40" maxlength="50" disabled onFocus="javascript:this.blur()" />
-          <input type="hidden" name="hdn_txt_autor" value="" />
-            <div clas="col-sm-2">
-            <input class="btn btn-primary" type="button" value="Selecionar" onClick="javascript:window.open('autor_pesquisar_form?hdn_tipo_pesquisa=protocolo_legislativo' , 'AutorWin', 'width=420,height=250,resizable=0');" />
-            <input type="hidden" name="hdn_cod_autor" value="" />
-          </div>
-        </div>
-      </div>
 
 
-
-
-      <div class="form-group">
-        <div class="col-sm-4">
-          <label class="control-label" for="lst_tip_autor">Tipo Autor </label> <br />
-          <select class="form-control" id="lst_tip_autor" name="lst_tip_autor" onChange="tipo_autor_trocar(document.protocolo_legislativo_form)" disabled >
-            <option>Todos</option>
-            <dtml-in expr="zsql.tipo_autor_obter_zsql(ind_excluido=0)">
-              <option value="<dtml-var tip_autor>">
-                <dtml-var des_tipo_autor>
-              </option>
-            </dtml-in>
-          </select>
-        </div>
-      </div>
-
-
-
-    <div class="form-group">
+    <div class="form-group row">
       <div class="col-sm-12">
         <label class="control-label" for="txa_txt_observacao">Observa&ccedil;&atilde;o</label>
         <textarea class="form-control" id="txa_txt_observacao" name="txa_txt_observacao" cols="67" onChange="javascript:form.hdn_alterou.value=1"><dtml-var txt_observacao missing null="N&atilde;o h&aacute;"></textarea>
       </div>
     </div>
 
-    <tr>
-      <td align="center" colspan="4">
-        <input type="button" class="btn btn-primary" name="button" value="Protocolar Mat&eacute;ria" onClick="campos_criticar()" />
+    <div class="form-group row">
+      <div class="col-sm-12">
+        <input type="button" class="btn btn-primary pull-right" name="button" value="Protocolar Mat&eacute;ria" onClick="campos_criticar()" />
         &nbsp;
         <input class="btn btn-inverse" type="reset" name="btn_protocolo_limpar" value="Limpar" />
-      </td>
-    </tr>
 
-</table>
+</div>
+</div>
 
 </fieldset>
 </form>
-
+<br>
 
 <dtml-if ano_base>
 <dtml-else>
@@ -439,7 +442,7 @@
 <form name="protocolo_trocar_periodo" action="protocolo_legislativo_form">
     <fieldset>
     <legend>Registro de Protocolo de Requerimentos por Vereador - Mês <dtml-var mes_base>/<dtml-var ano_base>.</legend>
-    <table class="table">
+    <table class="table table-striped">
         <tr>
             <th>
                 <select id="ano_base" name="ano_base">
