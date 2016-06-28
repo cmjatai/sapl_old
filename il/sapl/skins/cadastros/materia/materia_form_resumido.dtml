@@ -273,7 +273,7 @@
                     <select class="form-control" name="lst_tip_autor" size="1" onChange="tipo_autor_mudou(document.materia_form)">
                         <dtml-unless tip_autor>
                             <option value="0"></option>
-                        </dtml-unless>mail
+                        </dtml-unless>
                         <dtml-in expr="zsql.tipo_autor_obter_zsql(tip_autor='')">
                             <option
                             <dtml-if expr="REQUEST.has_key('tip_autor') and tip_autor==_.int('0'+REQUEST['tip_autor'])">

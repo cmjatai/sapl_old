@@ -285,7 +285,7 @@
                   <input type="hidden" name="hdn_cod_autor" value="" />
               <td>
                   <label for="lst_tip_autor">Tipo Autor </label> <br />
-                  <select id="lst_tip_autor" name="lst_tip_autor" onChange="tipo_autor_trocar(document.protocolo_legislativo_form)" disabled >
+                  <select id="lst_tip_autor" name="lst_tip_autor" onChange="tipo_autor_trocar(document.protocolo_legislativo_form)" >
                       <option>Todos</option>
                       <dtml-in expr="zsql.tipo_autor_obter_zsql(ind_excluido=0)">
                       <option value="<dtml-var tip_autor>">
@@ -377,6 +377,17 @@
 
 
 <div class="form-group row">
+  <div class="col-sm-4">
+    <label class="control-label col-sm-12 " for="lst_tip_autor">Tipo Autor </label> <br />
+    <select class="form-control" id="lst_tip_autor" name="lst_tip_autor" onChange="tipo_autor_trocar(document.protocolo_legislativo_form)" >
+      <option>Todos</option>
+      <dtml-in expr="zsql.tipo_autor_obter_zsql(ind_excluido=0)">
+        <option value="<dtml-var tip_autor>">
+          <dtml-var des_tipo_autor>
+        </option>
+      </dtml-in>
+    </select>
+  </div>
 
   <div class="col-sm-8">
     <label for="txt_autor" class="col-sm-12 control-label">Autor</label>
@@ -392,17 +403,6 @@
 
 
 
-  <div class="col-sm-4">
-    <label class="control-label col-sm-12 " for="lst_tip_autor">Tipo Autor </label> <br />
-    <select class="form-control" id="lst_tip_autor" name="lst_tip_autor" onChange="tipo_autor_trocar(document.protocolo_legislativo_form)" disabled >
-      <option>Todos</option>
-      <dtml-in expr="zsql.tipo_autor_obter_zsql(ind_excluido=0)">
-        <option value="<dtml-var tip_autor>">
-          <dtml-var des_tipo_autor>
-        </option>
-      </dtml-in>
-    </select>
-  </div>
 </div>
 
 
