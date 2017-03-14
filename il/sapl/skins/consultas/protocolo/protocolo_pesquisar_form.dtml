@@ -366,7 +366,7 @@
 
                     <td class="texto" style="text-align: center;padding: 0.5em;">
                         <dtml-in expr="(_['sequence-item'])['primQ'] + (_['sequence-item'])['segQ']">
-                          <a href="&dtml-portal_url;/consultas/materia/materia_mostrar_proc?cod_materia=<dtml-var expr="(_['sequence-item'])">">
+                          <a style="<dtml-if expr="_['sequence-item'][2]">color:black;</dtml-if>" href="&dtml-portal_url;/consultas/materia/materia_mostrar_proc?cod_materia=<dtml-var expr="(_['sequence-item'][1])">">
                             <dtml-var expr="(_['sequence-key'])">
                           </a>
                           <dtml-if expr="not _['sequence-end']">

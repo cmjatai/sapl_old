@@ -173,7 +173,7 @@
 
                 <dtml-var num_sessao_plen>ª <dtml-if expr="nom_sessao!='Audiência Pública'">Sessão</dtml-if>
                 <dtml-var nom_sessao>
-                <dtml-if expr="DateTime(pysc.data_converter_pysc(dat_inicio_sessao)).month() not in [2, 12]">
+                <dtml-if expr="DateTime(pysc.data_converter_pysc(dat_inicio_sessao)).month() not in [1, 2, 12]">
                     <dtml-if expr="DateTime(pysc.data_converter_pysc(dat_inicio_sessao)).day() <= 15">
                         da 1ª Quinzena
                     <dtml-else>

@@ -105,12 +105,17 @@
       </select>
     </div>
 
-    <div class="col-sm-3">
+    <div class="col-sm-2">
       <label class="control-label" for="txt_num_paginas">N&uacute;m. P&aacute;ginas </label>
       <input class="form-control" type="text" id="txt_num_paginas" name="txt_num_paginas" size="6 maxlength="3" value="<dtml-var num_dias_prazo missing null="">"/>
     </div>
 
-    <div class="col-sm-3">
+    <div class="col-sm-2">
+      <label class="control-label" for="txt_dat_protocolo">Data Chegada</label>
+    	<input class="form-control" type="text" id="txt_dat_protocolo" name="txt_dat_protocolo" size="10" maxlength="10" value="<dtml-var expr="pysc.data_atual_port_pysc()">" />
+    </div>
+
+    <div class="col-sm-2">
       <label class="control-label" for="txt_hor_protocolo">Horário Chegada</label>
       <input class="form-control" type="text" id="txt_hor_protocolo" name="txt_hor_protocolo" size="8" maxlength="8" value="<dtml-var expr="_.DateTime().Time()">"/>
     </div>

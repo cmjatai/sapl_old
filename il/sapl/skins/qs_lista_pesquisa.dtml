@@ -11,7 +11,13 @@
             <dtml-var "qs_page_list('qs', page, step, result_length)">
         </dtml-if>
     </dtml-if result_start>
-    <dtml-if expr="tipo == 1">
+    <dtml-if expr="tipo == 99">
+      <dtml-if expr="not baseCompleta">
+        <div class="alert alert-warning clearfix"  role="alert">
+            Mostrando resultados a partir de <strong><dtml-var expr="pysc.data_converter_por_extenso_pysc(str(dataMinima))"></strong>.<br><small>Use os menus laterais ou a caixa de pesquisa textual para realizar busca específica. Assim, não haverá limitação de data.</small>
+        </div>
+      </dtml-if>
+    <dtml-elif expr="tipo == 1">
         <div class="box qs-container qs-materia clearfix <dtml-if expr="itens_privados == '1' and item['ind_publico'] == 0"> qs-adm</dtml-if>">
             <div class="qs-topo">
               <div>

@@ -1,4 +1,4 @@
-<dtml-var standard_html_header><div id="conteudo">
+<dtml-var standard_html_header>
 
 
 <script type="text/javascript">
@@ -24,17 +24,13 @@
     <div class="row">
         <div class="col-xs-12">
             <div class="box ptrn-noise-darken clearfix">
-
                 <div class="pull-right legislaturas ">
-
                     <div class="btn-group pull-right" id="lst_num_legislatura" name="lst_num_legislatura">
                         <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Outras Legislaturas <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu">
-
                             <dtml-in expr="zsql.legislatura_obter_zsql()">
-
                                     <li><a  class="<dtml-if expr="_.has_key('hdn_num_legislatura') and num_legislatura==_.int(hdn_num_legislatura)">
                                             active
                                             <dtml-elif expr="not _.has_key('hdn_num_legislatura') and _.DateTime() >= dat_inicio and _.DateTime() <= dat_fim">
@@ -103,7 +99,7 @@
                             <div class="caption clearfix">
 
                                 <h2>
-                                    <a class="margin-to-right" href="parlamentar_mostrar_proc?cod_parlamentar=<dtml-var cod_parlamentar>"><dtml-var nom_completo></a>
+                                    <a class="margin-to-right" href="parlamentar_mostrar_proc?cod_parlamentar=<dtml-var cod_parlamentar>"><dtml-var nom_parlamentar></a>
                                 </h2>
 
                                 <div class="texto-parlamentar margin-to-left">
@@ -391,4 +387,4 @@
 
 
 </dtml-if>
-</div><dtml-var standard_html_footer>
+<dtml-var standard_html_footer>

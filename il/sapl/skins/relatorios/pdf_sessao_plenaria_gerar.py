@@ -12,7 +12,8 @@ def cabecalho(inf_basicas_dic,imagem):
     """
     """
     tmp=''
-    tmp+='\t\t\t\t<image x="2.1cm" y="25.7cm" width="59" height="62" file="' + imagem + '"/>\n'
+    #tmp+='\t\t\t\t<drawString x="5cm" y="27.1cm">' + str(imagem) + '</drawString>\n'
+    #tmp+='\t\t\t\t<image x="2.1cm" y="25.7cm" width="59" height="62" file="' + imagem + '"/>\n'
     tmp+='\t\t\t\t<lines>2cm 25.4cm 19cm 25.4cm</lines>\n'
     tmp+='\t\t\t\t<setFont name="Helvetica-Bold" size="16"/>\n'
     tmp+='\t\t\t\t<drawString x="5cm" y="27.1cm">' + str(inf_basicas_dic["nom_camara"]) + '</drawString>\n'
@@ -115,12 +116,12 @@ def inf_basicas(inf_basicas_dic):
     tmp+='\t\t<para style="P2" spaceAfter="5"><b>Tipo da Sessão: </b> ' + nom_sessao + '</para>\n'
     tmp+='\t\t<para style="P2" spaceAfter="5"><b>Abertura: </b> ' + dat_inicio_sessao + ' <b>- </b> ' + hr_inicio_sessao + '</para>\n'
     tmp+='\t\t<para style="P2" spaceAfter="5"><b>Encerramento: </b> ' + dat_fim_sessao + ' <b>- </b> ' + hr_fim_sessao + '</para>\n'
- 
+
     return tmp
 
 def mesa(lst_mesa):
     """
-    
+
     """
     tmp=''
     tmp+='\t\t<para style="P1">Mesa Diretora</para>\n'
@@ -133,7 +134,7 @@ def mesa(lst_mesa):
 
 def presenca(lst_presenca_sessao):
     """
-    
+
     """
     tmp = ''
     tmp+='\t\t<para style="P1">Lista de Presença da Sessão</para>\n'
@@ -146,7 +147,7 @@ def presenca(lst_presenca_sessao):
 
 def expedientes(lst_expedientes):
     """
-    
+
     """
     tmp = ''
     tmp+='\t\t<para style="P1">Expedientes</para>\n'
@@ -186,12 +187,12 @@ def expediente_materia(lst_expediente_materia):
             nom_autor=autoria[i].get(y, "falha-nom-autor")[1]
             tipo_autor=autoria[i].get(y, "falha-tipo-autor")[3]
             if tipo_autor!="não consta":
-                tmp+=nom_autor + ' - ' 
-                if primeiro_autor=="1": 
-                   tmp+="1o. autor - " 
+                tmp+=nom_autor + ' - '
+                if primeiro_autor=="1":
+                   tmp+="1o. autor - "
             tmp+=tipo_autor + '</para>\n'
         tmp+='</td>'
-            
+
 #       tmp+=  expediente_materia['nom_autor'] +'</para></td>\n'
         txt_ementa = expediente_materia['txt_ementa'].replace('&','&amp;')
         tmp+='<td><para style="P4">' + txt_ementa + '</para></td>'
@@ -202,7 +203,7 @@ def expediente_materia(lst_expediente_materia):
 
 def oradores_expediente(lst_oradores_expediente):
     """
-    
+
     """
     tmp = ''
     tmp+='\t\t<para style="P1">Oradores do Expediente</para>\n'
@@ -215,7 +216,7 @@ def oradores_expediente(lst_oradores_expediente):
 
 def presenca_ordem_dia(lst_presenca_ordem_dia):
     """
-    
+
     """
     tmp = ''
     tmp+='\t\t<para style="P1">Lista de Presença da Ordem do Dia</para>\n'
@@ -268,7 +269,7 @@ def votacao(lst_votacao):
 
 def oradores(lst_oradores):
     """
-    
+
     """
     tmp = ''
     tmp+='\t\t<para style="P1">Oradores das Explicações Pessoais</para>\n'

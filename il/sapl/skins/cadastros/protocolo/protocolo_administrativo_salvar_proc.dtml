@@ -19,6 +19,7 @@
         num_protocolo            = pysc.protocolo_proximo_obter_pysc(opcao=rd_opcao_num_protocolo),
         ano_protocolo            = pysc.current_year_pysc(),
         tip_protocolo            = rad_tip_protocolo,
+        dat_protocolo            = pysc.data_converter_pysc(data=txt_dat_protocolo),
         hor_protocolo            = txt_hor_protocolo,
         tip_documento            = lst_tip_documento,
         num_paginas              = txt_num_paginas,

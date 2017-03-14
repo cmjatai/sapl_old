@@ -152,7 +152,7 @@
                            Requerimentos Encaminhados</a>
                            </li>
 
-                             <dtml-if expr="AUTHENTICATED_USER.has_role( ['Operador', 'Operador Protocolo'])">
+                             <dtml-if expr="AUTHENTICATED_USER.has_role( ['Operador', 'Operador Protocolo', 'Operador Materia'])">
                                 <li><a href="&dtml-portal_url;/cadastros/materia/materia_form_resumido">
                                 Nova Matéria</a>
                                 </li>

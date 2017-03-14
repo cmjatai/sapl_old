@@ -414,7 +414,7 @@
     </fieldset>
 </dtml-if>
 
-<dtml-if expr="portal_membership.isAnonymousUser()">
+<dtml-if expr="not portal_membership.isAnonymousUser()">
     <dtml-if expr="zsql.documento_acessorio_obter_zsql(cod_materia=cod_materia,ind_excluido=0)">
         <fieldset>
             <legend>Documentos Acessórios</legend>
@@ -436,7 +436,13 @@
                             </dtml-in>
                             &nbsp;&nbsp;-&nbsp;&nbsp;<b>Descrição:</b> <dtml-var nom_documento missing null=""><br />
                         <b>Data:</b> <dtml-var dat_documento missing null="">
-                        &nbsp;&nbsp;-&nbsp;&nbsp;<b>Autoria:</b> <dtml-var nom_autor_documento missing null=""></td>
+                        &nbsp;&nbsp;-&nbsp;&nbsp;<b>Autoria:</b> <dtml-var nom_autor_documento missing null="">
+<br /><br />
+<b>Ementa:</b> <dtml-var txt_ementa missing null=""><br /><br />
+  <b>Conclusão:</b> <dtml-var txt_observacao missing null=""><br />
+                        </td>
+
+
                     </tr>
                 </dtml-in>
             </table>

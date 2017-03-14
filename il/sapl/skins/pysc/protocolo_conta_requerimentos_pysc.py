@@ -7,6 +7,7 @@
 ##parameters= ano_base, mes_base
 ##title=
 ##
+import simplejson as json
 
 def subtract_date(date, year=0, month=0):
     year, month = divmod(year*12 + month, 12)
@@ -31,10 +32,10 @@ try:
     d1 = DateTime(ano_base+'/'+mes_base+'/01')
 except:
     d1 = dia1MesAtual
-
 df = d1 + 35
 df = DateTime(str(df.year())+'/'+str(df.month())+'/01') - 1
 d2 = DateTime(str(df.year())+'/'+str(df.month())+'/16')
+
 
 lReqTramitando = []
 if d1 == dia1MesAtual:
@@ -83,22 +84,22 @@ for mat in lMaterias:
 
                         cod_materia = str(mat.cod_materia)
 
-                        if cod_materia in ja_inclusos:
-                            continue
+                        #if cod_materia in ja_inclusos:
+                        #    continue
 
-                        ja_inclusos.append(cod_materia)
+                        #ja_inclusos.append(cod_materia)
 
                         if codigo in autores:
                             if cod_materia in dataAprovados:
                                 if dataAprovados[cod_materia] >= d2:
-                                    autores[codigo]['segQ'].append((mat['num_ident_basica'], cod_materia))
+                                    autores[codigo]['segQ'].append((mat['num_ident_basica'], cod_materia, True))
                                 else:
-                                    autores[codigo]['primQ'].append((mat['num_ident_basica'], cod_materia))
+                                    autores[codigo]['primQ'].append((mat['num_ident_basica'], cod_materia, True))
                             else:
                                 if dataAtual >= d2:
-                                    autores[codigo]['segQ'].append((mat['num_ident_basica'], cod_materia))
+                                    autores[codigo]['segQ'].append((mat['num_ident_basica'], cod_materia, False))
                                 else:
-                                    autores[codigo]['primQ'].append((mat['num_ident_basica'], cod_materia))
+                                    autores[codigo]['primQ'].append((mat['num_ident_basica'], cod_materia, False))
                         else:
                             item = {}
                             item['nome'] = codigo
@@ -109,14 +110,14 @@ for mat in lMaterias:
 
                             if cod_materia in dataAprovados:
                                 if dataAprovados[cod_materia] >= d2:
-                                    item['segQ'] = [(mat['num_ident_basica'], cod_materia), ]
+                                    item['segQ'] = [(mat['num_ident_basica'], cod_materia, True), ]
                                 else:
-                                    item['primQ'] = [(mat['num_ident_basica'], cod_materia), ]
+                                    item['primQ'] = [(mat['num_ident_basica'], cod_materia, True), ]
                             else:
                                 if dataAtual >= d2:
-                                    item['segQ'] = [(mat['num_ident_basica'], cod_materia), ]
+                                    item['segQ'] = [(mat['num_ident_basica'], cod_materia, False), ]
                                 else:
-                                    item['primQ'] = [(mat['num_ident_basica'], cod_materia), ]
+                                    item['primQ'] = [(mat['num_ident_basica'], cod_materia, False), ]
                             autores[codigo] = item
 
 
