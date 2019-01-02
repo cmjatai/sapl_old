@@ -16,9 +16,9 @@
 
 <dtml-in expr="sapl_documentos.props_sapl.objectValues('Image')">
   <dtml-if expr="id() == id_logo">
-    <dtml-call expr="REQUEST.set('existe_logo', 1)">        
+    <dtml-call expr="REQUEST.set('existe_logo', 1)">
   </dtml-if>
-</dtml-in> 
+</dtml-in>
 <dtml-let cod_proposicao="_.str(cod_documento).split('/')[-1]"
           cod_checagem="pysc.proposicao_calcular_checksum_pysc(cod_proposicao)">
          <dtml-if expr="cod_documento!=cod_checagem">
@@ -52,9 +52,14 @@
                 <td width="15%" align="left" valign="top">
                     <img src="imagens/brasao.gif" width="100">
                 </td>
+                <td width="2%" align="left" valign="top">&nbsp;
+                </td>
         <dtml-else>
                 <td width="15%" align="left" valign="top">
                     <img src="sapl_documentos/props_sapl/<dtml-var id_logo>" width="100">
+                </td>
+
+                <td width="2%" align="left" valign="top">&nbsp;
                 </td>
         </dtml-if>
                 <td width="84%" class="rec_nome_casa">
@@ -117,7 +122,7 @@
                 <td colspan="2" class="rec_rotulo">Descrição:</td>
             </tr>
             <tr>
-                <td colspan="2" class="rec_dado"><dtml-var txt_descricao></td>
+                <td colspan="2" class="rec_dado" style="padding-right: 20px;"><dtml-var txt_descricao></td>
             </tr>
         </table>
         <table width="640px" border="0" rules="none" cellspacing="0" cellpadding="0" align="center" vspace="0" hspace="0" valign="top">

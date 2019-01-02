@@ -62,7 +62,12 @@
                                 <span class="icon-nav-left">F.A.</span>
                                 <span>Funções Administrativas</span>
                             </a>
+
                             <ul class="context-bg-color">
+
+                                <dtml-if expr="AUTHENTICATED_USER.has_role(['Autor'])">
+                                    <li class="sub"><a href="<dtml-var diretorio>proposicao">Elaboração de Proposições</a></li>
+                                </dtml-if>
                                 <dtml-if expr="AUTHENTICATED_USER.has_role( ['Operador', 'Operador Protocolo'])">
                                     <li class="sub"><a style="cursor: default;">Protocolo</a>
                                         <ul class="context-bg-color">
@@ -138,6 +143,12 @@
                             <li><a href="&dtml-portal_url;/qs?tr=1">
                               <span> Em tramita&ccedil;&atilde;o</span></a>
                            </li>
+                           <dtml-if expr="not isAnon">
+                             <li><a href="&dtml-portal_url;/qs?ts=61">
+                             Aguardando Parecer de Constitucionalidade</a>
+                             </li>
+                            </dtml-if>
+
                            <li><a href="&dtml-portal_url;/qs?ts=17">
                            Aguardando San&ccedil;&atilde;o</a>
                            </li>

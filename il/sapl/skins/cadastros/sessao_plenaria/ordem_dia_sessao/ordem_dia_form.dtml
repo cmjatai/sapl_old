@@ -239,15 +239,15 @@
                 <input type="button" class="botaoExtra" name="btn_excluir" value="Excluir" onClick="ordem_dia_excluir()" />
             </dtml-if>
             &nbsp;
-            <input type="button" class="botao" name="btn_fechar" value="Fechar" onClick="reloadParentAndClose();" />
-        </p> 
+            <input type="button" class="botao" name="btn_fechar" value="Fechar" onClick="reloadParentAndClose(<dtml-var cod_ordem missing>);" />
+        </p>
           <tr>
-            <td colspan="3">  
+            <td colspan="3">
                 <label for="txa_txt_tramitacao">Tramitação para Sessão Plenária</label><br />
                 <textarea name="txa_txt_tramitacao" cols="60" rows="30"><dtml-var txt_tramitacao missing null=""></textarea>
             </td>
           </tr>
-        
+
         <input type="hidden" name="cod_ordem" value="<dtml-var cod_ordem missing>" />
         <input type="hidden" name="cod_sessao_plen" value="<dtml-var cod_sessao_plen missing>" />
         <dtml-unless cod_ordem>

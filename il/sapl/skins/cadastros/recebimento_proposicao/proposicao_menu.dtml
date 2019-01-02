@@ -1,16 +1,6 @@
-<div id="barra-conteudo">
-    <ul>
-        <li>
-            <a <dtml-if expr="envrec=='B'">class=selecionado</dtml-if> href="&dtml-portal_url;/cadastros/recebimento_proposicao/proposicao_receber_form?envrec=B">Bucar Proposição</a>
-        </li>
-        <li>
-            <a <dtml-if expr="envrec=='E'">class=selecionado</dtml-if> href="&dtml-portal_url;/cadastros/recebimento_proposicao/proposicao_listar_form?envrec=E">Pendentes</a>
-        </li>
-        <li>
-            <a <dtml-if expr="envrec=='I'">class=selecionado</dtml-if> href="&dtml-portal_url;/cadastros/recebimento_proposicao/proposicao_listar_form?envrec=I">Incorporadas</a>
-        </li>
-        <li>
-            <a <dtml-if expr="envrec=='R'">class=selecionado</dtml-if> href="&dtml-portal_url;/cadastros/recebimento_proposicao/proposicao_listar_form?envrec=R">Devolvidas</a>
-        </li>
-    </ul>
+<div class="btn-group" role="group">
+  <a class="btn btn-default"<dtml-if expr="envrec=='B'">class=selecionado</dtml-if> href="&dtml-portal_url;/cadastros/recebimento_proposicao/proposicao_receber_form?envrec=B">Bucar Proposição</a>
+  <a class="btn btn-default"<dtml-if expr="envrec=='E'">class=selecionado</dtml-if> href="&dtml-portal_url;/cadastros/recebimento_proposicao/proposicao_listar_form?envrec=E">Pendentes</a>
+  <a class="btn btn-default"<dtml-if expr="envrec=='I'">class=selecionado</dtml-if> href="&dtml-portal_url;/cadastros/recebimento_proposicao/proposicao_listar_form?envrec=I">Incorporadas</a>
+  <a class="btn btn-default"<dtml-if expr="envrec=='R'">class=selecionado</dtml-if> href="&dtml-portal_url;/cadastros/recebimento_proposicao/proposicao_listar_form?envrec=R">Devolvidas</a>
 </div>

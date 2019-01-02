@@ -1,6 +1,6 @@
 <dtml-var standard_html_header><div id="conteudo">
 
-<script type="text/javascript" src="javascript/data_validar_jvsc"></script>
+<script type="text/javascript" src="../../javascript/data_validar_jvsc"></script>
 <script type="text/javascript">
 
     function submeter(endereco){
@@ -198,7 +198,7 @@
           <div class="row col-sm-12">
 
             <td>
-              <div class="col-sm-5">
+              <div class="col-sm-6">
               <label for="lst_tip_id_basica" class="control-label">Tipo </label>
                 <select class="form-control" id="lst_tip_id_basica" name="lst_tip_id_basica" onChange="numero_materia_buscar(document.materia_form)">
                     <option value="0">
@@ -221,14 +221,14 @@
               </div>
             </td>
             <td>
-              <div class="col-sm-1">
+              <div class="col-sm-2">
               <label for="txt_num_ident_basica" class="control-label">Número </label>
                 <input type="hidden" name="hdn_num_ident_basica" value="" />
                 <input class="form-control" type="text" id="txt_num_ident_basica" name="txt_num_ident_basica" size="6" maxlength="6" value="<dtml-var num_ident_basica missing null="1">" />
               </div>
             </td>
             <td>
-              <div class="col-sm-1">
+              <div class="col-sm-2">
                 <label for="txt_ano_ident_basica" class="control-label">Ano </label>
                 <dtml-unless ano_ident_basica>
                     <dtml-call expr="REQUEST.set('ano_ident_basica', _.DateTime.year(_.DateTime()))">
@@ -243,7 +243,7 @@
 
 
               <div class="row col-sm-12">
-                    <div class="col-sm-2">
+                    <div class="col-sm-4">
                                       <label for="txt_dat_apresentacao" class="control-label">Data Apresentação </label>
 
                           <dtml-unless dat_apresentacao>
@@ -251,7 +251,7 @@
                           </dtml-unless>
                           <input class="form-control" type="text" id="txt_dat_apresentacao" name="txt_dat_apresentacao" value="<dtml-var dat_apresentacao missing null="">" onBlur="formata_data(form.txt_dat_apresentacao); tipo_autor_mudou(document.materia_form);"/>
                       </div>
-                    <div class="col-sm-2">
+                    <div class="col-sm-4">
                     <label for="txt_num_protocolo" class="control-label">Núm. Protocolo </label>
                       <dtml-if use_spdo>
                           <input type="text" id="txt_num_protocolo_spdo" name="txt_num_protocolo_spdo" size="18" maxlength="18" value="<dtml-var num_protocolo_spdo missing null="">" />
@@ -268,7 +268,7 @@
 
 
 <div class="row col-sm-12">
-              <div class="col-sm-4 ">
+              <div class="col-sm-3 ">
                   <label for="lst_tip_autor" class="control-label">Tipo de Autor </label>
                     <select class="form-control" name="lst_tip_autor" size="1" onChange="tipo_autor_mudou(document.materia_form)">
                         <dtml-unless tip_autor>
@@ -288,7 +288,7 @@
                     </select>
               </div>
 
-              <div class="col-sm-4">
+              <div class="col-sm-6">
                     <label for="des_tip_autor" class="control-label">Nome Autor </label>
                         <dtml-if expr="_.has_key('des_tipo_autor')">
                             <select class="form-control" name="lst_cod_autor" size="1" onChange="javascript:form.hdn_alterou.value=1">

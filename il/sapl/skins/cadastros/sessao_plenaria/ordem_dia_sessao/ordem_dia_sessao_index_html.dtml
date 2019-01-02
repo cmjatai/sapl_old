@@ -57,8 +57,9 @@ function ordem_dia_reordenar(){
             scrolling       : 'auto',
             preload         : true,
             openEffect	: 'fade',
-            afterClose      : function() {
-                window.location.href = "&dtml-portal_url;/cadastros/sessao_plenaria/ordem_dia_sessao/ordem_dia_sessao_index_html?<dtml-var "REQUEST.get('QUERY_STRING','')">";
+            afterClose      : function(event) {
+                window.location.href = "&dtml-portal_url;/cadastros/sessao_plenaria/ordem_dia_sessao/ordem_dia_sessao_index_html?<dtml-var "REQUEST.get('QUERY_STRING','')">#cod_ordem"+window.cod_ordem+"";
+                window.location.reload();
             },
             closeEffect : 'fade'
         });
@@ -94,7 +95,7 @@ function ordem_dia_reordenar(){
                 <td class="texto" "valign="top">
                     <b><dtml-var num_ordem></b> -
                     <dtml-in expr="zsql.materia_obter_zsql(cod_materia=cod_materia, ind_excluido=0)">
-                        <b><a href="ordem_dia_mostrar_proc?cod_ordem=<dtml-var cod_ordem>&cod_sessao_plen=<dtml-var cod_sessao_plen>" class="popup" data-fancybox-type="iframe">
+                        <b><a name="cod_ordem<dtml-var cod_ordem>" href="ordem_dia_mostrar_proc?cod_ordem=<dtml-var cod_ordem>&cod_sessao_plen=<dtml-var cod_sessao_plen>" class="popup" data-fancybox-type="iframe">
                             <dtml-var sgl_tipo_materia missing> <dtml-var num_ident_basica missing>/<dtml-var ano_ident_basica missing></b></a><br />
 
                         <dtml-if num_protocolo>
@@ -117,6 +118,8 @@ function ordem_dia_reordenar(){
   	                            </dtml-if>
   	                        </dtml-in>
                         </dtml-in>
+
+
                     </dtml-in>
                     <dtml-comment>obtém o primeiro autor da matéria.</dtml-comment>
    	                <dtml-if expr="pysc.conta_autores_pysc(cod_materia)">
@@ -143,34 +146,66 @@ function ordem_dia_reordenar(){
                     </dtml-in>
 
 
-                  <dtml-in expr="zsql.anexada_obter_zsql(cod_materia_principal=cod_materia, ind_excluido=0)">
-                     <br><br>
-                     <dtml-in expr="zsql.materia_obter_zsql(cod_materia=cod_materia_anexada, ind_excluido = 0)">
-                        <b>Matéria Anexada:</b><br>
-                         <a href="&dtml-portal_url;/consultas/materia/materia_mostrar_proc?cod_materia=<dtml-var cod_materia>&autostart=off&pesquisa=<dtml-var pesquisa missing>">
-                         <b><dtml-var sgl_tipo_materia> <dtml-var num_ident_basica missing>/<dtml-var ano_ident_basica></b></a>
+                        <dtml-in expr="zsql.tramitacao_obter_zsql(cod_materia=cod_materia, ind_ult_tramitacao=1)">
+                            <dtml-if expr="cod_status!='55'">
+                                <dtml-if cod_unid_tram_dest>
+                                    <dtml-call expr="REQUEST.set('cod_unid_tram', cod_unid_tram_dest)">
+                                <dtml-else>
+                                    <dtml-call expr="REQUEST.set('cod_unid_tram', cod_unid_tram_local)">
+                                </dtml-if>
+                                <dtml-call expr="REQUEST.set('des_status', des_status)">
+                                <dtml-call expr="REQUEST.set('txt_tramitacao', txt_tramitacao)">
+                                <dtml-if des_status>
+                                    <br><b>Situação: </b><dtml-var des_status null="">
+                                </dtml-if>
+                                <dtml-if txt_tramitacao>
+                                    <br><b>Última Ação: </b><dtml-var txt_tramitacao>
+                                </dtml-if>
+                                <dtml-if dat_fim_prazo><br>
+                                    <br><b>Data Fim do Prazo: </b> <dtml-var dat_fim_prazo>
+                                </dtml-if>
+                            </dtml-if>
+                        </dtml-in>
 
-                     </dtml-in>
+                 <dtml-in expr="zsql.anexada_obter_zsql(cod_materia_principal=cod_materia, ind_excluido=0)">
+                   <dtml-if sequence-start>
+                     <br><b>Matérias Anexadas:</b>
+                     <table>
+                     <dtml-call expr="REQUEST.set('col_anexada', 0)">
+                   </dtml-if>
+
+                   <dtml-in expr="zsql.materia_obter_zsql(cod_materia=cod_materia_anexada, ind_excluido = 0)">
+                     <dtml-if expr="not dat_desanexacao">
+                       <dtml-if expr="col_anexada % 3 == 0"><tr></dtml-if>
+
+                       <td><a href="&dtml-portal_url;/consultas/materia/materia_mostrar_proc?cod_materia=<dtml-var cod_materia>&autostart=off&pesquisa=<dtml-var pesquisa missing>">
+                       <b><dtml-var sgl_tipo_materia> <dtml-var num_ident_basica missing>/<dtml-var ano_ident_basica></b></a></td>
+
+                       <dtml-if expr="col_anexada % 3 == 2"></tr></dtml-if>
+                       <dtml-call expr="REQUEST.set('col_anexada', col_anexada + 1)">
+                     </dtml-if>
                    </dtml-in>
+                   <dtml-if sequence-end>
+                     <dtml-if expr="col_anexada % 3 == 1"><td></td><td></td></tr></dtml-if>
+                     <dtml-if expr="col_anexada % 3 == 2"><td></td></tr></dtml-if>
+                   </table>
+                   </dtml-if>
 
+                  </dtml-in>
+                  <br><br>
+                  <b><a target="_blank" href="&dtml-portal_url;/consultas/materia/materia_mostrar_proc?cod_materia=<dtml-var cod_materia>">Ver Matéria</a></b> -
+                  <b><a target="_blank" href="&dtml-portal_url;/cadastros/materia/tramitacao/tramitacao_form?cod_materia=<dtml-var cod_materia>&btn_incluir=Incluir+Tramitação">Tramitar</a></b>
 
                 </td>
                 <td class="texto" valign="top">
                     <dtml-in expr="zsql.materia_obter_zsql(cod_materia=cod_materia, ind_excluido=0)">
-                        <dtml-var txt_ementa>
-                         <br>
-
-
-                                    <dtml-if txt_tramitacao>
-                                      <div style="font-size: 90%; line-height: 95%;">
-    				                    <dtml-var expr="'<br>'.join(str(txt_tramitacao).split('\r\n'))" >
-    				                    </div>
-                                    </dtml-if>
-
-
-
-
-
+                      <dtml-var txt_ementa>
+                      <br>
+                      <dtml-if txt_tramitacao>
+                        <div style="font-size: 90%; line-height: 95%;">
+                          <dtml-var expr="'<br>'.join(str(txt_tramitacao).split('\r\n'))" >
+		                    </div>
+                      </dtml-if>
                     </dtml-in>
                 </td>
                 <td class="texto" valign="top" align="center">
@@ -293,6 +328,31 @@ function ordem_dia_reordenar(){
                     </dtml-if>
                 </dtml-in>
                 </dtml-in>
+
+<br>
+                        <dtml-in expr="zsql.tramitacao_obter_zsql(cod_materia=cod_materia, ind_ult_tramitacao=1)">
+                            <dtml-if expr="cod_status!='55'">
+                                <dtml-if cod_unid_tram_dest>
+                                    <dtml-call expr="REQUEST.set('cod_unid_tram', cod_unid_tram_dest)">
+                                <dtml-else>
+                                    <dtml-call expr="REQUEST.set('cod_unid_tram', cod_unid_tram_local)">
+                                </dtml-if>
+                                <dtml-call expr="REQUEST.set('des_status', des_status)">
+                                <dtml-call expr="REQUEST.set('txt_tramitacao', txt_tramitacao)">
+                                <dtml-if des_status>
+                                    <br><b>Situação: </b><dtml-var des_status null="">
+                                </dtml-if>
+                                <dtml-if txt_tramitacao>
+                                    <br><b>Última Ação: </b><dtml-var txt_tramitacao>
+                                </dtml-if>
+                                <dtml-if dat_fim_prazo><br>
+                                    <br><b>Data Fim do Prazo: </b> <dtml-var dat_fim_prazo>
+                                </dtml-if>
+                            </dtml-if>
+                        </dtml-in>
+
+
+
             </td>
             <td class="texto" valign="top">
                 <dtml-in expr="zsql.materia_obter_zsql(cod_materia=cod_materia, ind_excluido=0)">

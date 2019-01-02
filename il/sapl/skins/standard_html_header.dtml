@@ -31,9 +31,9 @@
     <script type='text/javascript' src='&dtml-portal_url;/javascript/jquery.cookie.js'></script>
     <script type="text/javascript" src="&dtml-portal_url;/javascript/jquery.fancybox.pack.js"></script>
 
-    <script src="<dtml-var expr="sapl_documentos.props_sapl.midias_url">/sapl/js/main0.js?r=<dtml-var expr="_.random.random()">"></script>
+    <script src="<dtml-var expr="sapl_documentos.props_sapl.midias_url">/sapl/js/main0.js"></script>
 
-    <script type='text/javascript' src='&dtml-portal_url;/javascript/geral.js?r=<dtml-var expr="_.random.random()">'></script>
+    <script type='text/javascript' src="&dtml-portal_url;/javascript/geral.js"></script>
 
 
 </head>

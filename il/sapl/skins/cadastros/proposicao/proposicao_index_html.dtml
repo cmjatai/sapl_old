@@ -28,11 +28,10 @@
 
 <h1 class="firstHeading">Proposições</h1>
 
-<ul>
-    <li>
-        <a href="proposicao_form">Nova Proposição</a
-    </li>
-</ul>
+
+<div class="btn-group btn-group-sm " role="group"  >
+  <a class="btn btn-default" href="proposicao_form">Nova Proposição</a>
+</div>
 
 <dtml-call "REQUEST.set ('ind_enviado','1')">
 <dtml-in expr="zsql.proposicao_obter_zsql(ind_excluido=0, ind_enviado=ind_enviado, col_username=AUTHENTICATED_USER.getUserName())">

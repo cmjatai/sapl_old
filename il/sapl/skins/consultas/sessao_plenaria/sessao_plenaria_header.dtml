@@ -1,7 +1,26 @@
 <dtml-if cod_sessao_plen>
     <dtml-in expr="zsql.sessao_plenaria_obter_zsql(cod_sessao_plen=cod_sessao_plen, ind_excluido=0)">
         <dtml-in expr="zsql.tipo_sessao_plenaria_obter_zsql(tip_sessao=tip_sessao)">
-            <dtml-var num_sessao_plen>ª Sessão <dtml-var nom_sessao> da <dtml-var num_sessao_leg>ª Sessão Legislativa da <dtml-var num_legislatura>ª Legislatura <br /><dtml-var expr="pysc.data_converter_por_extenso_pysc(data=dat_inicio_sessao)"> (<dtml-var dia_sessao>)
+
+
+    <dtml-var num_sessao_plen>ª <dtml-if expr="nom_sessao not in ['Audiência Pública', 'Reunião da CCJ']">Sessão</dtml-if>
+    <dtml-var nom_sessao>
+    <dtml-if expr="nom_sessao!='Reunião da CCJ'">
+      <dtml-if expr="DateTime(pysc.data_converter_pysc(dat_inicio_sessao)).month() not in [1, 2, 12]">
+          <dtml-if expr="DateTime(pysc.data_converter_pysc(dat_inicio_sessao)).day() <= 15">
+              da 1ª Quinzena
+          <dtml-else>
+              da 2ª Quinzena
+          </dtml-if>
+      </dtml-if>
+    </dtml-if>
+
+    do Mês de <dtml-var expr="pysc.data_converter_por_extenso_mes_ano_pysc(data=dat_inicio_sessao)">
+<br>
+            <dtml-var num_sessao_leg>ª Sessão Legislativa da <dtml-var num_legislatura>ª Legislatura
+
+
+              <br /><dtml-var expr="pysc.data_converter_por_extenso_pysc(data=dat_inicio_sessao)"> (<dtml-var dia_sessao>)
         </dtml-in>
     </dtml-in>
 </dtml-if>

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="pt">
-	
+
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Sistema de Apoio ao Processo Legislativo</title>
@@ -16,8 +16,8 @@
         var regexp_digitos = /\D+/;
         var tipo_votacao = "<dtml-var tip_votacao>";
 
-        if (form.rad_votacao_branco.checked == true) { 
-            form.submit(); 
+        if (form.rad_votacao_branco.checked == true) {
+            form.submit();
         }
 
         if ((tipo_votacao == 1) || (tipo_votacao == 3)) {
@@ -44,7 +44,7 @@
                 form.txt_nao_votou.focus();
                 return false;
             }
-    
+
             if (tipo_votacao == 1) {
 
               if (!(form.rad_ind_votacao_presidente[0].checked || form.rad_ind_votacao_presidente[1].checked)){
@@ -52,7 +52,7 @@
                   form.rad_ind_votacao_presidente[0].focus();
                   return false;
               }
-              
+
 	      /*  ---------------------------------------------------------------------------------------- */
               /* valida quorum: ...[0].checked --> opção: Não - presidente NÃO participa da votação,
                                 ...[1].checked --> opção: Sim - presidente PARTICIPA da votação */
@@ -60,10 +60,10 @@
               /* c/ o voto do presidente --> quorum de presentes = quantidade de votantes                  */
               /* s/ o voto do presidente --> quorum de presentes = quantidade de votantes - 1              */
               /* ----------------------------------------------------------------------------------------- */
-            
+
               var qtv = 0;
               var qp  = 0;
-              var qvs = parseInt(form.txt_votos_sim.value,10); 
+              var qvs = parseInt(form.txt_votos_sim.value,10);
               var qvn = parseInt(form.txt_votos_nao.value,10);
               var qab = parseInt(form.txt_votos_abstencao.value,10);
               var qnv = parseInt(form.txt_nao_votou.value,10);
@@ -74,14 +74,14 @@
                  qp = quo - 1;
               }
 	      if (qtv != qp) {
-                 alert("O total de votos não confere com o quorum de presentes na Sessão Plenária. Reinforme corretamente!"); 
+                 alert("O total de votos não confere com o quorum de presentes na Sessão Plenária. Reinforme corretamente!");
                  form.rad_ind_votacao_presidente[0].focus();
                  return false;
-              } 
+              }
               if (qp == quo) {
                  form.rad_ind_votacao_presidente[1].focus();
               }
-            form.submit(); 
+            form.submit();
             }
 //            if (tipo_votacao == 3) {
 //               var qtv = 0
@@ -104,6 +104,7 @@
             return false;
         }
 
+				parent.cod_ordem = <dtml-var cod_ordem missing>;
         form.submit();
     }
 
@@ -123,7 +124,7 @@
         }
 
         function votacao_em_branco(tip_votacao){
-             
+
             var form = document.votacao_form;
 
             if (tip_votacao == 1) {
@@ -170,9 +171,10 @@
             return;
         }
 
-    function reloadParentAndClose()
+    function reloadParentAndClose(cod_ordem)
     {
-        parent.jQuery.fancybox.close();
+    	parent.cod_ordem = cod_ordem;
+      parent.jQuery.fancybox.close();
     }
 
 </script>
@@ -182,16 +184,16 @@
 <h1 class="firstHeading">Vota&ccedil;&atilde;o</h1>
 <h3 align="center"><dtml-var sessao_plenaria_header></h3>
 <form action="votacao_salvar_proc" name="votacao_form" method="get" enctype="multipart/form-data">
-        <input type="hidden" name="hdn_url" value="javascript:reloadParentAndClose()" />
-        <input type="hidden" name="hdn_cod_sessao_plen" value="<dtml-var cod_sessao_plen missing>" />
-        <input type="hidden" name="hdn_cod_sessao_leg" value="<dtml-var cod_sessao_leg missing>"/>
-        <input type="hidden" name="hdn_dat_sessao" value="<dtml-var dat_sessao missing>"/>
-        <input type="hidden" name="hdn_num_legislatura" value="<dtml-var cod_num_legislatura missing>"/>
-        <input type="hidden" name="hdn_cod_ordem" value="<dtml-var cod_ordem missing>"/>
-        <input type="hidden" name="hdn_cod_materia" value="<dtml-var cod_materia missing>"/>
-        <input type="hidden" name="hdn_tip_votacao" value="<dtml-var tip_votacao missing>"/>
-        <input type="hidden" name="hdn_tip_sessao" value="<dtml-var tip_sessao missing>"/>
-        <dtml-in expr="zsql.presenca_ordem_dia_contar_zsql(cod_sessao_plen=cod_sessao_plen)">
+  <input type="hidden" name="hdn_url" value="javascript:reloadParentAndClose(<dtml-var cod_ordem missing>)" />
+  <input type="hidden" name="hdn_cod_sessao_plen" value="<dtml-var cod_sessao_plen missing>" />
+  <input type="hidden" name="hdn_cod_sessao_leg" value="<dtml-var cod_sessao_leg missing>"/>
+  <input type="hidden" name="hdn_dat_sessao" value="<dtml-var dat_sessao missing>"/>
+  <input type="hidden" name="hdn_num_legislatura" value="<dtml-var cod_num_legislatura missing>"/>
+  <input type="hidden" name="hdn_cod_ordem" value="<dtml-var cod_ordem missing>"/>
+  <input type="hidden" name="hdn_cod_materia" value="<dtml-var cod_materia missing>"/>
+  <input type="hidden" name="hdn_tip_votacao" value="<dtml-var tip_votacao missing>"/>
+  <input type="hidden" name="hdn_tip_sessao" value="<dtml-var tip_sessao missing>"/>
+  <dtml-in expr="zsql.presenca_ordem_dia_contar_zsql(cod_sessao_plen=cod_sessao_plen)">
 	<input type="hidden" name="hdn_nro_presentes" value="<dtml-var presenca>" />
         </dtml-in>
         <dtml-in expr="zsql.votacao_obter_zsql(cod_ordem=cod_ordem, cod_materia=cod_materia, ind_excluido=0)">
@@ -239,7 +241,7 @@
                     <label for="rad_votacao_branco">Anular Vota&ccedil;&atilde;o</label>
                     <input type="checkbox" name="rad_votacao_branco" onchange="javascript:votacao_em_branco(tip_votacao=1)">
                 </td>
-            
+
                 <td colspan="3"><label for="rad_ind_votacao_presidente">A totaliza&ccedil;&atilde;o inclui o voto do Presidente: ?</label><span class="campoObrigatorio">&nbsp;</span>
                 <dtml-in expr="[('Não','0'),('Sim','1')]">
                   <input type="radio" name="rad_ind_votacao_presidente" value="<dtml-var expr="_['sequence-item']">"
@@ -277,7 +279,7 @@
 
         <div style="text-align: center">
             <input class="botao" type="button" name="button" value="Salvar" onClick="campos_criticar()" />
-            &nbsp;&nbsp;&nbsp;<input type="button" class="botao" name="btn_fechar" value="Fechar" onClick="reloadParentAndClose();" />
+            &nbsp;&nbsp;&nbsp;<input type="button" class="botao" name="btn_fechar" value="Fechar" onClick="reloadParentAndClose(<dtml-var cod_ordem missing>);" />
         </div>
 </fieldset>
         </dtml-if>
@@ -388,7 +390,7 @@
         </table>
         <div style="text-align: center">
             <input class="botao" type="button" name="button" value="Salvar" onClick="campos_criticar()" />
-            &nbsp;&nbsp;&nbsp;<input type="button" class="botao" name="btn_fechar" value="Fechar" onClick="reloadParentAndClose();" />
+            &nbsp;&nbsp;&nbsp;<input type="button" class="botao" name="btn_fechar" value="Fechar" onClick="reloadParentAndClose(<dtml-var cod_ordem missing>);" />
         </div>
 </fieldset>
         </dtml-if>
@@ -476,7 +478,7 @@
             </table>
             <div style="text-align: center">
                 <input class="botao" type="button" name="button" value="Salvar" onClick="campos_criticar()" />
-                  &nbsp;&nbsp;&nbsp;<input type="button" class="botao" name="btn_fechar" value="Fechar" onClick="reloadParentAndClose();" />
+                  &nbsp;&nbsp;&nbsp;<input type="button" class="botao" name="btn_fechar" value="Fechar" onClick="reloadParentAndClose(<dtml-var cod_ordem missing>);" />
             </div>
     </fieldset>
     </dtml-if>

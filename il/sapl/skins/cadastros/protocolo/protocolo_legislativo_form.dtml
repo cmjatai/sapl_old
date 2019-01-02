@@ -442,7 +442,7 @@
 <form name="protocolo_trocar_periodo" action="protocolo_legislativo_form">
     <fieldset>
     <legend>Registro de Protocolo de Requerimentos por Vereador - Mês <dtml-var mes_base>/<dtml-var ano_base>.</legend>
-    <table class="table table-striped">
+    <table class="table">
         <tr>
             <th>
                 <select id="ano_base" name="ano_base">
@@ -485,8 +485,11 @@
 
 
                     <td class="texto" style="text-align: center;padding: 0.5em;">
+
+
+
                         <dtml-in expr="(_['sequence-item'])['primQ'] + (_['sequence-item'])['segQ']">
-                          <a href="&dtml-portal_url;/consultas/materia/materia_mostrar_proc?cod_materia=<dtml-var expr="(_['sequence-item'])">">
+                          <a style="<dtml-if expr="_['sequence-item'][2]">color:green;<dtml-else>color:#ca9800;</dtml-if>" href="&dtml-portal_url;/consultas/materia/materia_mostrar_proc?cod_materia=<dtml-var expr="(_['sequence-item'][1])">">
                             <dtml-var expr="(_['sequence-key'])">
                           </a>
                           <dtml-if expr="not _['sequence-end']">
@@ -498,9 +501,13 @@
                       <dtml-var expr="_.len((_['sequence-item'])['primQ']) + _.len((_['sequence-item'])['segQ'])">
                     </th>
                 <dtml-else>
-                    <td class="texto" style="text-align: center;padding: 0.5em;">
+                    <td class="texto" style="text-align: center; padding: 0.5em;">
+
+
+
                         <dtml-in expr="(_['sequence-item'])['primQ']">
-                          <a href="&dtml-portal_url;/consultas/materia/materia_mostrar_proc?cod_materia=<dtml-var expr="(_['sequence-item'])">">
+
+                          <a style="color:<dtml-if expr="_['sequence-item'][2]">green<dtml-elif expr="_['sequence-number'] <= 6">#ca9800<dtml-else>red</dtml-if>;" href="&dtml-portal_url;/consultas/materia/materia_mostrar_proc?cod_materia=<dtml-var expr="(_['sequence-item'][1])">">
                             <dtml-var expr="(_['sequence-key'])">
                           </a>
                           <dtml-if expr="not _['sequence-end']">
@@ -509,12 +516,12 @@
                         </dtml-in>
                     </td>
                     <th style="text-align: center;padding: 0.5em;">
-                      <dtml-var expr="_.len((_['sequence-item'])['primQ'])">
+                       <span style="color:green;"><dtml-var expr="(_['sequence-item'])['ta1q']"></span> - <span style="color:#ca9800;"><dtml-var expr="(_['sequence-item'])['tt1q']"></span>
                     </th>
 
                     <td class="texto" style="text-align: center;padding: 0.5em;">
                         <dtml-in expr="(_['sequence-item'])['segQ']">
-                          <a href="&dtml-portal_url;/consultas/materia/materia_mostrar_proc?cod_materia=<dtml-var expr="(_['sequence-item'])">">
+                          <a style="color:<dtml-if expr="_['sequence-item'][2]">green<dtml-elif expr="_['sequence-number'] <= 6">#ca9800<dtml-else>red</dtml-if>;" href="&dtml-portal_url;/consultas/materia/materia_mostrar_proc?cod_materia=<dtml-var expr="(_['sequence-item'][1])">">
                             <dtml-var expr="(_['sequence-key'])">
                           </a>
                           <dtml-if expr="not _['sequence-end']">
@@ -523,7 +530,7 @@
                         </dtml-in>
                     </td>
                     <th style="text-align: center;padding: 0.5em;">
-                      <dtml-var expr="_.len((_['sequence-item'])['segQ'])">
+                       <span style="color:green;"><dtml-var expr="(_['sequence-item'])['ta2q']"></span> - <span style="color:#ca9800;"><dtml-var expr="(_['sequence-item'])['tt2q']"></span>
                     </th>
                 </dtml-if>
             </tr>

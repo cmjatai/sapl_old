@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="pt">
-	
+
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Sistema de Apoio ao Processo Legislativo</title>
@@ -23,7 +23,7 @@ function reloadParentAndClose()
 <dtml-call expr="REQUEST.set('ind_pdf_ordem', 'mostrar')">
 
 <div class="helpsapl"> <a id="ajuda" href="&dtml-portal_url;/ajuda/ordem_dia">Ajuda</a> </div>
-<h1 class="firstHeading"> Mat&eacute;rias da Ordem do dia </h1> 
+<h1 class="firstHeading"> Mat&eacute;rias da Ordem do dia </h1>
 
 <h3 align="center"><dtml-var sessao_plenaria_header></h3>
 
@@ -57,19 +57,19 @@ function reloadParentAndClose()
             </dtml-if previous-sequence>
         </dtml-if sequence-start>
         <tr>
-                <td class="texto" valign="top">
-                    <b><dtml-var num_ordem></b> - 
-                <dtml-in expr="zsql.materia_obter_zsql(cod_materia=cod_materia, ind_excluido=0)">
-                    <a href="#" onClick="javascript:window.open('ordem_dia_mostrar_proc?cod_ordem=<dtml-var cod_ordem>','ItemOrdemWin','width=770,height=350,top=200,left=200,scrollbars=yes');">
-                        <dtml-var sgl_tipo_materia missing> - <dtml-var des_tipo_materia> <dtml-var num_ident_basica missing>/<dtml-var ano_ident_basica missing></a><br />
+          <td class="texto" valign="top">
+            <b><dtml-var num_ordem></b> -
+              <dtml-in expr="zsql.materia_obter_zsql(cod_materia=cod_materia, ind_excluido=0)">
+                <a href="#" onClick="javascript:window.open('ordem_dia_mostrar_proc?cod_ordem=<dtml-var cod_ordem>','ItemOrdemWin','width=770,height=350,top=200,left=200,scrollbars=yes');">
+                  <dtml-var sgl_tipo_materia missing> - <dtml-var des_tipo_materia> <dtml-var num_ident_basica missing>/<dtml-var ano_ident_basica missing></a><br />
 
-               <dtml-if num_protocolo>
-                  <b>Protocolo:</b> <dtml-var num_protocolo>/<dtml-var ano_ident_basica>
-                  <br />
-               </dtml-if>
-</dtml-in>
+                 <dtml-if num_protocolo>
+                    <b>Protocolo:</b> <dtml-var num_protocolo>/<dtml-var ano_ident_basica>
+                    <br />
+                 </dtml-if>
+              </dtml-in>
 
-                <dtml-in expr="zsql.autoria_obter_zsql(cod_materia=cod_materia, ind_primeiro_autor=1)">
+              <dtml-in expr="zsql.autoria_obter_zsql(cod_materia=cod_materia, ind_primeiro_autor=1)">
                 <dtml-in expr="zsql.autor_obter_zsql(cod_autor=cod_autor)">
                     <dtml-if cod_parlamentar>
                         <dtml-in expr="zsql.parlamentar_obter_zsql(cod_parlamentar=cod_parlamentar)">
@@ -83,7 +83,8 @@ function reloadParentAndClose()
                              <b>Autor</b>: <dtml-var nom_autor>
                     </dtml-if>
                 </dtml-in>
-                </dtml-in>
+              </dtml-in>
+
             </td>
             <td class="texto" valign="top">
                 <dtml-in expr="zsql.materia_obter_zsql(cod_materia=cod_materia, ind_excluido=0)">
@@ -141,4 +142,3 @@ function reloadParentAndClose()
 </p>
 
 </form>
-

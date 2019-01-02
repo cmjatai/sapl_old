@@ -52,13 +52,18 @@
 
 
 
-<dtml-in expr="zsql.materia_pesquisar_zsql( rd_ordem='1',  test_excluir_tipos='3;4;7;8;11;13;12;15;16;18;20')"
+<dtml-in expr="zsql.materia_pesquisar_zsql( rd_ordem='1', checkcheck= 0 if _.str(AUTHENTICATED_USER) in ('leandro', 'adevania') else '')"
                                            size="step" start="start" orphan=0>
     <dtml-if sequence-start>
     <b>Resultado da Pesquisa: <dtml-var sequence-length> matéria(s) encontrada(s) do total de&nbsp; <dtml-var total_materias missing='0'>&nbsp;matérias legislativas.</b></td>
     <br>   <table class="table">
 
      <tr align=center>
+       <dtml-if expr="_.str(AUTHENTICATED_USER) == 'leandro'">
+         <th>
+              Check
+         </th>
+       </dtml-if>
         <th align=center>Matérias Legislativas</th>
         <th>Autógrafos</th>
         <th>Normas Jurídicas</th>
@@ -72,23 +77,30 @@
    </dtml-if sequence-start>
 
             <tr>
-
-              <td class="texto" style="width: 40%;">
-                <a href="&dtml-portal_url;/cadastros/materia/materia_mostrar_proc?cod_materia=<dtml-var cod_materia>">
-
-
-                <dtml-if expr="txt_latitude != ''">
-                 <img align="absmiddle" src="&dtml-portal_url;/imagens/img_mapa.jpg"alt="Icone do Mapa" title="Proposição possui cadastro de georreferenciamento"  style="width: 16px;"/>
+              <dtml-if expr="_.str(AUTHENTICATED_USER) == 'leandro'">
+                <td class="texto" style="width: 65px;">
+                  <a href="&dtml-portal_url;/pysc/materia_check_pysc?cod_materia=<dtml-var cod_materia>">
+                    Check
+                  </a>
+                </td>
+              </dtml-if>
+                <td class="texto" style="width: 40%;">
+                  <a href="&dtml-portal_url;/cadastros/materia/materia_mostrar_proc?cod_materia=<dtml-var cod_materia>">
+                    <dtml-if expr="txt_latitude != ''">
+                     <img align="absmiddle" src="&dtml-portal_url;/imagens/img_mapa.jpg"alt="Icone do Mapa" title="Proposição possui cadastro de georreferenciamento"  style="width: 16px;"/>
+                    </dtml-if>
+                  <b><dtml-var sgl_tipo_materia> <dtml-var num_ident_basica>/<dtml-var ano_ident_basica> - <dtml-var des_tipo_materia></b>
+                  </a>
+                <dtml-if expr="_.str(AUTHENTICATED_USER) in ('leandro', 'adevania')">
+                  <dtml-if expr="ind_publico == '0'">
+                    <span style="color: red; font-size: 80%;"> (Documento Privado)</span>
+                  </dtml-if>
+                  <dtml-if ind_tramitacao>
+                    <span style="text-align: center; display: block; font-weight: bold; color: red;">EM TRAMITAÇÃO</span><br>
+                  <dtml-else>
+                      <br>
+                  </dtml-if>
                 </dtml-if>
-
-                <b><dtml-var sgl_tipo_materia> <dtml-var num_ident_basica>/<dtml-var ano_ident_basica> - <dtml-var des_tipo_materia></b>
-
-                </a>
-
-                <dtml-if expr="itens_privados == '1' and ind_publico == 0">
-                     <span style="color: red; font-size: 80%;"> (Documento Privado)</span>
-                </dtml-if>
-                <br>
 
                <dtml-var txt_ementa missing><br> <br>
                  <dtml-call "REQUEST.set('p_ementa', txt_ementa.strip().lower())">
@@ -132,12 +144,16 @@
              <dtml-comment>obt�m normas jur�dicas vinculadas </dtml-comment>
                 <dtml-in expr="zsql.materia_buscar_norma_juridica_zsql(cod_materia=cod_materia)">
                    <dtml-if cod_norma>
-
 	                   <dtml-if expr="sgl_norma=='ATG'">
+                       <dtml-if expr="_.str(AUTHENTICATED_USER) == 'leandro'">
+                           <a href="&dtml-portal_url;/pysc/norma_check_pysc?cod_norma=<dtml-var cod_norma>">
+                             Check
+                           </a><br>
+                       </dtml-if>
 	                     <a href="&dtml-portal_url;/consultas/norma_juridica/norma_juridica_mostrar_proc?cod_norma=<dtml-var cod_norma>"><b><dtml-var des_norma> <dtml-var num_norma>/<dtml-var ano_norma></b></a><br />
 
-			               <dtml-var txt_ementa missing><br> <br>
-			                 <dtml-call "REQUEST.set('a_ementa', txt_ementa.strip().lower())">
+			               <dtml-var norma_txt_ementa missing><br> <br>
+			                 <dtml-call "REQUEST.set('a_ementa', norma_txt_ementa.strip().lower())">
 
 
 	                     <dtml-if expr="pysc.verifica_similaridade_string_pysc(p_ementa, a_ementa) < 50 ">
@@ -182,35 +198,54 @@
              <dtml-comment>obt�m normas jur�dicas vinculadas </dtml-comment>
                 <dtml-in expr="zsql.materia_buscar_norma_juridica_zsql(cod_materia=cod_materia)">
                    <dtml-if cod_norma>
-
 	                   <dtml-if expr="sgl_norma!='ATG'">
+                        <a href="&dtml-portal_url;/consultas/norma_juridica/norma_juridica_mostrar_proc?cod_norma=<dtml-var cod_norma>"><b><dtml-var des_norma> <dtml-var num_norma>/<dtml-var ano_norma></b></a><br />
+                        <dtml-var norma_txt_ementa missing><br> <br>
+	                      <dtml-call "REQUEST.set('l_ementa', norma_txt_ementa.strip().lower())">
+  	                     <dtml-if expr="pysc.verifica_similaridade_string_pysc(p_ementa, l_ementa) < 50 ">
+  	                        <hr>
+  	                        <span style="text-align: center; display: block; font-weight: bold; color: red;"> Semelhança com Projeto<br>abaixo de 50%</span><br>
+  	                     </dtml-if>
+  	                     <dtml-if expr="_.len(a_ementa) > 0 and pysc.verifica_similaridade_string_pysc(a_ementa, l_ementa) < 50 ">
+  	                        <hr>
+  	                        <span style="text-align: center; display: block; font-weight: bold; color: red;"> Semelhança com Autografo<br>abaixo de 50%</span><br>
+  	                     </dtml-if>
 
-	                        <a href="&dtml-portal_url;/consultas/norma_juridica/norma_juridica_mostrar_proc?cod_norma=<dtml-var cod_norma>"><b><dtml-var des_norma> <dtml-var num_norma>/<dtml-var ano_norma></b></a><br />
+          		          <div class="linksOutrasNormas">
+            						  <dtml-in expr="zsql.vinculo_norma_juridica_referidas_obter_zsql(cod_norma=cod_norma)">
+    						            <dtml-if "tip_vinculo=='Z'">
+    						                <img align="absmiddle" border="0" src="&dtml-portal_url;/imagens/icon_status_correlata.gif">&nbsp;<span style="color:#62682F;font-weight:normal;">Autógrafo da Norma:&nbsp;<a href="&dtml-portal_url;/consultas/norma_juridica/norma_juridica_mostrar_proc?cod_norma=<dtml-var cod_norma_referida>&autostart=off&pesquisa=<dtml-var pesquisa missing>">ATG&nbsp;<dtml-var num_norma>/<dtml-var ano_norma></a>.&nbsp;</span>
+    						            </dtml-if>
+							              <BR>
+  						            <dtml-else>
+            						  </dtml-in>
 
-	                        <dtml-var txt_ementa missing><br> <br>
-	                      <dtml-call "REQUEST.set('l_ementa', txt_ementa.strip().lower())">
+                          <dtml-let diario="get_diario_oficial(num_norma=des_veiculo_publicacao,num_lei=num_norma)">
 
-	                     <dtml-if expr="pysc.verifica_similaridade_string_pysc(p_ementa, l_ementa) < 50 ">
-	                        <hr>
-	                        <span style="text-align: center; display: block; font-weight: bold; color: red;"> Semelhança com Projeto<br>abaixo de 50%</span><br>
-	                     </dtml-if>
+                            <dtml-if expr="diario">
+                              <img align="absmiddle" border="0" src="&dtml-portal_url;/imagens/icon_status_correlata.gif">&nbsp;<span style="color:#62682F;font-weight:normal;">Diário Oficial:&nbsp;
+                              <a class="qs-titulo" target="_blank" href="&dtml-portal_url;/sapl_documentos/diario_oficial/<dtml-var expr="diario['codigo']" missing>_diario_oficial_<dtml-var expr="diario['numero']" missing>.pdf">
+                                <dtml-var expr="diario['numero']">/<dtml-var expr="diario['ano']">
+                              </a>
+                              <dtml-if num_pag_inicio_publ><br>Pág. <dtml-var num_pag_inicio_publ missing null=""></dtml-if> <dtml-if num_pag_fim_public> <dtml-var num_pag_fim_publ missing null=""></dtml-if>
+                            </dtml-if>
+                            <span style="text-align: left; display: block; font-weight: bold; color: red;">
+                                <dtml-if expr="not diario and _.len(des_veiculo_publicacao or '') > 0">
+                                  Houve erro no registro do Diário Oficial<br>
+                                <dtml-elif expr="not _.len(des_veiculo_publicacao or '')">
+                                  Diário Oficial não informado.<br>
+                                </dtml-if>
+                                <dtml-if expr="diario and diario['data'] != pysc.iso_to_port_pysc(dat_publicacao)">
+                                  Data do Diário: <dtml-var expr="diario['data']"><br>Diferente da data de Publicação informada na Norma: <dtml-var expr="pysc.iso_to_port_pysc(dat_publicacao)"><br>
+                                </dtml-if>
+                                <dtml-if expr="diario and not diario['lei_no_diario']">
+                                  A Norma Jurídica não foi encontrada dentro do Diário informado.
+                                </dtml-if>
+                            </span>
 
+                          </dtml-let>
 
-	                     <dtml-if expr="_.len(a_ementa) > 0 and pysc.verifica_similaridade_string_pysc(a_ementa, l_ementa) < 50 ">
-	                        <hr>
-	                        <span style="text-align: center; display: block; font-weight: bold; color: red;"> Semelhança com Autografo<br>abaixo de 50%</span><br>
-	                     </dtml-if>
-	            		 <div class="linksOutrasNormas">
-
-						  <dtml-in expr="zsql.vinculo_norma_juridica_referidas_obter_zsql(cod_norma=cod_norma)">
-						            <dtml-if "tip_vinculo=='Z'">
-						                <img align="absmiddle" border="0" src="&dtml-portal_url;/imagens/icon_status_correlata.gif">&nbsp;<span style="color:#62682F;font-weight:normal;">Autógrafo da Norma:&nbsp;<a href="&dtml-portal_url;/consultas/norma_juridica/norma_juridica_mostrar_proc?cod_norma=<dtml-var cod_norma_referida>&autostart=off&pesquisa=<dtml-var pesquisa missing>">ATG&nbsp;<dtml-var num_norma>/<dtml-var ano_norma></a>.&nbsp;</span>
-						            </dtml-if>
-										<BR>
-						            <dtml-else>
-						  </dtml-in>
-
-						  </div>
+		                    </div>
 	                   </dtml-if>
 
 

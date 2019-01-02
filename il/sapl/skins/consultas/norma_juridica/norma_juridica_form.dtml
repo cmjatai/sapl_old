@@ -116,9 +116,17 @@
 
         <dtml-if des_veiculo_publicacao>
           <tr>
+
             <th width="20%" class="form-label">Veículo Publicação:</th>
             <td class="texto">
-              <dtml-var des_veiculo_publicacao missing null=""> <dtml-if num_pag_inicio_publ> Pág. <dtml-var num_pag_inicio_publ missing null=""></dtml-if> <dtml-if num_pag_fim_public> <dtml-var num_pag_fim_publ missing null=""></dtml-if>
+              <dtml-let diario="get_diario_oficial(num_norma=des_veiculo_publicacao, num_lei = 0)">
+                <dtml-if expr="diario">
+                  <a class="qs-titulo" target="_blank" href="&dtml-portal_url;/sapl_documentos/diario_oficial/<dtml-var expr="diario['codigo']" missing>_diario_oficial_<dtml-var expr="diario['numero']" missing>.pdf">
+                    <dtml-var expr="diario['titulo']">
+                  </a>
+                  <dtml-if num_pag_inicio_publ><br>Pág. <dtml-var num_pag_inicio_publ missing null=""></dtml-if> <dtml-if num_pag_fim_public> <dtml-var num_pag_fim_publ missing null=""></dtml-if>
+                </dtml-if>
+              </dtml-let>
             </td>
             <td width="20%" class="texto"><b>Data Publicação:</b></td>
             <td class="texto">
@@ -128,7 +136,7 @@
         </dtml-if>
 
         <tr>
-          <th width="20%" class="form-label">Arquivo Digital:</th>
+          <th width="20%" class="form-label">Impresso Original Digitalizado:</th>
           <td class="texto">
             <dtml-call expr="REQUEST.set('texto_consolidado', _.str(cod_norma)+'_texto_consolidado')">
             <dtml-call expr="REQUEST.set('texto_original', _.str(cod_norma)+'_texto_integral')">
@@ -176,6 +184,64 @@
         </table>
     </fieldset>
 </dtml-if>
+
+
+<div>
+   <legend ><span class="tipotexto">Texto Multivigente</span> <a onclick="window.scrollTo(0,1000000)">(*)</a></legend>
+   <dtml-call expr="REQUEST.set('id_documento', _.str(cod_norma)+'_texto_html')">
+    <dtml-if "_.hasattr(sapl_documentos.norma_juridica,id_documento)">
+      <dtml-let documento="_.getattr(sapl_documentos.norma_juridica,id_documento)">
+
+
+
+<script type="text/javascript">
+
+function textoMultiVigente(obj) {
+  $('.btn-link').removeClass('active');
+  $(event.target).addClass('active');
+	$(".desativado").removeClass('hidden');
+  $(".link_alterador").removeClass('hidden');
+  $(".tipotexto").html('Texto Multivigente');
+}
+
+function textoVigente() {
+  $('.btn-link').removeClass('active');
+  $(event.target).addClass('active');
+	$(".desativado").addClass('hidden');
+  $(".link_alterador").removeClass('hidden');
+  $(".tipotexto").html('Texto Vigente');
+}
+function textoVigenteSemReferencia() {
+  $('.btn-link').removeClass('active');
+  $(event.target).addClass('active');
+	$(".desativado").addClass('hidden');
+	$(".link_alterador").addClass('hidden');
+  $(".tipotexto").html('Texto Vigente Sem Referências');
+}
+
+</script>
+
+			<div class="hidden-print">
+        <a class="btn btn-link" href="javascript:void(0)" onclick="textoMultiVigente();"role="button">Texto Multivigente</a>&nbsp;&nbsp;&nbsp;
+        <a class="btn btn-link" href="javascript:void(0)" onclick="textoVigente();">Texto Vigente</a>&nbsp;&nbsp;&nbsp;
+        <a class="btn btn-link" href="javascript:void(0)" onclick="textoVigenteSemReferencia();">Texto Vigente Sem Referências</a>
+
+      </div>
+
+     <a name="texto_integral"> </a>
+
+     <br><br><br>
+        <dtml-var expr="documento">
+
+      </dtml-let>
+    <dtml-else>
+      <b> NÃO DISPONÍVEL</b>
+    </dtml-if>
+
+
+
+</div>
+
 
 <dtml-if expr="zsql.vinculo_norma_juridica_referentes_obter_zsql(cod_norma=cod_norma) or zsql.vinculo_norma_juridica_referidas_obter_zsql(cod_norma=cod_norma)">
     <fieldset>
@@ -248,52 +314,6 @@
 </table>
 </fieldset>
 </dtml-if>
-
-
-<div>
-   <legend >Texto em Vigência <a onclick="window.scrollTo(0,1000000)">(*)</a></legend>
-   <dtml-call expr="REQUEST.set('id_documento', _.str(cod_norma)+'_texto_html')">
-    <dtml-if "_.hasattr(sapl_documentos.norma_juridica,id_documento)">
-      <dtml-let documento="_.getattr(sapl_documentos.norma_juridica,id_documento)">
-
-
-
-<script type="text/javascript">
-
-function consolidarTotalmente() {
-	$(".desativado").remove();
-	$(".link_alterador").remove();
-}
-function consolidarParcialmente() {
-	$(".desativado").remove();
-}
-
-</script>
-
-			<div class="hidden-print" style="float: right;">
-			  <input class="btn btn-default" type="button" value="Compilar Parcialmente" onclick="consolidarParcialmente();" title="Acionar essa opção elimina todos os itens revogados.">
-		    <input class="btn btn-default" type="button" value="Compilar Totalmente" onclick="consolidarTotalmente();" title="Acionar essa opção limpa todo o texto e mostra apenas os dispositivos em vigor.">
-      </div>
-
-     <a name="texto_integral"> </a>
-
-     <br><br><br>
-        <dtml-var expr="documento">
-
-      </dtml-let>
-    <dtml-else>
-      <b> NÃO DISPONÍVEL</b>
-    </dtml-if>
-
-
-
-</div>
-
-
-
-<p align="center">
-    <input class="botao" type="button" value="Retornar" onClick="history.go(-1)">
-</p>
 
 <div style="text-align: center; color: #00a; font-size:90%; padding-top: 5em;">
     O SAPL tem cunho informativo, educativo,

@@ -6,13 +6,13 @@ session= request.SESSION
 
 if context.REQUEST['data']!='':
     dat_inicio_sessao = context.REQUEST['data']
-    pauta = [] # lista contendo a pauta da ordem do dia a ser impressa    
+    pauta = [] # lista contendo a pauta da ordem do dia a ser impressa
     data = context.pysc.data_converter_pysc(dat_inicio_sessao) # converte data para formato yyyy/mm/dd
     codigo = context.REQUEST['cod_sessao_plen']
 
     # seleciona as matérias que compõem a pauta na data escolhida
     for sessao in context.zsql.sessao_plenaria_obter_zsql(dat_inicio_sessao=data, cod_sessao_plen=codigo, ind_excluido=0):
-        inf_basicas_dic = {} # dicionário que armazenará as informacoes basicas da sessao plenaria 
+        inf_basicas_dic = {} # dicionário que armazenará as informacoes basicas da sessao plenaria
         # seleciona o tipo da sessao plenaria
         tipo_sessao = context.zsql.tipo_sessao_plenaria_obter_zsql(tip_sessao=sessao.tip_sessao,ind_excluido=0)[0]
         inf_basicas_dic["nom_sessao"] = tipo_sessao.nom_sessao
@@ -24,7 +24,7 @@ if context.REQUEST['data']!='':
         inf_basicas_dic["hr_inicio_sessao"] = sessao.hr_inicio_sessao
         inf_basicas_dic["dat_fim_sessao"] = sessao.dat_fim_sessao
         inf_basicas_dic["hr_fim_sessao"] = sessao.hr_fim_sessao
- 
+
         # Lista da composicao da mesa diretora
         lst_mesa = []
         for composicao in context.zsql.composicao_mesa_sessao_obter_zsql(cod_sessao_plen=sessao.cod_sessao_plen,ind_excluido=0):
@@ -45,7 +45,7 @@ if context.REQUEST['data']!='':
                 dic_presenca['sgl_partido'] = parlamentar.sgl_partido
                 lst_presenca_sessao.append(dic_presenca)
 
-        # Exibe os Expedientes 
+        # Exibe os Expedientes
         lst_expedientes = []
         dic_expedientes = None
         for tip_expediente in context.zsql.tipo_expediente_obter_zsql():
@@ -56,11 +56,11 @@ if context.REQUEST['data']!='':
 
             if dic_expedientes:
                 lst_expedientes.append(dic_expedientes)
-      
+
         # Lista das matérias do Expediente, incluindo o resultado das votacoes
         lst_expediente_materia=[]
         for expediente_materia in context.zsql.votacao_expediente_materia_obter_zsql(dat_ordem = data, cod_sessao_plen=sessao.cod_sessao_plen, ind_excluido=0):
-        
+
             # seleciona os detalhes de uma matéria
             materia = context.zsql.materia_obter_zsql(cod_materia=expediente_materia.cod_materia)[0]
 
@@ -78,7 +78,7 @@ if context.REQUEST['data']!='':
             dic_expediente_materia["des_turno"]=""
             if len(tram):
                tram_turno = tram[0]
-               if tram_turno.sgl_turno != "":            
+               if tram_turno.sgl_turno != "":
                   for turno in [("P","Primeiro"), ("S","Segundo"), ("U","Único"), ("L","Suplementar"), ("A","Votação Única em Regime de Urgência"), ("B","1ª Votação"), ("C","2ª e 3ª Votações"), ("F", "Final")]:
                     if tram_turno.sgl_turno == turno[0]:
                         dic_expediente_materia["des_turno"] = turno[1]
@@ -92,8 +92,8 @@ if context.REQUEST['data']!='':
             n="NC-em"
             nc=n
             t="não definido"
- 
-            for autoria in context.zsql.autoria_obter_zsql(cod_materia=expediente_materia.cod_materia):        
+
+            for autoria in context.zsql.autoria_obter_zsql(cod_materia=expediente_materia.cod_materia):
 #           if len(autoria) > 0: # se existe autor
 #               autoria = autoria[0]
                 a="2"
@@ -104,7 +104,7 @@ if context.REQUEST['data']!='':
 #                   autor = autor[0]
                     try:
                       if autor.des_tipo_autor == "Parlamentar":
-                         parlamentar = context.zsql.parlamentar_obter_zsql(cod_parlamentar=autor.cod_parlamentar)[0]     
+                         parlamentar = context.zsql.parlamentar_obter_zsql(cod_parlamentar=autor.cod_parlamentar)[0]
 #                        dic_expediente_materia["nom_autor"] = parlamentar.nom_parlamentar
                          n=parlamentar.nom_parlamentar
                          nc=parlamentar.nom_completo
@@ -133,12 +133,12 @@ if context.REQUEST['data']!='':
                     lst_autoria_exp_mat.append({a+n:[a,n,nc,t]})
 
             lst_autoria_exp_mat.sort()
-            if len(lst_autoria_exp_mat)>0:  
+            if len(lst_autoria_exp_mat)>0:
                dic_expediente_materia["autoria_exp_mat"]=lst_autoria_exp_mat
             else:
                lst_autoria_exp_mat.append({a+n:[a,n,nc,t]})
                dic_expediente_materia["autoria_exp_mat"]=lst_autoria_exp_mat
- 
+
             dic_expediente_materia["votacao_observacao"]=""
             if expediente_materia.tip_resultado_votacao:
                 resultado = context.zsql.tipo_resultado_votacao_obter_zsql(tip_resultado_votacao=expediente_materia.tip_resultado_votacao, ind_excluido=0)
@@ -169,11 +169,11 @@ if context.REQUEST['data']!='':
                 dic_presenca_ordem_dia['nom_parlamentar'] = parlamentar.nom_parlamentar
                 dic_presenca_ordem_dia['sgl_partido'] = parlamentar.sgl_partido
                 lst_presenca_ordem_dia.append(dic_presenca_ordem_dia)
-        
+
         # Lista das matérias da Ordem do Dia, incluindo o resultado das votacoes
         lst_votacao=[]
         for votacao in context.zsql.votacao_ordem_dia_obter_zsql(dat_ordem = data, cod_sessao_plen=sessao.cod_sessao_plen, ind_excluido=0):
-        
+
             # seleciona os detalhes de uma matéria
             materia = context.zsql.materia_obter_zsql(cod_materia=votacao.cod_materia)[0]
 
@@ -192,7 +192,7 @@ if context.REQUEST['data']!='':
             tram = context.zsql.tramitacao_turno_obter_zsql(cod_materia=materia.cod_materia, dat_inicio_sessao=data)
             if len(tram):
                tram_turno = tram[0]
-               if tram_turno.sgl_turno != "":            
+               if tram_turno.sgl_turno != "":
                   for turno in [("P","Primeiro"), ("S","Segundo"), ("U","Único"), ("L","Suplementar"), ("F","Final"), ("A","Votação Única em Regime de Urgência"), ("B","1ª Votação"), ("C","2ª e 3ª Votações")]:
                     if tram_turno.sgl_turno == turno[0]:
                         dic_votacao["des_turno"] = turno[1]
@@ -205,7 +205,7 @@ if context.REQUEST['data']!='':
             nc="NC - OD"
             t="não definido"
 
-            for autoria in context.zsql.autoria_obter_zsql(cod_materia=votacao.cod_materia):        
+            for autoria in context.zsql.autoria_obter_zsql(cod_materia=votacao.cod_materia):
 #               if len(autoria) > 0: # se existe autor
 #                  autoria = autoria[0]
                 a="2"
@@ -217,9 +217,9 @@ if context.REQUEST['data']!='':
                 for autor in context.zsql.autor_obter_zsql(cod_autor=autoria.cod_autor):
 #                    if len(autor) > 0:
 #                      autor = autor[0]
-                    try:           
+                    try:
                        if autor.des_tipo_autor == "Parlamentar":
-                          parlamentar = context.zsql.parlamentar_obter_zsql(cod_parlamentar=autor.cod_parlamentar)[0]     
+                          parlamentar = context.zsql.parlamentar_obter_zsql(cod_parlamentar=autor.cod_parlamentar)[0]
 #                         dic_votacao["nom_autor"] = parlamentar.nom_parlamentar
                           n=parlamentar.nom_parlamentar
                           nc=parlamentar.nom_completo
@@ -240,7 +240,7 @@ if context.REQUEST['data']!='':
                           n=autor.des_tipo_autor
                           nc=autor.des_tipo_autor
                           t=autor.des_tipo_autor
-                    except: 
+                    except:
 #                      dic_votacao["nom_autor"] = "NC-od"
                        n="NC-od"
                        nc="NC - OD"
@@ -285,7 +285,7 @@ if context.REQUEST['data']!='':
         imagem = context.sapl_documentos.props_sapl['logo_casa.gif'].absolute_url()
     else:
         imagem = context.imagens.absolute_url() + "/brasao_transp.gif"
-    
+
     #Abaixo é gerado o dic do rodapé da página (linha 7)
     casa={}
     aux=context.sapl_documentos.props_sapl.propertyItems()

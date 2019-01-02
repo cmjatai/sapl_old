@@ -63,7 +63,7 @@ for mat in lReqTramitando:
 for mat in lAprovados:
     lMaterias.append(mat)
 
-ja_inclusos = []
+ja_inclusos = {}
 
 count = 1
 autores = {}
@@ -84,10 +84,13 @@ for mat in lMaterias:
 
                         cod_materia = str(mat.cod_materia)
 
-                        #if cod_materia in ja_inclusos:
-                        #    continue
+                        if codigo not in ja_inclusos:
+                            ja_inclusos[codigo] = []
 
-                        #ja_inclusos.append(cod_materia)
+                        if cod_materia in ja_inclusos[codigo]:
+                            continue
+
+                        ja_inclusos[codigo].append(cod_materia)
 
                         if codigo in autores:
                             if cod_materia in dataAprovados:
@@ -123,11 +126,33 @@ for mat in lMaterias:
 
 #return printed
 
+
+
 lResults = []
 for k,v in autores.items():
     iResults = (k, v)
     v['primQ'].sort()
     v['segQ'].sort()
+
+    ta1q = 0
+    tt1q = 0 #total tramitando na primeira quinzena
+    ta2q = 0
+    tt2q = 0
+    v['ta1q'] = 0 #total aprovado na primeira quinzena
+    v['tt1q'] = 0 #total aprovado na primeira quinzena
+    v['ta2q'] = 0 #total aprovado na primeira quinzena
+    v['tt2q'] = 0 #total aprovado na primeira quinzena
+    for item in v['primQ']:
+        if item[2]:
+            v['ta1q'] = v['ta1q'] + 1
+        else:
+            v['tt1q'] = v['tt1q'] + 1
+
+    for item in v['segQ']:
+        if item[2]:
+            v['ta2q'] = v['ta2q'] + 1
+        else:
+            v['tt2q'] = v['tt2q'] + 1
 
     lResults.append(iResults)
 

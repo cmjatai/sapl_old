@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<materia xmlns:tal="http://xml.zope.org/namespaces/tal" 
+<materia xmlns:tal="http://xml.zope.org/namespaces/tal"
          tal:define="cod_materia request/cod_materia|nothing;
                     materia python:context.zsql.materia_obter_zsql(cod_materia=cod_materia, ind_excluido=0)[-1];"
          tal:attributes="cod_materia materia/cod_materia;
@@ -25,7 +25,7 @@
 			<autor-materia tal:condition="autor/cod_comissao" tal:content="python:context.zsql.comissao_obter_zsql(cod_comissao=autor['cod_comissao'])[-1]['nom_comissao']"/>
 			<autor-materia tal:define="comiss autor/cod_comissao;
 					   parm autor/cod_parlamentar"
-			       tal:condition="python: test(parm or comiss,False,True)" tal:content="autor/nom_autor"/>	
+			       tal:condition="python: test(parm or comiss,False,True)" tal:content="autor/nom_autor"/>
 		</tal:block>
 	</tal:block>
 	</autores>
@@ -33,11 +33,11 @@
 	<arquivo tal:condition="python:hasattr(context.sapl_documentos.materia,materia.cod_materia+'_texto_integral')"
 		tal:attributes="content_type python: getattr(context.sapl_documentos.materia, materia.cod_materia+'_texto_integral').getContentType();
 				last_modified python: getattr(context.sapl_documentos.materia, materia.cod_materia+'_texto_integral').bobobase_modification_time();" />
- 
+
 	<materias-anexadas>
 		<tal:block tal:repeat="anexada python:context.zsql.anexada_obter_zsql(cod_materia_principal=materia.cod_materia, ind_excluido=0)">
 			<tal:block tal:repeat="matanex python:context.zsql.materia_obter_zsql(cod_materia=anexada.cod_materia_anexada, ind_excluido = 0)">
-                               <matanex tal:attributes="sgl_tipo_materia matanex/sgl_tipo_materia;
+         <matanex tal:condition="not: anexada/dat_desanexacao" tal:attributes="sgl_tipo_materia matanex/sgl_tipo_materia;
 							des_tipo_materia matanex/des_tipo_materia;
 							num_ident_basica matanex/num_ident_basica;
 							ano_ident_basica matanex/ano_ident_basica;
@@ -53,7 +53,7 @@
 							<autor-matanex tal:condition="autor/cod_comissao" tal:content="python:context.zsql.comissao_obter_zsql(cod_comissao=autor['cod_comissao'])[-1]['nom_comissao']"/>
 							<autor-matanex tal:define="comiss autor/cod_comissao;
 									   parm autor/cod_parlamentar"
-							       tal:condition="python: test(parm or comiss,False,True)" tal:content="autor/nom_autor"/>	
+							       tal:condition="python: test(parm or comiss,False,True)" tal:content="autor/nom_autor"/>
 						</tal:block>
 					</tal:block>
 					</autores-matanex>
@@ -61,13 +61,13 @@
 					<arquivo tal:condition="python:hasattr(context.sapl_documentos.materia,matanex.cod_materia+'_texto_integral')"
 						tal:attributes="content_type python: getattr(context.sapl_documentos.materia, matanex.cod_materia+'_texto_integral').getContentType();
 							last_modified python: getattr(context.sapl_documentos.materia, matanex.cod_materia+'_texto_integral').bobobase_modification_time();" />
-				 
-				</matanex> 
+
+				</matanex>
 			</tal:block>
 		</tal:block>
 	</materias-anexadas>
 
-	
+
 	<materia-anexadora>
 		<tal:block tal:repeat="anexada python:context.zsql.anexada_obter_zsql(cod_materia_anexada=materia.cod_materia, ind_excluido=0)">
 			<tal:block tal:repeat="matanex python:context.zsql.materia_obter_zsql(cod_materia=anexada.cod_materia_principal, ind_excluido = 0)">
@@ -86,7 +86,7 @@
 							<autor-matanexadora tal:condition="autor/cod_comissao" tal:content="python:context.zsql.comissao_obter_zsql(cod_comissao=autor['cod_comissao'])[-1]['nom_comissao']"/>
 							<autor-matanexadora tal:define="comiss autor/cod_comissao;
 									   parm autor/cod_parlamentar"
-							       tal:condition="python: test(parm or comiss,False,True)" tal:content="autor/nom_autor"/>	
+							       tal:condition="python: test(parm or comiss,False,True)" tal:content="autor/nom_autor"/>
 						</tal:block>
 					</tal:block>
 					</autores-matanexadora>
@@ -94,8 +94,8 @@
 					<arquivo tal:condition="python:hasattr(context.sapl_documentos.materia,matanex.cod_materia+'_texto_integral')"
 						tal:attributes="content_type python: getattr(context.sapl_documentos.materia, matanex.cod_materia+'_texto_integral').getContentType();
 							last_modified python: getattr(context.sapl_documentos.materia, matanex.cod_materia+'_texto_integral').bobobase_modification_time();" />
-				 
-				</matanexadora> 
+
+				</matanexadora>
 			</tal:block>
 		</tal:block>
 	</materia-anexadora>
@@ -112,13 +112,13 @@
 						num_norma norma/num_norma;
 						ano_norma norma/ano_norma;"/>
 		</tal:block>
-	</normas-vinculadas> 
+	</normas-vinculadas>
 
 	<legislacao-citada>
 		<tal:block tal:repeat="legcit python:context.zsql.legislacao_citada_obter_zsql(cod_materia=materia.cod_materia, ind_excluido=0)">
 			<tal:block tal:repeat="norma python:context.zsql.norma_juridica_obter_zsql(cod_norma = legcit.cod_norma_sel, ind_excluido=0)">
 				<item tal:attributes="cod_norma norma/cod_norma;
-							des_tipo_norma norma/des_tipo_norma; 
+							des_tipo_norma norma/des_tipo_norma;
 							num_norma norma/num_norma;
 							ano_norma norma/ano_norma;"/>
 			</tal:block>
@@ -133,12 +133,13 @@
 						nom_autor_documento doc_acess/nom_autor_documento;
 						des_tipo_documento tipo_doc/des_tipo_documento;
 						cod_materia doc_acess/cod_documento">
+        <ementa-doc-acess tal:content="doc_acess/txt_ementa"/>
 				<arquivo tal:condition="python:hasattr(context.sapl_documentos.materia,doc_acess.cod_documento)"
 					tal:attributes="content_type python: getattr(context.sapl_documentos.materia, doc_acess.cod_documento).getContentType();
 							last_modified python: getattr(context.sapl_documentos.materia, doc_acess.cod_documento).bobobase_modification_time();" />
 			</doc-acess>
 		</tal:block>
-	</documentos-acessorios> 
+	</documentos-acessorios>
 
 	<tramitacao tal:define="turnos python:{'_P':'Primeiro', '_S':'Segundo', '_U': 'Unico', '_L':'Suplementar', '_A':'Votação Única em Regime de Urgência', '_B':'1ª Votação', '_C': '2ª e 3ª Votação', '_F': 'Final', '_':''}">
 		<tal:block tal:repeat="tramitacao python:context.zsql.tramitacao_obter_zsql(cod_materia=materia.cod_materia)">
@@ -146,14 +147,14 @@
 					      situacao tramitacao/des_status;
 					      turno python:turnos['_'+test(tramitacao.sgl_turno,tramitacao.sgl_turno,'')];">
 				<origem tal:repeat="origem python:context.zsql.unidade_tramitacao_obter_zsql(cod_unid_tramitacao=tramitacao.cod_unid_tram_local)"
-					tal:attributes="nom_orgao origem/nom_orgao; 
+					tal:attributes="nom_orgao origem/nom_orgao;
 							nom_comissao origem/nom_comissao;
 							nom_parlamentar origem/nom_parlamentar;"></origem>
 				<destino tal:condition="tramitacao/cod_unid_tram_dest"
 					tal:repeat="destino python:context.zsql.unidade_tramitacao_obter_zsql(cod_unid_tramitacao=tramitacao.cod_unid_tram_dest)"
-					tal:attributes="nom_orgao destino/nom_orgao; 
+					tal:attributes="nom_orgao destino/nom_orgao;
 							nom_comissao destino/nom_comissao;
-							nom_parlamentar destino/nom_parlamentar;"></destino> 
+							nom_parlamentar destino/nom_parlamentar;"></destino>
 				<ultima-acao tal:content="tramitacao/txt_tramitacao"></ultima-acao>
 			</item-tramitacao>
 		</tal:block>

@@ -102,7 +102,7 @@ def principal(sessao,imagem,data,lst_protocolos,dic_cabecalho,lst_rodape,dic_fil
     tmp_data+='\t<template pageSize="(62mm, 29mm)" title="Etiquetas de Protocolo" author="Luciano De Fazio" allowSplitting="20">\n'
     tmp_data+='\t\t<pageTemplate id="first">\n'
     tmp_data+='\t\t\t<pageGraphics>\n'
-    tmp_data+='\t\t\t<frame id="first" x1="0.03cm" y1="0.1cm" width="61mm" height="29mm"/>\n'
+    tmp_data+='\t\t\t<frame id="first" x1="0.03cm" y1="0cm" width="61mm" height="29mm"/>\n'
     tmp_data+='\t\t\t</pageGraphics>\n'
     tmp_data+='\t\t</pageTemplate>\n'
     tmp_data+='\t</template>\n'

@@ -4,7 +4,7 @@ arguments : cod_materia tip_id_basica num_ident_basica ano_ident_basica num_prot
 max_rows : 1000
 max_cache : 100
 </dtml-comment>
-UPDATE 
+UPDATE
       materia_legislativa
 
 SET
