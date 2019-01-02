@@ -1,0 +1,3 @@
+nome_relatorio:string=Vínculos entre Autógrafos, Matérias e Normas
+desc_relatorio:string=Relatório Gerencial das relações criadas a partir de Autógrafos com Matérias e Normas
+acesso_publico:boolean=True

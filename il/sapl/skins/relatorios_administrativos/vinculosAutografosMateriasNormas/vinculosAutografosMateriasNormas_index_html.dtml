@@ -1,0 +1,525 @@
+<dtml-let isAnon="portal_membership.isAnonymousUser()">
+<dtml-var standard_html_header><div id="conteudo">
+
+<h2>Vínculos a partir de Autógrafos com Matérias Legislativas e Normas Jurídicas</h2>
+
+<dtml-call "REQUEST.set('existe_seq_anterior', 0)">
+<dtml-call "REQUEST.set('existe_seq_posterior', 0)">
+<dtml-if page>
+  <dtml-call "REQUEST.set('page', _.int(page))">
+<dtml-else>
+  <dtml-call "REQUEST.set('page', 1)">
+</dtml-if>
+<dtml-if step>
+  <dtml-call "REQUEST.set('step', _.int(step))">
+<dtml-else>
+  <dtml-call "REQUEST.set('step', 50)">
+</dtml-if>
+
+<dtml-call "REQUEST.set('start',(page-1) * step + 1)">
+
+<fieldset>
+  <legend>V&iacute;nculos</legend>
+
+  <dtml-call "REQUEST.set('l_ementa', '')">
+  <dtml-call "REQUEST.set('a_ementa', '')">
+  <dtml-call "REQUEST.set('p_ementa', '')">
+
+<dtml-in expr="zsql.autografo_obter_zsql(tip_norma=27, checkcheck = 0 if _.str(AUTHENTICATED_USER) in ('leandro', 'adevania') else '')"
+                                           size="step" start="start" orphan=0>
+
+  <dtml-if sequence-start>
+    <b>Resultado da Pesquisa: <dtml-var sequence-length> autógrafos(s) encontrado(s)</b>
+    <br>
+    <table class="table">
+      <tr>
+        <dtml-if expr="_.str(AUTHENTICATED_USER) == 'leandro'">
+          <th>
+               Check
+          </th>
+        </dtml-if>
+        <th>Autógrafos</th>
+         <th>Matérias Legislativas</th>
+         <th>Normas Jurídicas</th>
+      </tr>
+
+      <dtml-if previous-sequence>
+        <dtml-call "REQUEST.set('existe_seq_anterior', 1)">
+      </dtml-if previous-sequence>
+  </dtml-if sequence-start>
+
+  <tr>
+
+    <dtml-if expr="_.str(AUTHENTICATED_USER) == 'leandro'">
+      <td class="texto" style="width: 65px;">
+        <a href="&dtml-portal_url;/pysc/norma_check_pysc?cod_norma=<dtml-var cod_norma>">
+          Check
+        </a>
+      </td>
+    </dtml-if>
+    <td width=35%>
+      <a href="&dtml-portal_url;/consultas/norma_juridica/norma_juridica_mostrar_proc?cod_norma=<dtml-var cod_norma>">
+        <b><dtml-var des_tipo_norma> <dtml-var num_norma>/<dtml-var ano_norma></b>
+      </a>
+      <br />
+      <dtml-var txt_ementa>
+    </td>
+
+
+
+
+
+    <td width=35%>
+      <dtml-if cod_materia>
+        <dtml-in expr="zsql.materia_obter_zsql(cod_materia=cod_materia)">
+          <a href="&dtml-portal_url;/cadastros/materia/materia_mostrar_proc?cod_materia=<dtml-var cod_materia>">
+            <b><dtml-var sgl_tipo_materia> <dtml-var num_ident_basica>/<dtml-var ano_ident_basica> - <dtml-var des_tipo_materia></b>
+          </a>
+          <br />
+          <dtml-var txt_ementa missing><br> <br>
+            <dtml-call "REQUEST.set('p_ementa', txt_ementa.strip().lower())">
+
+          <dtml-comment>obt�m a �ltima tramita��o da mat�ria.</dtml-comment>
+           <dtml-in expr="zsql.tramitacao_obter_zsql(cod_materia=cod_materia, ind_ult_tramitacao=1)">
+             <dtml-if cod_unid_tram_dest>
+               <dtml-call expr="REQUEST.set('cod_unid_tram', cod_unid_tram_dest)">
+             <dtml-else>
+               <dtml-call expr="REQUEST.set('cod_unid_tram', cod_unid_tram_local)">
+             </dtml-if>
+             <dtml-comment>obtem a unidade de tramitação da matéria.</dtml-comment>
+             <dtml-in expr="zsql.unidade_tramitacao_obter_zsql(cod_unid_tramitacao=cod_unid_tram)">
+               <dtml-if cod_orgao>
+                 <b>Localiza&ccedil;&atilde;o Atual: </b><dtml-var nom_orgao><br>
+               <dtml-elif cod_comissao>
+                 <b>Localiza&ccedil;&atilde;o Atual: </b><dtml-var nom_comissao><br>
+               <dtml-else>
+                 <b>Localiza&ccedil;&atilde;o Atual: </b><dtml-var nom_parlamentar><br>
+               </dtml-if>
+             </dtml-in>
+             <dtml-call expr="REQUEST.set('des_status', des_status)">
+             <dtml-call expr="REQUEST.set('txt_tramitacao', txt_tramitacao)">
+           <dtml-if des_status>
+             <b>Situação: </b><dtml-var des_status null=""><br>
+           </dtml-if>
+           <dtml-if txt_tramitacao>
+             <b>&Uacute;ltima A&ccedil;&atilde;o: </b><dtml-var txt_tramitacao>&nbsp;&nbsp;-&nbsp;&nbsp;<b>Em:</b>&nbsp;<dtml-var dat_tramitacao><br>
+           </dtml-if>
+           <dtml-if dat_fim_prazo>
+             <b>Data Fim do Prazo: </b> <dtml-var dat_fim_prazo><br>
+           </dtml-if>
+          </dtml-in>
+        </dtml-in>
+      </dtml-if>
+    </td>
+    <td class="texto">
+      <dtml-in expr="zsql.materia_buscar_norma_juridica_zsql(cod_materia=cod_materia)">
+        <dtml-if cod_norma>
+          <dtml-if expr="sgl_norma!='ATG'">
+              <a href="&dtml-portal_url;/consultas/norma_juridica/norma_juridica_mostrar_proc?cod_norma=<dtml-var cod_norma>"><b><dtml-var des_norma> <dtml-var num_norma>/<dtml-var ano_norma></b></a><br />
+              <dtml-var txt_ementa missing><br> <br>
+              <dtml-call "REQUEST.set('l_ementa', txt_ementa.strip().lower())">
+               <dtml-if expr="pysc.verifica_similaridade_string_pysc(p_ementa, l_ementa) < 50 ">
+                  <hr>
+                  <span style="text-align: center; display: block; font-weight: bold; color: red;"> Semelhança com Projeto<br>abaixo de 50%</span><br>
+               </dtml-if>
+               <dtml-if expr="_.len(a_ementa) > 0 and pysc.verifica_similaridade_string_pysc(a_ementa, l_ementa) < 50 ">
+                  <hr>
+                  <span style="text-align: center; display: block; font-weight: bold; color: red;"> Semelhança com Autografo<br>abaixo de 50%</span><br>
+               </dtml-if>
+
+              <div class="linksOutrasNormas">
+                <dtml-in expr="zsql.vinculo_norma_juridica_referidas_obter_zsql(cod_norma=cod_norma)">
+                  <dtml-if "tip_vinculo=='Z'">
+                      <img align="absmiddle" border="0" src="&dtml-portal_url;/imagens/icon_status_correlata.gif">&nbsp;<span style="color:#62682F;font-weight:normal;">Autógrafo da Norma:&nbsp;<a href="&dtml-portal_url;/consultas/norma_juridica/norma_juridica_mostrar_proc?cod_norma=<dtml-var cod_norma_referida>&autostart=off&pesquisa=<dtml-var pesquisa missing>">ATG&nbsp;<dtml-var num_norma>/<dtml-var ano_norma></a>.&nbsp;</span>
+                  </dtml-if>
+                  <BR>
+                <dtml-else>
+                </dtml-in>
+
+                <dtml-let diario="get_diario_oficial(num_norma=des_veiculo_publicacao,num_lei=num_norma)">
+
+                  <dtml-if expr="diario">
+                    <img align="absmiddle" border="0" src="&dtml-portal_url;/imagens/icon_status_correlata.gif">&nbsp;<span style="color:#62682F;font-weight:normal;">Diário Oficial:&nbsp;
+                    <a class="qs-titulo" target="_blank" href="&dtml-portal_url;/sapl_documentos/diario_oficial/<dtml-var expr="diario['codigo']" missing>_diario_oficial_<dtml-var expr="diario['numero']" missing>.pdf">
+                      <dtml-var expr="diario['numero']">/<dtml-var expr="diario['ano']">
+                    </a>
+                    <dtml-if num_pag_inicio_publ><br>Pág. <dtml-var num_pag_inicio_publ missing null=""></dtml-if> <dtml-if num_pag_fim_public> <dtml-var num_pag_fim_publ missing null=""></dtml-if>
+                  </dtml-if>
+                  <span style="text-align: left; display: block; font-weight: bold; color: red;">
+                      <dtml-if expr="not diario and _.len(des_veiculo_publicacao or '') > 0">
+                        Houve erro no registro do Diário Oficial<br>
+                      <dtml-elif expr="not _.len(des_veiculo_publicacao or '')">
+                        Diário Oficial não informado.<br>
+                      </dtml-if>
+                      <dtml-if expr="diario and diario['data'] != pysc.iso_to_port_pysc(dat_publicacao)">
+                        Data do Diário: <dtml-var expr="diario['data']"><br>Diferente da data de Publicação informada na Norma: <dtml-var expr="pysc.iso_to_port_pysc(dat_publicacao)"><br>
+                      </dtml-if>
+                      <dtml-if expr="diario and not diario['lei_no_diario']">
+                        A Norma Jurídica não foi encontrada dentro do Diário informado.
+                      </dtml-if>
+                  </span>
+
+                </dtml-let>
+
+              </div>
+           </dtml-if>
+
+
+
+
+
+
+
+
+
+
+         </dtml-if>
+      </dtml-in>
+
+    </td>
+  </tr>
+
+  <dtml-if sequence-end>
+      <dtml-if next-sequence>
+        <dtml-call "REQUEST.set('existe_seq_posterior', 1)">
+      </dtml-if next-sequence>
+      <dtml-if expr="existe_seq_anterior or existe_seq_posterior">
+        <tr>
+          <td align="center" class="texto" colspan=3>
+            <b>
+              <dtml-var "pysc.PageListOutput_pysc('vinculosAutografosMateriasNormas_index_html', page, step, _['sequence-length'])">
+            </b>
+          </td>
+        </tr>
+      </dtml-if>
+    </table>
+  </dtml-if sequence-end>
+
+
+</dtml-in>
+
+
+
+<dtml-comment>
+<dtml-in expr="zsql.materia_pesquisar_zsql( rd_ordem='1',  test_excluir_tipos='3;4;7;8;11;13;12;15;16;18;20', ind_tramitacao=0)"
+                                           size="step" start="start" orphan=0>
+
+
+            <tr>
+
+              <td class="texto" style="width: 40%;">
+                <a href="&dtml-portal_url;/cadastros/materia/materia_mostrar_proc?cod_materia=<dtml-var cod_materia>">
+
+
+                <dtml-if expr="txt_latitude != ''">
+                 <img align="absmiddle" src="&dtml-portal_url;/imagens/img_mapa.jpg"alt="Icone do Mapa" title="Proposição possui cadastro de georreferenciamento"  style="width: 16px;"/>
+                </dtml-if>
+
+                <b><dtml-var sgl_tipo_materia> <dtml-var num_ident_basica>/<dtml-var ano_ident_basica> - <dtml-var des_tipo_materia></b>
+
+                </a>
+
+                <dtml-if expr="itens_privados == '1' and ind_publico == 0">
+                     <span style="color: red; font-size: 80%;"> (Documento Privado)</span>
+                </dtml-if>
+                <br>
+
+               <dtml-var txt_ementa missing><br> <br>
+                 <dtml-call "REQUEST.set('p_ementa', txt_ementa.strip().lower())">
+
+               <dtml-comment>obt�m a �ltima tramita��o da mat�ria.</dtml-comment>
+                <dtml-in expr="zsql.tramitacao_obter_zsql(cod_materia=cod_materia, ind_ult_tramitacao=1)">
+                  <dtml-if cod_unid_tram_dest>
+                    <dtml-call expr="REQUEST.set('cod_unid_tram', cod_unid_tram_dest)">
+                  <dtml-else>
+                    <dtml-call expr="REQUEST.set('cod_unid_tram', cod_unid_tram_local)">
+                  </dtml-if>
+                  <dtml-comment>obtem a unidade de tramitação da matéria.</dtml-comment>
+                  <dtml-in expr="zsql.unidade_tramitacao_obter_zsql(cod_unid_tramitacao=cod_unid_tram)">
+                    <dtml-if cod_orgao>
+                      <b>Localiza&ccedil;&atilde;o Atual: </b><dtml-var nom_orgao><br>
+                    <dtml-elif cod_comissao>
+                      <b>Localiza&ccedil;&atilde;o Atual: </b><dtml-var nom_comissao><br>
+                    <dtml-else>
+                      <b>Localiza&ccedil;&atilde;o Atual: </b><dtml-var nom_parlamentar><br>
+                    </dtml-if>
+                  </dtml-in>
+                  <dtml-call expr="REQUEST.set('des_status', des_status)">
+                  <dtml-call expr="REQUEST.set('txt_tramitacao', txt_tramitacao)">
+                <dtml-if des_status>
+                  <b>Situação: </b><dtml-var des_status null=""><br>
+                </dtml-if>
+                <dtml-if txt_tramitacao>
+                  <b>&Uacute;ltima A&ccedil;&atilde;o: </b><dtml-var txt_tramitacao>&nbsp;&nbsp;-&nbsp;&nbsp;<b>Em:</b>&nbsp;<dtml-var dat_tramitacao><br>
+                </dtml-if>
+                <dtml-if dat_fim_prazo>
+                  <b>Data Fim do Prazo: </b> <dtml-var dat_fim_prazo><br>
+                </dtml-if>
+               </dtml-in>
+
+              </td>
+
+
+              <td class="texto">
+                    <dtml-call "REQUEST.set('a_ementa', '')">
+             <br>
+             <dtml-comment>obt�m normas jur�dicas vinculadas </dtml-comment>
+                <dtml-in expr="zsql.materia_buscar_norma_juridica_zsql(cod_materia=cod_materia)">
+                   <dtml-if cod_norma>
+
+	                   <dtml-if expr="sgl_norma=='ATG'">
+	                     <a href="&dtml-portal_url;/consultas/norma_juridica/norma_juridica_mostrar_proc?cod_norma=<dtml-var cod_norma>"><b><dtml-var des_norma> <dtml-var num_norma>/<dtml-var ano_norma></b></a><br />
+
+			               <dtml-var txt_ementa missing><br> <br>
+			                 <dtml-call "REQUEST.set('a_ementa', txt_ementa.strip().lower())">
+
+
+	                     <dtml-if expr="pysc.verifica_similaridade_string_pysc(p_ementa, a_ementa) < 50 ">
+	                    <hr>
+	                   <span style="text-align: center; display: block; font-weight: bold; color: red;"> Semelhança com Projeto<br>abaixo de 50%</span><br>
+	                     </dtml-if>
+						<div class="linksOutrasNormas">
+						  <dtml-in expr="zsql.vinculo_norma_juridica_referentes_obter_zsql(cod_norma=cod_norma)">
+
+						          <dtml-if "tip_vinculo=='Z'">
+						               <img align="absmiddle" border="0" src="&dtml-portal_url;/imagens/icon_status_correlata.gif">&nbsp;<span style="color:#62682F;font-weight:normal;">Autógrafo Transformado em Lei:&nbsp;<a href="&dtml-portal_url;/consultas/norma_juridica/norma_juridica_mostrar_proc?cod_norma=<dtml-var cod_norma_referente>&autostart=off&pesquisa=<dtml-var pesquisa missing>"><dtml-var sgl_tipo_norma>&nbsp;<dtml-var num_norma>/<dtml-var ano_norma></a>.&nbsp;</span>
+
+						            </dtml-if>
+										<BR>
+						            <dtml-else>
+
+						            </dtml-in>
+
+						  </div>
+	                   </dtml-if>
+
+
+
+
+
+
+
+
+
+                   </dtml-if>
+                </dtml-in>
+             <br>
+              </td>
+
+
+
+
+
+              <td class="texto">
+
+
+             <dtml-comment>obt�m normas jur�dicas vinculadas </dtml-comment>
+                <dtml-in expr="zsql.materia_buscar_norma_juridica_zsql(cod_materia=cod_materia)">
+                   <dtml-if cod_norma>
+	                   <dtml-if expr="sgl_norma!='ATG'">
+                        <a href="&dtml-portal_url;/consultas/norma_juridica/norma_juridica_mostrar_proc?cod_norma=<dtml-var cod_norma>"><b><dtml-var des_norma> <dtml-var num_norma>/<dtml-var ano_norma></b></a><br />
+                        <dtml-var txt_ementa missing><br> <br>
+	                      <dtml-call "REQUEST.set('l_ementa', txt_ementa.strip().lower())">
+  	                     <dtml-if expr="pysc.verifica_similaridade_string_pysc(p_ementa, l_ementa) < 50 ">
+  	                        <hr>
+  	                        <span style="text-align: center; display: block; font-weight: bold; color: red;"> Semelhança com Projeto<br>abaixo de 50%</span><br>
+  	                     </dtml-if>
+  	                     <dtml-if expr="_.len(a_ementa) > 0 and pysc.verifica_similaridade_string_pysc(a_ementa, l_ementa) < 50 ">
+  	                        <hr>
+  	                        <span style="text-align: center; display: block; font-weight: bold; color: red;"> Semelhança com Autografo<br>abaixo de 50%</span><br>
+  	                     </dtml-if>
+
+          		          <div class="linksOutrasNormas">
+            						  <dtml-in expr="zsql.vinculo_norma_juridica_referidas_obter_zsql(cod_norma=cod_norma)">
+    						            <dtml-if "tip_vinculo=='Z'">
+    						                <img align="absmiddle" border="0" src="&dtml-portal_url;/imagens/icon_status_correlata.gif">&nbsp;<span style="color:#62682F;font-weight:normal;">Autógrafo da Norma:&nbsp;<a href="&dtml-portal_url;/consultas/norma_juridica/norma_juridica_mostrar_proc?cod_norma=<dtml-var cod_norma_referida>&autostart=off&pesquisa=<dtml-var pesquisa missing>">ATG&nbsp;<dtml-var num_norma>/<dtml-var ano_norma></a>.&nbsp;</span>
+    						            </dtml-if>
+							              <BR>
+  						            <dtml-else>
+            						  </dtml-in>
+
+                          <dtml-let diario="get_diario_oficial(num_norma=des_veiculo_publicacao,num_lei=num_norma)">
+
+                            <dtml-if expr="diario">
+                              <img align="absmiddle" border="0" src="&dtml-portal_url;/imagens/icon_status_correlata.gif">&nbsp;<span style="color:#62682F;font-weight:normal;">Diário Oficial:&nbsp;
+                              <a class="qs-titulo" target="_blank" href="&dtml-portal_url;/sapl_documentos/diario_oficial/<dtml-var expr="diario['codigo']" missing>_diario_oficial_<dtml-var expr="diario['numero']" missing>.pdf">
+                                <dtml-var expr="diario['numero']">/<dtml-var expr="diario['ano']">
+                              </a>
+                              <dtml-if num_pag_inicio_publ><br>Pág. <dtml-var num_pag_inicio_publ missing null=""></dtml-if> <dtml-if num_pag_fim_public> <dtml-var num_pag_fim_publ missing null=""></dtml-if>
+                            </dtml-if>
+                            <span style="text-align: left; display: block; font-weight: bold; color: red;">
+                                <dtml-if expr="not diario and _.len(des_veiculo_publicacao or '') > 0">
+                                  Houve erro no registro do Diário Oficial<br>
+                                <dtml-elif expr="not _.len(des_veiculo_publicacao or '')">
+                                  Diário Oficial não informado.<br>
+                                </dtml-if>
+                                <dtml-if expr="diario and diario['data'] != pysc.iso_to_port_pysc(dat_publicacao)">
+                                  Data do Diário: <dtml-var expr="diario['data']"><br>Diferente da data de Publicação informada na Norma: <dtml-var expr="pysc.iso_to_port_pysc(dat_publicacao)"><br>
+                                </dtml-if>
+                                <dtml-if expr="diario and not diario['lei_no_diario']">
+                                  A Norma Jurídica não foi encontrada dentro do Diário informado.
+                                </dtml-if>
+                            </span>
+
+                          </dtml-let>
+
+		                    </div>
+	                   </dtml-if>
+
+
+
+
+
+
+
+
+
+
+                   </dtml-if>
+                </dtml-in>
+
+              </td>
+
+
+            <dtml-comment>
+              <td class="texto">
+
+
+
+               <dtml-in expr="zsql.numeracao_obter_zsql(cod_materia=cod_materia)">
+               <dtml-if num_materia>
+               <b>Processo:</b>&nbsp;<dtml-var num_materia>/<dtml-var ano_materia> <br />
+               </dtml-if>
+               </dtml-in>
+
+               <dtml-if num_protocolo>
+                 <b>Protocolo Geral:</b>&nbsp;<dtml-var num_protocolo>/<dtml-var ano_ident_basica>
+                  <dtml-in expr="zsql.protocolo_obter_zsql(cod_protocolo=num_protocolo,ano_protocolo=ano_ident_basica)">
+                     <b> - Data de Entrada:</b> <dtml-var "pysc.iso_to_port_pysc(dat_protocolo)">  - <b>Hor&aacute;rio: </b> <dtml-var hor_protocolo>
+                  </dtml-in> <br />
+               </dtml-if>
+
+                <dtml-comment>obt�m o primeiro autor da mat�ria.</dtml-comment>
+                <dtml-if expr="pysc.conta_autores_pysc(cod_materia)">
+                  <dtml-if expr="pysc.conta_autores_pysc(cod_materia)>1">
+                      <b>Autores:</b>
+                  <dtml-else>
+                      <b>Autor:</b>
+                  </dtml-if>
+                </dtml-if>
+                <dtml-in expr="zsql.autoria_obter_zsql(cod_materia=cod_materia)">
+                  <dtml-in expr="zsql.autor_obter_zsql(cod_autor=cod_autor)">
+                    <dtml-if expr="des_tipo_autor=='Parlamentar'">
+                      <dtml-in expr="zsql.parlamentar_obter_zsql(cod_parlamentar=cod_parlamentar)">
+                               <dtml-var nom_completo><br />
+                      </dtml-in>
+                    <dtml-elif expr="des_tipo_autor=='Comissao'">
+                      <dtml-in expr="zsql.comissao_obter_zsql(cod_comissao=cod_comissao)">
+                               <dtml-var nom_comissao><br />
+                      </dtml-in>
+                    <dtml-else>
+                               <dtml-var nom_autor><br />
+                    </dtml-if>
+                  </dtml-in>
+                </dtml-in>
+                <dtml-comment> obt�m data da sess�o na qual a mat�ria tenha sido votada </dtml-comment>
+                <dtml-in expr="zsql.pesquisa_sessao_votacao_materia_zsql(cod_materia=cod_materia)">
+                  <dtml-if dat_inicio_sessao>
+                   <dtml-let data_sessao="pysc.iso_to_port_pysc(dat_inicio_sessao)">
+                      <b>Vota&ccedil;&atilde;o em:&nbsp;
+                  <a href="&dtml-portal_url;/consultas/sessao_plenaria/sessao_plenaria_index_html?dat_sessao_sel=<dtml-var data_sessao>"><dtml-var data_sessao></a><br /></b>
+                   </dtml-let>
+                  </dtml-if>
+                </dtml-in>
+                <dtml-call expr="REQUEST.set('des_status', '')">
+                <dtml-call expr="REQUEST.set('txt_tramitacao', '')">
+
+              <dtml-in expr="zsql.anexada_obter_zsql(cod_materia_anexada=cod_materia, ind_excluido=0)">
+                 <dtml-in expr="zsql.materia_obter_zsql(cod_materia=cod_materia_principal, ind_excluido = 0)">
+                  <b>Mat�ria Anexadora:</b>
+                     <a href="&dtml-portal_url;/consultas/materia/materia_mostrar_proc?cod_materia=<dtml-var cod_materia_principal>">
+                     <b><dtml-var sgl_tipo_materia> <dtml-var num_ident_basica missing>/<dtml-var ano_ident_basica></b></a> -
+                     <b>Data Anexa��o:</b> <dtml-var dat_anexacao missing><br />
+                 </dtml-in>
+               </dtml-in>
+              <dtml-in expr="zsql.anexada_obter_zsql(cod_materia_principal=cod_materia, ind_excluido=0)">
+                 <dtml-in expr="zsql.materia_obter_zsql(cod_materia=cod_materia_anexada, ind_excluido = 0)">
+                    <b>Mat�ria Anexada:</b>
+                     <a href="&dtml-portal_url;/consultas/materia/materia_mostrar_proc?cod_materia=<dtml-var cod_materia>">
+                     <b><dtml-var sgl_tipo_materia> <dtml-var num_ident_basica missing>/<dtml-var ano_ident_basica></b></a> -
+                     <b>Data Anexa��o:</b> <dtml-var dat_anexacao missing><br />
+                 </dtml-in>
+               </dtml-in>
+
+
+
+
+
+
+
+                <dtml-comment>documentos acess�rios </dtml-comment>
+                  <dtml-if "not isAnon">
+                    <dtml-in expr="zsql.documento_acessorio_obter_zsql(cod_materia=cod_materia, ind_excluido=0)">
+		      <dtml-if sequence-start>
+                             <b>Docs Acess&oacute;rios:</b><br>
+                      </dtml-if>
+                       <a href="&dtml-portal_url;/sapl_documentos/materia/<dtml-var cod_documento>"><b><dtml-var nom_documento missing></b> - <b><dtml-var dat_documento missing></b> - (<dtml-var nom_autor_documento missing>)</a><br />
+                   </dtml-in>
+                 </dtml-if>
+
+                <dtml-if expr="ind_tramitacao==1">
+                  <img align="absmiddle" border="0" src="&dtml-portal_url;/imagens/acomp_email.png">&nbsp;<span style="color:#32682F;font-weight:normal;"><a href="#" onClick="javascript:window.open('&dtml-portal_url;/consultas/materia/acompanhamento/acomp_materia_form?cod_materia=<dtml-var cod_materia>','ItemOrdemWin','width=770,height=310,top=200,left=200,scrollbars=yes');"><b>Acompanhar mat&eacute;ria</b></a>&nbsp;</span>
+                </dtml-if>
+
+
+
+                  <dtml-let id_documento="_.str(cod_materia)+'_texto_integral'">
+                  <dtml-if "_.hasattr(sapl_documentos.materia,id_documento)">
+                    <dtml-let documento="_.getattr(sapl_documentos.materia,id_documento).absolute_url">
+                       <br>
+                      <a target="_blank" href="<dtml-var documento>">
+                      Texto Integral
+
+
+                      </a>
+
+                    </dtml-let>
+                  <dtml-else>
+                    <br>
+                  </dtml-if>
+                </dtml-let>
+
+
+               </td>
+
+            </dtml-comment>
+
+            </tr>
+  <dtml-if sequence-end>
+    <dtml-if next-sequence>
+      <dtml-call "REQUEST.set('existe_seq_posterior', 1)">
+    </dtml-if next-sequence>
+    <dtml-if expr="existe_seq_anterior or existe_seq_posterior">
+      <tr> <td align="center" class="texto" colspan=3><b>
+          <dtml-var "pysc.PageListOutput_pysc('vinculosMateriasNormas_index_html', page, step, _['sequence-length'], rd_ordenacao='1',rd_ordem_td='1')">
+      </b></td> </tr>
+    </dtml-if>
+</dtml-if sequence-end>
+<dtml-else>
+<tr>
+<td class="texto"><b>Resultado da Pesquisa</b></td>
+</tr>
+<tr>
+<td class="texto">Nenhuma ocorrência encontrada.</td>
+</tr>
+</dtml-in>
+
+
+</td>
+</tr>
+</table>
+</dtml-comment>
+</fieldset>
+
+</div><dtml-var standard_html_footer>
+   </dtml-let>
